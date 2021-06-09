@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for Orp information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "orp")
 public record Orp(
         @Id

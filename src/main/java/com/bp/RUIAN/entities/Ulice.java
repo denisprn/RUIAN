@@ -7,6 +7,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+/**
+ * Container for Ulice information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "ulice")
 public record Ulice(
         @Id

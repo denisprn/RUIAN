@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for Pou information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "pou")
 public record Pou(
         @Id

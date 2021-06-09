@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for RegionSoudrznosti information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "regionsoudrznosti")
 public record RegionSoudrznosti(
         @Id

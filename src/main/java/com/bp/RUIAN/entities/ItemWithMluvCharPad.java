@@ -1,5 +1,9 @@
 package com.bp.RUIAN.entities;
 
+/**
+ * Interface for items with MluvCharPad.
+ * @author Denys Peresychanskyi
+ */
 public interface ItemWithMluvCharPad {
     String getMluvCharPad2();
 

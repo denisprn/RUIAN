@@ -26,7 +26,6 @@ import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 class RuianApplicationTest {
     private static Document document;
 

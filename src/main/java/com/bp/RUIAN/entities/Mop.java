@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for Mop information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "mop")
 public record Mop(
         @Id

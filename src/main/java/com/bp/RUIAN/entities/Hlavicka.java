@@ -5,6 +5,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+/**
+ * Container for Hlavicka information
+ * @author Denys Peresychanskyi
+ */
 public record Hlavicka(
         @Field(type = FieldType.Text, name = "zachranka")
         String verzeVfr,

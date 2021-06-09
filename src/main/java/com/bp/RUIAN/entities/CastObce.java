@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for CastObce information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "castobce")
 public record CastObce(
         @Id

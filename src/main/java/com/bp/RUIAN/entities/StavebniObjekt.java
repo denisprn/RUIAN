@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Container for StavebniObjekt information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "stavebniobjekt")
 public record StavebniObjekt(
         @Id

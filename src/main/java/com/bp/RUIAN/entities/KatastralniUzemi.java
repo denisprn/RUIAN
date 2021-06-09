@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for KatastralniUzemi information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "katastralniuzemi")
 public record KatastralniUzemi(
         @Id

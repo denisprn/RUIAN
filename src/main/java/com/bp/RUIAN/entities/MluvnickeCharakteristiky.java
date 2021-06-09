@@ -3,6 +3,10 @@ package com.bp.RUIAN.entities;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+/**
+ * Container for MluvnickeCharakteristiky information
+ * @author Denys Peresychanskyi
+ */
 public record MluvnickeCharakteristiky(
         @Field(type = FieldType.Text, name = "Pad2")
         String Pad2,

@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for Okres information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "okres")
 public record Okres(
         @Id

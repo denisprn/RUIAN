@@ -5,6 +5,10 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+/**
+ * Container for ZpusobOchranyPozemku information
+ * @author Denys Peresychanskyi
+ */
 public record ZpusobOchranyPozemku(
         @Field(type = FieldType.Integer, name = "KodZOP")
         Integer kod,

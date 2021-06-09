@@ -15,6 +15,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * This class tests Elasticsearch congifuration
+ * @author Denys Peresychanskyi
+ */
 public class ElasticsearchTests {
     private static final ElasticsearchContainer container =
             new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.13.1").withExposedPorts(9200);
@@ -62,16 +66,5 @@ public class ElasticsearchTests {
         final ClusterHealthResponse response = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT);
         // check for yellow or green cluster health
         Assertions.assertNotSame(response.getStatus(), ClusterHealthStatus.RED);
-
-
-        // async
-        CountDownLatch latch = new CountDownLatch(1);
-        AtomicReference<ClusterHealthResponse> reference = new AtomicReference<>();
-        final ActionListener<ClusterHealthResponse> listener = ActionListener.wrap(
-                r -> { reference.set(r); latch.countDown(); },
-                e -> { e.printStackTrace(); latch.countDown(); });
-        client.cluster().healthAsync(new ClusterHealthRequest(), RequestOptions.DEFAULT, listener);
-        latch.await(10, TimeUnit.SECONDS);
-        Assertions.assertNotSame(reference.get().getStatus(), ClusterHealthStatus.RED);
     }
 }

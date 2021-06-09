@@ -5,6 +5,10 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+/**
+ * Container for ZpusobOchranyObjektu information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "zpusobochranyobjektu")
 public record ZpusobOchranyObjektu(
         @Id

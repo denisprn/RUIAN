@@ -9,6 +9,10 @@ import org.springframework.data.geo.Point;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Container for Parcela information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "parcela")
 public record Parcela(
         @Id

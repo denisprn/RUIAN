@@ -7,6 +7,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+/**
+ * Container for DetailniTEA information
+ * @author Denys Peresychanskyi
+ */
 public record DetailniTEA(
         @Field(type = FieldType.Integer, name = "kod")
         Integer kod,

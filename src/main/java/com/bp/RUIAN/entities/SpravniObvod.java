@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for SpravniObvod information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "spravniobvod")
 public record SpravniObvod(
         @Id

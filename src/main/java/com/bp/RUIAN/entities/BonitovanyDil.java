@@ -1,9 +1,12 @@
 package com.bp.RUIAN.entities;
 
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+/**
+ * Container for BonitovanyDil information
+ * @author Denys Peresychanskyi
+ */
 public record BonitovanyDil(
         @Field(type = FieldType.Long, name = "vymera")
         Long vymera,

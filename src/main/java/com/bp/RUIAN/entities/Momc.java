@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for Momc information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "momc")
 public record Momc(
         @Id

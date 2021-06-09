@@ -17,16 +17,30 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * Main class
+ * @author Denys Peresychanskyi
+ */
 @SpringBootApplication
 public class RuianApplication {
 
+	/**
+	 * Main method
+	 * @param args application arguments.
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(RuianApplication.class, args);
 	}
 
+	/**
+	 * Get MluvnickeCharakteristiky of the entity
+	 * @param eElement node of the XML file
+	 * @return MluvnickeCharakterictiky object of given node
+	 */
 	private MluvnickeCharakteristiky getMluvChar(Element eElement) {
 		String pad2 = eElement.getElementsByTagName("com:Pad2").item(0).getTextContent();
 		String pad3 = eElement.getElementsByTagName("com:Pad3").item(0).getTextContent();
@@ -36,6 +50,12 @@ public class RuianApplication {
 		return new MluvnickeCharakteristiky(pad2, pad3, pad4, pad6, pad7);
 	}
 
+	/**
+	 * Get representation of flag
+	 * @param eElement node of the XML file
+	 * @param prefix prefix of XML element
+	 * @return String of XML element's text content
+	 */
 	private String getVlajkaText(Element eElement, String prefix) {
 		NodeList nListVlajkaText = eElement.getElementsByTagName(prefix + ":VlajkaText");
 
@@ -46,6 +66,12 @@ public class RuianApplication {
 		return null;
 	}
 
+	/**
+	 * Get byte representation of flag image
+	 * @param eElement element of the XML file
+	 * @param prefix prefix of XML element
+	 * @return String of XML element's text content
+	 */
 	private String getVlajkaObrazek(Element eElement, String prefix) {
 		NodeList nListVlajkaObrazek = eElement.getElementsByTagName(prefix + ":VlajkaObrazek");
 
@@ -56,6 +82,12 @@ public class RuianApplication {
 		return null;
 	}
 
+	/**
+	 * Get byte representation of emblem image
+	 * @param eElement element of the XML file
+	 * @param prefix prefix of XML element
+	 * @return String of XML element's text content
+	 */
 	private String getZnakObrazek(Element eElement, String prefix) {
 		NodeList nListZnakObrazek = eElement.getElementsByTagName(prefix + ":ZnakObrazek");
 
@@ -66,6 +98,12 @@ public class RuianApplication {
 		return null;
 	}
 
+	/**
+	 * Get representation of emblem
+	 * @param eElement element of the XML file
+	 * @param prefix prefix of XML element
+	 * @return String of XML element's text content
+	 */
 	private String getZnakText(Element eElement, String prefix) {
 		NodeList nListZnakText = eElement.getElementsByTagName(prefix + ":ZnakText");
 
@@ -76,7 +114,14 @@ public class RuianApplication {
 		return null;
 	}
 
-	private void parse(Node node, String prefix, EsService esService) throws Exception {
+	/**
+	 * Secondary method for parsing XML nodes
+	 * @param node node of the XML file
+	 * @param prefix prefix of XML element
+	 * @param esService Elasticsearch service
+	 * @throws ParseException if error occurs during XML file parsing
+	 */
+	private void parse(Node node, String prefix, EsService esService) throws ParseException {
 		Integer kod = null;
 		Long globalniIdNavrhuZmeny = null;
 		String nazev = null;
@@ -520,7 +565,7 @@ public class RuianApplication {
 
 					for (int i = 0; i < nodeListDTChildren.getLength(); i++) {
 						if (nodeListDTChildren.item(i).getNodeType() == Node.ELEMENT_NODE) {
-							Boolean nespravnyDT = false;
+							boolean nespravnyDT = false;
 							Element element = (Element) nodeListDTChildren.item(i);
 
 							Integer kodDT = Integer.parseInt(element.getElementsByTagName(prefix + ":Kod")
@@ -620,6 +665,10 @@ public class RuianApplication {
 		}
 	}
 
+	/**
+	 * Main method for parsing XML file
+	 * @param esService Elasticsearch service
+	 */
 	@Bean
 	CommandLineRunner runner(EsService esService) {
 		return args -> {

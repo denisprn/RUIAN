@@ -7,6 +7,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+/**
+ * Container for VolebniOkrsek information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "volebniokrsek")
 public record VolebniOkrsek(
         @Id

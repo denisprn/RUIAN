@@ -7,6 +7,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.geo.Point;
 import java.util.Date;
 
+/**
+ * Container for Stat information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "stat")
 public record Stat(
         @Id

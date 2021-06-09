@@ -8,6 +8,10 @@ import org.springframework.data.geo.Point;
 
 import java.util.Date;
 
+/**
+ * Container for Zsj information
+ * @author Denys Peresychanskyi
+ */
 @Document(indexName = "zsj")
 public record Zsj(
         @Id

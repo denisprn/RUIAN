@@ -2,23 +2,19 @@ package com.bp.RUIAN.services;
 
 import com.bp.RUIAN.entities.*;
 import com.bp.RUIAN.repositories.*;
-import org.elasticsearch.common.recycler.Recycler;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.geo.Point;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests Elasticsearch service
+ * @author Denys Peresychanskyi
+ */
 public class EsServiceTest {
     private final StatRepository statRepository = Mockito.mock(StatRepository.class);
     private final RegionSoudrznostiRepository regionSoudrznostiRepository = Mockito.mock(RegionSoudrznostiRepository.class);
@@ -40,7 +36,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find list of all Stat")
-    void findStaty() throws ParseException {
+    void findStaty() {
         List<Stat> staty = new ArrayList<>();
 
         Stat stat = new Stat(1, null, null, null,null,
@@ -53,7 +49,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find Stat by id")
-    void shouldFindStatById() throws ParseException {
+    void shouldFindStatById() {
         Stat stat = new Stat(1, null, null, null,null,
                 null, null, null, null, null, null);
 
@@ -62,7 +58,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should save Stat")
-    void saveStat() throws ParseException {
+    void saveStat() {
         Stat stat = new Stat(1, null, null, null,null,
                 null, null, null, null, null, null);
 
@@ -72,7 +68,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a list of Region soudrznosti")
-    void findRs() throws ParseException {
+    void findRs() {
         List<RegionSoudrznosti> regionSoudrznostiList = new ArrayList<>();
 
         RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null, null, null,
@@ -87,7 +83,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a Region soudrznosti by id")
-    void findRsById() throws ParseException {
+    void findRsById() {
         RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null, null, 1,
                 null, null, null, null, null,
                 null, null, null);
@@ -97,7 +93,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should save Region Soudrznosti")
-    void saveRs() throws ParseException {
+    void saveRs() {
         RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null, null, null,
                 null, null, null, null, null,
                 null, null, null);
@@ -109,7 +105,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a list of Vusc")
-    void findVusc() throws ParseException {
+    void findVusc() {
         List<Vusc> vuscList = new ArrayList<>();
 
         Vusc vusc = new Vusc(19, null, null, null,
@@ -124,7 +120,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a Vusc by id")
-    void findVuscById() throws ParseException {
+    void findVuscById() {
         Vusc vusc = new Vusc(19, null, null, null,
                 null, null, null, null, null,
                 null, null, null);
@@ -134,7 +130,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should save Vusc")
-    void saveVusc() throws ParseException {
+    void saveVusc() {
         Vusc vusc = new Vusc(19, null, null, null,
                 null, null, null, null, null,
                 null, null, null);
@@ -146,7 +142,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a list of Okres")
-    void findOkresy() throws ParseException {
+    void findOkresy() {
         List<Okres> okresList = new ArrayList<>();
 
         Okres okres = new Okres(19, null, null, null,
@@ -161,7 +157,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find an Okres by id")
-    void findOkresById() throws ParseException {
+    void findOkresById() {
         Okres okres = new Okres(19, null, null, null,
                 null, null, null, null, null,
                 null, null, null);
@@ -171,7 +167,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should save Okres")
-    void saveOkres() throws ParseException {
+    void saveOkres() {
         Okres okres = new Okres(19, null, null, null,
                 null, null, null, null, null,
                 null, null, null);
@@ -183,7 +179,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a list of Orp")
-    void findOrp() throws ParseException {
+    void findOrp() {
         List<Orp> orpList = new ArrayList<>();
 
         Orp orp = new Orp(315, null, null, null, null,
@@ -198,7 +194,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find an Orp by id")
-    void findOrpById() throws ParseException {
+    void findOrpById() {
        Orp orp = new Orp(315, null, null, null, null,
                null, null, null, null,
                null, null, null);
@@ -208,7 +204,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should save Orp")
-    void saveOrp() throws ParseException {
+    void saveOrp() {
         Orp orp = new Orp(315, null, null, null, null,
                 null, null, null, null,
                 null, null, null);
@@ -220,7 +216,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a list of Pou")
-    void findPou() throws ParseException {
+    void findPou() {
         List<Pou> pouList = new ArrayList<>();
 
         Pou pou = new Pou(3163, null, null, null, null,
@@ -235,7 +231,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a Pou by id")
-    void findPouById() throws ParseException {
+    void findPouById() {
         Pou pou = new Pou(3163, null, null, null, null,
                 null, null, null, null,
                 null, null, null);
@@ -245,7 +241,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should save Pou")
-    void savePou() throws ParseException {
+    void savePou() {
         Pou pou = new Pou(3163, null, null, null, null,
                 null, null, null, null,
                 null, null, null);
@@ -257,7 +253,7 @@ public class EsServiceTest {
 
     @Test
     @DisplayName("Should find a list of Obec")
-    void findObce() throws ParseException {
+    void findObce() {
         List<Obec> obecList = new ArrayList<>();
 
         Obec obec = new Obec(3163, null, null, null, null,
