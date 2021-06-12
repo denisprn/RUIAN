@@ -38,7 +38,7 @@ public class FilesParser {
 
     /**
      * Method for recursively walking through all directories
-     * @param directoryPath path of the root directory, that containes files or other directories
+     * @param directoryPath path of the root directory, that contains files or other directories
      */
     public void walk(String directoryPath) {
         File root = new File(directoryPath);
@@ -50,7 +50,7 @@ public class FilesParser {
             if (f.isDirectory()) {
                 walk(f.getAbsolutePath());
             }
-            else {
+            else if (f.getName().endsWith(".xml")) {
                 parseFile(f.getAbsolutePath());
             }
         }
