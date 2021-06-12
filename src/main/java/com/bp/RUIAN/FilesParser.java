@@ -326,7 +326,7 @@ public class FilesParser {
      * @return Integer kodSpravniMomc or null
      */
     private Integer getSpravniMomcKod(Element element, String prefix) {
-        NodeList nList = element.getElementsByTagName(prefix + "SpravniMomcKod");
+        NodeList nList = element.getElementsByTagName(prefix + ":SpravniMomcKod");
 
         if (nList.getLength() > 0) {
             return Integer.parseInt(nList.item(0).getTextContent());
@@ -871,7 +871,7 @@ public class FilesParser {
      * @return Long isknBudovaId or null
      */
     private Long getIsknBudovaId(Element element, String prefix) {
-        NodeList nList = element.getElementsByTagName(prefix + "IsknBudovaId");
+        NodeList nList = element.getElementsByTagName(prefix + ":IsknBudovaId");
 
         if (nList.getLength() > 0) {
             return Long.parseLong(nList.item(0).getTextContent());
@@ -1475,7 +1475,7 @@ public class FilesParser {
      * @throws ParseException if an error occurs during parsing
      */
     private void parseOrpElement(Element element) throws ParseException {
-        String prefix = "oki";
+        String prefix = "opi";
         boolean nespravny = false;
         Integer kod = getKod(element, prefix);
         String nazev = getNazev(element, prefix);
