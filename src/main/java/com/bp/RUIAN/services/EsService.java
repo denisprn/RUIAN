@@ -515,30 +515,27 @@ public class EsService {
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
             String hitIndexName = hit.getIndex();
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-
-            Integer kod = (Integer) sourceAsMap.get("kod");
-            Long kodToLong = Long.parseLong(kod.toString());
+            Long id = Long.parseLong(hit.getId());
 
             switch(hitIndexName) {
                 case "okres" -> {
-                    Optional<Okres> okres = findOkresById(kodToLong);
+                    Optional<Okres> okres = findOkresById(id);
                     founded.add(okres.orElse(null));
                 }
                 case "obec" -> {
-                    Optional<Obec> obec = findObecById(kodToLong);
+                    Optional<Obec> obec = findObecById(id);
                     founded.add(obec.orElse(null));
                 }
                 case "castobce" -> {
-                    Optional<CastObce> castObce = findCastObceById(kodToLong);
+                    Optional<CastObce> castObce = findCastObceById(id);
                     founded.add(castObce.orElse(null));
                 }
                 case "ulice" -> {
-                    Optional<Ulice> ulice = findUliceById(kodToLong);
+                    Optional<Ulice> ulice = findUliceById(id);
                     founded.add(ulice.orElse(null));
                 }
                 case "adresnimisto" -> {
-                    Optional<AdresniMisto> adresniMisto = findAdresniMistoById(kodToLong);
+                    Optional<AdresniMisto> adresniMisto = findAdresniMistoById(id);
                     founded.add(adresniMisto.orElse(null));
                 }
             }
@@ -565,13 +562,9 @@ public class EsService {
         List<Okres> okresy = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            Long id = Long.parseLong(hit.getId());
 
-            Integer kod = (Integer) sourceAsMap.get("kod");
-
-            Long kodtoLong = Long.parseLong(kod.toString());
-
-            Optional<Okres> okres = findOkresById(kodtoLong);
+            Optional<Okres> okres = findOkresById(id);
 
             okresy.add(okres.orElse(null));
         }
@@ -597,13 +590,9 @@ public class EsService {
         List<Obec> obce = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            Long id = Long.parseLong(hit.getId());
 
-            Integer kod = (Integer) sourceAsMap.get("kod");
-
-            Long kodtoLong = Long.parseLong(kod.toString());
-
-            Optional<Obec> obec = findObecById(kodtoLong);
+            Optional<Obec> obec = findObecById(id);
 
             obce.add(obec.orElse(null));
         }
@@ -629,13 +618,9 @@ public class EsService {
         List<CastObce> castiObce = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            Long id = Long.parseLong(hit.getId());
 
-            Integer kod = (Integer) sourceAsMap.get("kod");
-
-            Long kodtoLong = Long.parseLong(kod.toString());
-
-            Optional<CastObce> castObce = findCastObceById(kodtoLong);
+            Optional<CastObce> castObce = findCastObceById(id);
 
             castiObce.add(castObce.orElse(null));
         }
@@ -661,13 +646,9 @@ public class EsService {
         List<Ulice> uliceList = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            Long id = Long.parseLong(hit.getId());
 
-            Integer kod = (Integer) sourceAsMap.get("kod");
-
-            Long kodtoLong = Long.parseLong(kod.toString());
-
-            Optional<Ulice> ulice = findUliceById(kodtoLong);
+            Optional<Ulice> ulice = findUliceById(id);
 
             uliceList.add(ulice.orElse(null));
         }
@@ -694,13 +675,9 @@ public class EsService {
         List<AdresniMisto> adresniMista = new ArrayList<>();
 
         for (SearchHit hit : searchResponse.getHits().getHits()) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            
-            Integer kod = (Integer) sourceAsMap.get("kod");
+            Long id = Long.parseLong(hit.getId());
 
-            Long kodtoLong = Long.parseLong(kod.toString());
-
-            Optional<AdresniMisto> adresniMisto = findAdresniMistoById(kodtoLong);
+            Optional<AdresniMisto> adresniMisto = findAdresniMistoById(id);
 
             adresniMista.add(adresniMisto.orElse(null));
         }

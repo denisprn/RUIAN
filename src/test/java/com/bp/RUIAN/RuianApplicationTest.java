@@ -80,7 +80,7 @@ class RuianApplicationTest {
 
     @BeforeAll
     static void prepareXMLDoc() throws ParserConfigurationException, IOException, SAXException {
-        File file = new ClassPathResource("ruian_test.xml").getFile();
+        File file = new ClassPathResource("xml/ruian_test.xml").getFile();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         document = builder.parse(file);
