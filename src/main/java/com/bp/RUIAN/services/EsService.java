@@ -499,6 +499,8 @@ public class EsService {
      * Fuzzy search by nazev, cisloDomovni, cisloOrientacni,cisloOrientacniPismeno, psc, nutsLau
      * in okres, obec, castobce, ulice and adresnimisto indexes
      * @param searchString query string
+     * @return List of Objects
+     * @throws IOException if an input/output error occurs
      */
     public List<Object> search(String searchString) throws IOException {
         SearchRequest searchRequest = new SearchRequest("okres", "obec", "castobce",
