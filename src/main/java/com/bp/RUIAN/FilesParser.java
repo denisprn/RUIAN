@@ -2,6 +2,11 @@ package com.bp.RUIAN;
 
 import com.bp.RUIAN.entities.*;
 import com.bp.RUIAN.services.EsService;
+import org.elasticsearch.index.mapper.ObjectMapper;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonLineString;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 import org.springframework.data.geo.Point;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -1142,18 +1147,77 @@ public class FilesParser {
     }
 
     /**
-     * Parse record's 'pos' attribute
+     * Parse record's 'definicniBod' attribute
      * @param element xml element
-     * @return Point pos or null
+     * @return GeoJsonPoint definicniBod
      */
-    private Point getPos(Element element) {
+    private GeoJsonPoint getDefinicniBod(Element element) {
         NodeList nList = element.getElementsByTagName("gml:pos");
 
         if (nList.getLength() > 0) {
-            String position = nList.item(0).getTextContent();
-            double x = Double.parseDouble(position.split(" ")[0]);
-            double y = Double.parseDouble(position.split(" ")[1]);
-            return new Point(x,y);
+            String definicniBod = nList.item(0).getTextContent();
+            double x = Double.parseDouble(definicniBod.split(" ")[0]);
+            double y = Double.parseDouble(definicniBod.split(" ")[1]);
+
+            return GeoJsonPoint.of(x,y);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse record's 'hranice' attribute
+     * @param element xml element
+     * @return GeoJsonPolygon hranice
+     */
+    private GeoJsonPolygon getHranice(Element element) {
+        NodeList nList = element.getElementsByTagName("gml:posList");
+
+        if (nList.getLength() > 0) {
+            List<Point> points = new ArrayList<>();
+
+            String[] posList = nList.item(0).getTextContent().split(" ");
+
+            for (int i = 0; i < posList.length; i++) {
+                double x = Double.parseDouble(posList[i]);
+                double y = Double.parseDouble(posList[++i]);
+                Point point = new Point(x, y);
+                points.add(point);
+            }
+
+            return GeoJsonPolygon.of(points);
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse record's 'definicniCara' attribute
+     * @param element xml element
+     * @return GeoJsonMultiLineString definicniCara
+     */
+    private GeoJsonMultiLineString getDefinicniCara(Element element) {
+        NodeList nList = element.getElementsByTagName("gml:posList");
+
+        if (nList.getLength() > 0) {
+            List<GeoJsonLineString> definicniCara = new ArrayList<>();
+
+            for (int i = 0; i < nList.getLength(); i++) {
+                List<Point> points = new ArrayList<>();
+
+                String[] posList = nList.item(i).getTextContent().split(" ");
+
+                for (int j = 0; j < posList.length; j++) {
+                    double x = Double.parseDouble(posList[j]);
+                    double y = Double.parseDouble(posList[++j]);
+                    Point point = new Point(x, y);
+                    points.add(point);
+                }
+
+                definicniCara.add(GeoJsonLineString.of(points));
+            }
+
+            return GeoJsonMultiLineString.of(definicniCara);
         }
 
         return null;
@@ -1361,7 +1425,8 @@ public class FilesParser {
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
         String nutsLau = getNutsLau(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1371,7 +1436,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Stat stat = new Stat(kod, nazev, nespravny, platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny,
-                nutsLau, pos, nespravnyUdaj, datumVzniku);
+                nutsLau, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         esService.saveStat(stat);
     }
@@ -1392,7 +1457,8 @@ public class FilesParser {
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
         String nutsLau = getNutsLau(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1402,7 +1468,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(kod, nazev, nespravny, kodStatu,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, pos,
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, definicniBod, hranice,
                 nespravnyUdaj, datumVzniku);
 
         esService.saveRs(regionSoudrznosti);
@@ -1424,7 +1490,8 @@ public class FilesParser {
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
         String nutsLau = getNutsLau(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1434,7 +1501,8 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Vusc vusc = new Vusc(kod, nazev, nespravny, kodRs, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, nutsLau, pos, nespravnyUdaj, datumVzniku);
+                idTransakce, globalniIdNavrhuZmeny, nutsLau, definicniBod,
+                hranice, nespravnyUdaj, datumVzniku);
         esService.saveVusc(vusc);
     }
 
@@ -1454,7 +1522,8 @@ public class FilesParser {
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
         String nutsLau = getNutsLau(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1464,7 +1533,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Okres okres = new Okres(kod, nazev, nespravny, kodVusc, platiOd, platiDo, idTransakce,
-                globalniIdNavrhuZmeny, nutsLau, pos, nespravnyUdaj, datumVzniku);
+                globalniIdNavrhuZmeny, nutsLau, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         esService.saveOkres(okres);
     }
@@ -1485,7 +1554,8 @@ public class FilesParser {
         Date platiDo = getPlatiDo(element, prefix);
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1495,7 +1565,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Orp orp = new Orp(kod, nazev, nespravny, spravniObecKod, kodOkresu, platiOd, platiDo, idTransakce,
-                globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                globalniIdNavrhuZmeny, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.saveOrp(orp);
     }
 
@@ -1515,7 +1585,8 @@ public class FilesParser {
         Date platiDo = getPlatiDo(element, prefix);
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1525,7 +1596,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Pou pou = new Pou(kod, nazev, nespravny, spravniObecKod, kodOrp, platiOd, platiDo, idTransakce,
-                globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                globalniIdNavrhuZmeny, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.savePou(pou);
     }
 
@@ -1554,7 +1625,8 @@ public class FilesParser {
         Integer cleneniSMRozsahKod = getCleneniSMRozsahKod(element, prefix);
         Integer cleneniSMTypKod = getCleneniSMTypKod(element, prefix);
         String nutsLau = getNutsLau(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1565,7 +1637,7 @@ public class FilesParser {
 
         Obec obec = new Obec(kod, nazev, nespravny, statusKod, kodOkresu, kodPou, platiOd, platiDo, idTransakce,
                 globalniIdNavrhuZmeny, mluvChar, vlajkaText, vlajkaObrazek, znakText, znakObrazek,
-                cleneniSMRozsahKod, cleneniSMTypKod, nutsLau, pos, nespravnyUdaj, datumVzniku);
+                cleneniSMRozsahKod, cleneniSMTypKod, nutsLau, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.saveObec(obec);
     }
 
@@ -1585,7 +1657,8 @@ public class FilesParser {
         Date platiDo = getPlatiDo(element, prefix);
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1595,7 +1668,8 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         SpravniObvod spravniObvod = new SpravniObvod(kod, nazev, nespravny, spravniMomcKod, kodObce,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, definicniBod,
+                hranice, nespravnyUdaj, datumVzniku);
         esService.saveSO(spravniObvod);
     }
 
@@ -1614,7 +1688,8 @@ public class FilesParser {
         Date platiDo = getPlatiDo(element, prefix);
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1624,7 +1699,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Mop mop = new Mop(kod, nazev, nespravny, kodObce, platiOd, platiDo, idTransakce,
-                globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                globalniIdNavrhuZmeny, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.saveMop(mop);
     }
 
@@ -1650,7 +1725,8 @@ public class FilesParser {
         String vlajkaObrazek = getVlajkaObrazek(element, prefix);
         String znakText = getZnakText(element, prefix);
         String znakObrazek = getZnakObrazek(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1661,7 +1737,7 @@ public class FilesParser {
 
         Momc momc = new Momc(kod, nazev, nespravny, kodMop, kodObce, kodSpravniObvod, platiOd, platiDo,
                 idTransakce, globalniIdNavrhuZmeny, vlajkaText, vlajkaObrazek,
-                mluvChar, znakText, znakObrazek, pos, nespravnyUdaj, datumVzniku);
+                mluvChar, znakText, znakObrazek, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.saveMomc(momc);
     }
 
@@ -1681,7 +1757,8 @@ public class FilesParser {
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
         MluvnickeCharakteristiky mluvChar = getMluvChar(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1691,7 +1768,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         CastObce castObce = new CastObce(kod, nazev, nespravny, kodObce, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, mluvChar, pos, nespravnyUdaj, datumVzniku);
+                idTransakce, globalniIdNavrhuZmeny, mluvChar, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.saveCastObce(castObce);
     }
 
@@ -1713,7 +1790,8 @@ public class FilesParser {
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
         Long rizeniId = getIdRizeni(element, prefix);
         MluvnickeCharakteristiky mluvChar = getMluvChar(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1724,7 +1802,7 @@ public class FilesParser {
 
         KatastralniUzemi katastralniUzemi = new KatastralniUzemi(kod, nazev, nespravny,
                 existujeDigitalniMapa, kodObce, platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny,
-                rizeniId, mluvChar, pos, nespravnyUdaj, datumVzniku);
+                rizeniId, mluvChar, definicniBod, hranice, nespravnyUdaj, datumVzniku);
         esService.saveKatastralniUzemi(katastralniUzemi);
     }
 
@@ -1746,7 +1824,8 @@ public class FilesParser {
         MluvnickeCharakteristiky mluvChar = getMluvChar(element, prefix);
         Long vymera = getVymera(element, prefix);
         Integer charakterZsjKod = getCharakterZsjKod(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1756,7 +1835,7 @@ public class FilesParser {
         Date datumVzniku = getDatumVzniku(element, prefix);
 
         Zsj zsj = new Zsj(kod, nazev, nespravny, kodKatastralniUzemi, platiOd, platiDo, idTransakce,
-                globalniIdNavrhuZmeny, mluvChar, vymera, charakterZsjKod, pos, nespravnyUdaj, datumVzniku);
+                globalniIdNavrhuZmeny, mluvChar, vymera, charakterZsjKod, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         esService.saveZsj(zsj);
     }
@@ -1776,6 +1855,7 @@ public class FilesParser {
         Date platiDo = getPlatiDo(element, prefix);
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
+        GeoJsonMultiLineString definicniCara = getDefinicniCara(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1783,7 +1863,7 @@ public class FilesParser {
         }
 
         Ulice ulice = new Ulice(kod, nazev, nespravny, kodObce,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nespravnyUdaj);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, definicniCara, nespravnyUdaj);
 
         esService.saveUlice(ulice);
     }
@@ -1809,7 +1889,8 @@ public class FilesParser {
         Long rizeniId = getIdRizeni(element, prefix);
         List<BonitovanyDil> bonitovaneDily = getBonitovaneDily(element, prefix);
         ZpusobOchranyPozemku zpusobOchranyPozemku = getZpusobOchranyPozemku(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1818,7 +1899,7 @@ public class FilesParser {
 
         Parcela parcela = new Parcela(id, nespravny, kmenoveCislo, pododdeleniCisla, vymeraParcely,
                 druhCislovaniKod, druhPozemkuKod, kodKatastralniUzemi, platiOd, platiDo, idTransakce,
-                rizeniId, bonitovaneDily, zpusobOchranyPozemku, pos, nespravnyUdaj);
+                rizeniId, bonitovaneDily, zpusobOchranyPozemku, definicniBod, hranice, nespravnyUdaj);
 
         esService.saveParcela(parcela);
     }
@@ -1856,7 +1937,8 @@ public class FilesParser {
         Integer zpusobVytapeniKod = getZpusobVytapeniKod(element, prefix);
         List<Integer> zpusobyOchranyKod = getZpusobyOchranyKod(element, prefix);
         List<DetailniTEA> detailniTEAList = getDetailniTea(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
+        GeoJsonPolygon hranice = getHranice(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1868,7 +1950,7 @@ public class FilesParser {
                 globalniIdNavrhuZmeny, isknBudovaId, dokonceni, druhKonstrukceKod, obestavenyProstor, pocetBytu,
                 pocetPodlazi, podlahovaPlocha, pripojeniKanalizaceKod, pripojeniPlynKod, pripojeniVodovodKod,
                 vybaveniVytahemKod, zastavenaPlocha, zpusobVytapeniKod, zpusobyOchranyKod, detailniTEAList,
-                pos, nespravnyUdaj);
+                definicniBod, hranice, nespravnyUdaj);
 
         esService.saveStavebniObjekt(stavebniObjekt);
     }
@@ -1893,7 +1975,7 @@ public class FilesParser {
         Date platiDo = getPlatiDo(element, prefix);
         Long idTransakce = getIdTransakce(element, prefix);
         Long globalniIdNavrhuZmeny = getGlobalniIdNavrhuZmeny(element, prefix);
-        Point pos = getPos(element);
+        GeoJsonPoint definicniBod = getDefinicniBod(element);
         NespravnyUdaj nespravnyUdaj = getNespravneUdaje(element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1902,7 +1984,7 @@ public class FilesParser {
 
         AdresniMisto adresniMisto = new AdresniMisto(kod, nespravny, cisloDomovni, cisloOrientacni,
                 cisloOrientacniPismeno, psc, stavebniObjektKod, uliceKod, voKod, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj);
+                idTransakce, globalniIdNavrhuZmeny, definicniBod, nespravnyUdaj);
 
         esService.saveAdresniMisto(adresniMisto);
     }
