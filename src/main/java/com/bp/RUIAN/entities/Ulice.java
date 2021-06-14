@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
 
 import java.util.Date;
 
@@ -37,6 +38,9 @@ public record Ulice(
 
         @Field(type = FieldType.Long, name = "globalniIdNavrhuZmeny")
         Long globalniIdNavrhuZmeny,
+
+        @Field(name = "definicniCara")
+        GeoJsonMultiLineString definicniCara,
 
         @Field(type = FieldType.Object, name = "nespravnyUdaj")
         NespravnyUdaj nespravnyUdaj
