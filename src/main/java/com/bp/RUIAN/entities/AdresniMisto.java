@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.geo.Point;
 
 import java.util.Date;
@@ -54,8 +55,8 @@ public record AdresniMisto(
         @Field(type = FieldType.Long, name = "globalniIdNavrhuZmeny")
         Long globalniIdNavrhuZmeny,
 
-        @Field(name = "pos")
-        Point pos,
+        @Field(name = "definicniBod")
+        GeoJsonPoint definicniBod,
 
         @Field(type = FieldType.Object, name = "nespravnyUdaj")
         NespravnyUdaj nespravnyUdaj
