@@ -12,8 +12,20 @@
 					<sti:DefinicniBod>
 						<gml:Point gml:id="DST.1" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
 							<gml:pos>-743100.00 -1043300.00</gml:pos>
-						</gml:Point>
-					</sti:DefinicniBod>
+						</gml:Point></sti:DefinicniBod>
+					<sti:GeneralizovaneHranice5>
+						<gml:MultiSurface gml:id="GST.1.5" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GST.1.5.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-757828.04 -959710.26 -757829.04 -959711.26 -757174.05 -959633.36 -756813.52 -959909.86</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</sti:GeneralizovaneHranice5>
 				</sti:Geometrie>
 				<sti:DatumVzniku>1993-01-01T00:00:00</sti:DatumVzniku>
 			</vf:Stat>
@@ -35,6 +47,19 @@
 							<gml:pos>-743100.00 -1043300.00</gml:pos>
 						</gml:Point>
 					</rsi:DefinicniBod>
+					<rsi:GeneralizovaneHranice5>
+						<gml:MultiSurface gml:id="GRS.19.5" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GRS.19.5.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-733566.86 -1053251.22 -733567.86 -1053252.22 -733912.03 -1052746.38 -734508.61 -1052601.41</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</rsi:GeneralizovaneHranice5>
 				</rsi:Geometrie>
 				<rsi:DatumVzniku>2001-01-01T00:00:00</rsi:DatumVzniku>
 			</vf:RegionSoudrznosti>
@@ -132,6 +157,19 @@
 							<gml:pos>-743100.00 -1043300.00</gml:pos>
 						</gml:Point>
 					</vci:DefinicniBod>
+					<vci:GeneralizovaneHranice5>
+						<gml:MultiSurface gml:id="GVC.19.5" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GVC.19.5.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-733566.86 -1053251.22 -733567.86 -1053252.22 -733912.03 -1052746.38 -734508.61 -1052601.41</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</vci:GeneralizovaneHranice5>
 				</vci:Geometrie>
 				<vci:DatumVzniku>2000-01-01T00:00:00</vci:DatumVzniku>
 			</vf:Vusc>
@@ -230,6 +268,19 @@
 							<gml:pos>-743100.00 -1043300.00</gml:pos>
 						</gml:Point>
 					</oki:DefinicniBod>
+					<oki:GeneralizovaneHranice4>
+						<gml:MultiSurface gml:id="GOK.3100.4" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GOK.3100.4.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-736098.50 -1034452.00 -736099.50 -1034453.00 -735474.72 -1034591.34 -735280.35 -1034312.02</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</oki:GeneralizovaneHranice4>
 				</oki:Geometrie>
 				<oki:NespravneUdaje>
 					<com:NespravnyUdaj>
@@ -338,6 +389,19 @@
 							</gml:pointMembers>
 						</gml:MultiPoint>
 					</opi:DefinicniBod>
+					<opi:GeneralizovaneHranice4>
+						<gml:MultiSurface gml:id="GOP.78.4" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GOP.78.4.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-754587.64 -1025005.93 -754588.64 -1025006.93 -754510.23 -1024994.37 -754408.01 -1025109.34</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</opi:GeneralizovaneHranice4>
 				</opi:Geometrie>
 				<opi:DatumVzniku>2003-01-01T00:00:00</opi:DatumVzniku>
 			</vf:Orp>
@@ -486,6 +550,19 @@
 							</gml:pointMembers>
 						</gml:MultiPoint>
 					</pui:DefinicniBod>
+					<pui:GeneralizovaneHranice4>
+						<gml:MultiSurface gml:id="GPU.2119.4" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GPU.2119.4.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-656589.83 -1067506.21 -656590.83 -1067507.21 -656450.63 -1067680.89 -656345.11 -1067679.46</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</pui:GeneralizovaneHranice4>
 				</pui:Geometrie>
 				<pui:DatumVzniku>1990-11-24T00:00:00</pui:DatumVzniku>
 			</vf:Pou>
@@ -616,6 +693,19 @@
 							</gml:pointMembers>
 						</gml:MultiPoint>
 					</obi:DefinicniBod>
+					<obi:GeneralizovaneHranice3>
+						<gml:MultiSurface gml:id="GOB.569089.3" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GOB.569089.3.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-657677.99 -1087738.86 -657678.99 -1087739.86 -657672.71 -1087682.56 -657616.44 -1087590.72</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</obi:GeneralizovaneHranice3>
 				</obi:Geometrie>
 			</vf:Obec>
 			<vf:Obec gml:id="OB.569119">
@@ -777,6 +867,19 @@
 							<gml:pos>-742600.00 -1043000.00</gml:pos>
 						</gml:Point>
 					</spi:DefinicniBod>
+					<spi:OriginalniHranice>
+						<gml:MultiSurface gml:id="HSP.19" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="HSP.19.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-743272.11 -1042309.04 -743273.11 -1042310.04 -743242.23 -1042305.23 -743203.74 -1042302.40</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</spi:OriginalniHranice>
 				</spi:Geometrie>
 			</vf:SpravniObvod>
 			<vf:SpravniObvod gml:id="SP.27">
@@ -940,6 +1043,19 @@
 							<gml:pos>-742600.00 -1043000.00</gml:pos>
 						</gml:Point>
 					</mpi:DefinicniBod>
+					<mpi:OriginalniHranice>
+						<gml:MultiSurface gml:id="HMP.19" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="HMP.19.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-743272.11 -1042309.04 -743273.11 -1042310.04 -743242.23 -1042305.23 -743203.74 -1042302.40</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</mpi:OriginalniHranice>
 				</mpi:Geometrie>
 				<mpi:DatumVzniku>1960-04-11T00:00:00</mpi:DatumVzniku>
 			</vf:Mop>
@@ -1055,6 +1171,19 @@
 							<gml:pos>-734200.00 -1036800.00</gml:pos>
 						</gml:Point>
 					</mci:DefinicniBod>
+					<mci:OriginalniHranice>
+						<gml:MultiSurface gml:id="HMC.547310" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="HMC.547310.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-733972.62 -1034123.26 -733973.62 -1034124.26 -733959.18 -1034126.77 -733954.37 -1034129.44</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</mci:OriginalniHranice>
 				</mci:Geometrie>
 				<mci:DatumVzniku>1977-01-01T00:00:00</mci:DatumVzniku>
 			</vf:Momc>
@@ -1294,6 +1423,19 @@
 							</gml:pointMembers>
 						</gml:MultiPoint>
 					</kui:DefinicniBod>
+					<kui:GeneralizovaneHranice2>
+						<gml:MultiSurface gml:id="GKU.668761.2" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="GKU.668761.2.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-753388.46 -1177300.38 -753389.46 -1177301.38 -753299.33 -1177323.05 -753145.06 -1177338.88</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</kui:GeneralizovaneHranice2>
 				</kui:Geometrie>
 				<kui:DatumVzniku>1923-01-01T00:00:00</kui:DatumVzniku>
 			</vf:KatastralniUzemi>
@@ -1444,6 +1586,19 @@
 							</gml:pointMembers>
 						</gml:MultiPoint>
 					</zji:DefinicniBod>
+					<zji:OriginalniHranice>
+						<gml:MultiSurface gml:id="HZJ.29374" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+							<gml:surfaceMember>
+								<gml:Polygon gml:id="HZJ.29374.1">
+									<gml:exterior>
+										<gml:LinearRing>
+											<gml:posList>-692061.58 -1005217.93 -692062.58 -1005218.93 -692067.54 -1005213.71 -692072.85 -1005209.95</gml:posList>
+										</gml:LinearRing>
+									</gml:exterior>
+								</gml:Polygon>
+							</gml:surfaceMember>
+						</gml:MultiSurface>
+					</zji:OriginalniHranice>
 				</zji:Geometrie>
 				<zji:DatumVzniku>1970-12-01T00:00:00</zji:DatumVzniku>
 			</vf:Zsj>
@@ -1578,6 +1733,22 @@
 				<uli:PlatiOd>2018-01-22T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>2277057</uli:IdTransakce>
 				<uli:GlobalniIdNavrhuZmeny>1672622</uli:GlobalniIdNavrhuZmeny>
+				<uli:Geometrie>
+					<uli:DefinicniCara>
+						<gml:MultiCurve srsDimension="2" gml:id="DUL.644196" srsName="urn:ogc:def:crs:EPSG::5514">
+							<gml:curveMember>
+								<gml:LineString gml:id="DUL.644196.1">
+									<gml:posList>-515244.88 -1166620.04 -515262.38 -1166596.12 -515278.17 -1166577.53</gml:posList>
+								</gml:LineString>
+							</gml:curveMember>
+							<gml:curveMember>
+								<gml:LineString gml:id="DUL.644196.6">
+									<gml:posList>-515183.48 -1166654.22 -515146.99 -1166665.95 -515122.60 -1166672.64</gml:posList>
+								</gml:LineString>
+							</gml:curveMember>
+						</gml:MultiCurve>
+					</uli:DefinicniCara>
+				</uli:Geometrie>
 			</vf:Ulice>
 			<vf:Ulice gml:id="UL.644960">
 				<uli:Kod>644960</uli:Kod>
@@ -1674,7 +1845,7 @@
 						<gml:Polygon gml:id="HPA.55804638010" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
 							<gml:exterior>
 								<gml:LinearRing>
-									<gml:posList>-516104.71 -1166826.42 -516105.35 -1166833.31 -516106.98 -1166833.16 -516107.23 -1166836.23 -516111.59 -1166835.81 -516112.61 -1166847.30 -516119.75 -1166846.65 -516117.96 -1166826.70 -516111.75 -1166827.25 -516111.63 -1166825.76 -516104.71 -1166826.42</gml:posList>
+									<gml:posList>-516104.71 -1166826.42 -516105.71 -1166827.42 -516105.35 -1166833.31 -516106.98 -1166833.16</gml:posList>
 								</gml:LinearRing>
 							</gml:exterior>
 						</gml:Polygon>
@@ -1855,7 +2026,7 @@
 								<gml:Polygon gml:id="HSO.4165586.1">
 									<gml:exterior>
 										<gml:LinearRing>
-											<gml:posList>-514663.37 -1166842.49 -514680.76 -1166832.56 -514698.33 -1166822.53 -514693.10 -1166813.40 -514675.56 -1166823.45 -514658.20 -1166833.40 -514660.04 -1166836.63 -514663.13 -1166842.05 -514663.37 -1166842.49</gml:posList>
+											<gml:posList>-514663.37 -1166842.49 -514680.76 -1166832.56 -514698.33 -1166822.53 -514693.10 -1166813.40</gml:posList>
 										</gml:LinearRing>
 									</gml:exterior>
 								</gml:Polygon>
@@ -1901,7 +2072,7 @@
 								<gml:Polygon gml:id="HSO.4162927.1">
 									<gml:exterior>
 										<gml:LinearRing>
-											<gml:posList>-515566.99 -1166550.36 -515561.17 -1166531.34 -515555.46 -1166533.08 -515561.55 -1166552.14 -515566.99 -1166550.36</gml:posList>
+											<gml:posList>-515566.99 -1166550.36 -515567.99 -1166551.36 -515561.17 -1166531.34 -515555.46 -1166533.08</gml:posList>
 										</gml:LinearRing>
 									</gml:exterior>
 								</gml:Polygon>
@@ -2123,6 +2294,6 @@
 					</ami:DefinicniBod>
 				</ami:Geometrie>
 			</vf:AdresniMisto>
-		</vf:AdresniMista>
+		</vf:AdresniMista>-->
 	</vf:Data>
 </vf:VymennyFormat>
