@@ -5,6 +5,10 @@ import com.bp.RUIAN.services.EsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonLineString;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
+import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 import org.springframework.data.geo.Point;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -42,9 +46,9 @@ class FilesParserTest {
             getIdentifikacniParcelaId, getTypStavebnihoObjektuKod, getZpusobVyuzitiKod, getIsknBudovaId, getDokonceni,
             getDruhKonstrukceKod, getObestavenyProstor, getPocetBytu, getPocetPodlazi, getPodlahovaPlocha,
             getPripojeniKanalizaceKod, getPripojeniPlynKod, getPripojeniVodovodKod, getVybaveniVytahemKod,
-            getZastavenaPlocha, getZpusobVytapeniKod, getZpusobyOchranyKod, getDetailniTea, getPos, getNespravneUdaje,
+            getZastavenaPlocha, getZpusobVytapeniKod, getZpusobyOchranyKod, getDetailniTea, getNespravneUdaje,
             getDatumVzniku, getMluvChar, getBonitovaneDily, getZpusobOchranyPozemku, getVlajkaText, getVlajkaObrazek,
-            getZnakObrazek, getZnakText;
+            getZnakObrazek, getZnakText, getDefinicniBod, getHranice, getDefinicniCara;
 
 
     FilesParserTest() throws NoSuchMethodException {
@@ -168,8 +172,6 @@ class FilesParserTest {
         this.getZpusobyOchranyKod.setAccessible(true);
         this.getDetailniTea = FilesParser.class.getDeclaredMethod("getDetailniTea", Element.class, String.class);
         this.getDetailniTea.setAccessible(true);
-        this.getPos = FilesParser.class.getDeclaredMethod("getPos", Element.class);
-        this.getPos.setAccessible(true);
         this.getNespravneUdaje = FilesParser.class.getDeclaredMethod("getNespravneUdaje", Element.class, String.class);
         this.getNespravneUdaje.setAccessible(true);
         this.getDatumVzniku = FilesParser.class.getDeclaredMethod("getDatumVzniku", Element.class, String.class);
@@ -188,7 +190,12 @@ class FilesParserTest {
         this.getZnakObrazek.setAccessible(true);
         this.getZnakText = FilesParser.class.getDeclaredMethod("getZnakText", Element.class, String.class);
         this.getZnakText.setAccessible(true);
-
+        this.getDefinicniBod = FilesParser.class.getDeclaredMethod("getDefinicniBod", Element.class);
+        this.getDefinicniBod.setAccessible(true);
+        this.getHranice = FilesParser.class.getDeclaredMethod("getHranice", Element.class);
+        this.getHranice.setAccessible(true);
+        this.getDefinicniCara = FilesParser.class.getDeclaredMethod("getDefinicniCara", Element.class);
+        this.getDefinicniCara.setAccessible(true);
     }
 
     @Test
@@ -307,7 +314,8 @@ class FilesParserTest {
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
         String nutsLau = (String) getNutsLau.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -316,12 +324,19 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-757828.04, -959710.26));
+        points.add(new Point(-757829.04, -959711.26));
+        points.add(new Point(-757174.05, -959633.36));
+        points.add(new Point(-756813.52, -959909.86));
+
         Stat statExpected = new Stat(1, "Česká republika", false, sdf.parse("2015-06-06T00:00:00"),
-                null, 0L, 731654L, "CZ", new Point(-743100.00, -1043300.00),
-                null, sdf.parse("1993-01-01T00:00:00"));
+                null, 0L, 731654L, "CZ",
+                GeoJsonPoint.of(new Point(-743100.00, -1043300.00)),
+                GeoJsonPolygon.of(points), null, sdf.parse("1993-01-01T00:00:00"));
 
         Stat statActual = new Stat(kod, nazev, nespravny, platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny,
-                nutsLau, pos, nespravnyUdaj, datumVzniku);
+                nutsLau, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(statExpected, statActual);
     }
@@ -353,7 +368,8 @@ class FilesParserTest {
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
         String nutsLau = (String) getNutsLau.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -362,13 +378,19 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-733566.86, -1053251.22));
+        points.add(new Point(-733567.86, -1053252.22));
+        points.add(new Point(-733912.03, -1052746.38));
+        points.add(new Point(-734508.61, -1052601.41));
+
         RegionSoudrznosti regionSoudrznostiExpected = new RegionSoudrznosti(19, "Praha", false, 1,
                 sdf.parse("2016-11-23T00:00:00"), null, 1572842L,
-                1173831L, "CZ01", new Point(-743100.00, -1043300.00),
-                null, sdf.parse("2001-01-01T00:00:00"));
+                1173831L, "CZ01", GeoJsonPoint.of(new Point(-743100.00, -1043300.00)),
+                GeoJsonPolygon.of(points), null, sdf.parse("2001-01-01T00:00:00"));
 
         RegionSoudrznosti regionSoudrznostiActual = new RegionSoudrznosti(kod, nazev, nespravny, kodStatu,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, pos, nespravnyUdaj, datumVzniku);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(regionSoudrznostiExpected, regionSoudrznostiActual);
     }
@@ -402,7 +424,8 @@ class FilesParserTest {
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
         String nutsLau = (String) getNutsLau.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -411,13 +434,20 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-733566.86, -1053251.22));
+        points.add(new Point(-733567.86, -1053252.22));
+        points.add(new Point(-733912.03, -1052746.38));
+        points.add(new Point(-734508.61, -1052601.41));
+
         Vusc vuscExpected = new Vusc(19, "Hlavní město Praha", false, 19,
                 sdf.parse("2016-11-23T00:00:00"), null, 1572842L,
-                1173831L, "CZ010", new Point(-743100.00, -1043300.00),
-                null, sdf.parse("2000-01-01T00:00:00"));
+                1173831L, "CZ010", GeoJsonPoint.of(new Point(-743100.00, -1043300.00)),
+                GeoJsonPolygon.of(points), null, sdf.parse("2000-01-01T00:00:00"));
 
         Vusc vuscActual = new Vusc(kod, nazev, nespravny, kodRs,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, pos, nespravnyUdaj, datumVzniku);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, definicniBod,
+                hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(vuscExpected, vuscActual);
     }
@@ -451,7 +481,8 @@ class FilesParserTest {
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
         String nutsLau = (String) getNutsLau.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -460,15 +491,23 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-736098.50, -1034452.00));
+        points.add(new Point(-736099.50, -1034453.00));
+        points.add(new Point(-735474.72, -1034591.34));
+        points.add(new Point(-735280.35, -1034312.02));
+
         Okres okresExpected = new Okres(3100, "Hlavní město Praha", true, 19,
                 sdf.parse("2021-01-02T00:00:00"), null, 3650029L,
-                2398502L, "CZ0100", new Point(-743100.00, -1043300.00),
+                2398502L, "CZ0100", GeoJsonPoint.of(new Point(-743100.00, -1043300.00)),
+                GeoJsonPolygon.of(points),
                 new NespravnyUdaj("KODU", sdf.parse("2021-01-03T09:57:21"),
                         "Okres Hlavní město Praha byl k 1. 1. 2021 zrušen v souvislosti se zrušením vyhlášky č. 564/2002 Sb."),
                 sdf.parse("1960-04-11T00:00:00"));
 
         Okres okresActual = new Okres(kod, nazev, nespravny, kodVusc,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau, pos, nespravnyUdaj, datumVzniku);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nutsLau,
+                definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(okresExpected, okresActual);
     }
@@ -502,7 +541,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -511,13 +551,20 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-754587.64, -1025005.93));
+        points.add(new Point(-754588.64, -1025006.93));
+        points.add(new Point(-754510.23, -1024994.37));
+        points.add(new Point(-754408.01, -1025109.34));
+
         Orp orpExpected = new Orp(78, "Kladno", false, 532053, 3203,
                 sdf.parse("2021-03-18T00:00:00"), null, 3748176L,
-                2450941L, new Point(-764439.00, -1033266.00),
+                2450941L,GeoJsonPoint.of(new Point(-764439.00, -1033266.00)),
+                GeoJsonPolygon.of(points),
                 null, sdf.parse("2003-01-01T00:00:00"));
 
         Orp orpActual = new Orp(kod, nazev, nespravny, spravniObecKod, kodOkresu,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(orpExpected, orpActual);
     }
@@ -551,7 +598,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -560,13 +608,21 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-656589.83, -1067506.21));
+        points.add(new Point(-656590.83, -1067507.21));
+        points.add(new Point(-656450.63, -1067680.89));
+        points.add(new Point(-656345.11, -1067679.46));
+
         Pou pouExpected = new Pou(2119, "Heřmanův Městec", false, 571385, 981,
                 sdf.parse("2017-10-24T00:00:00"), null, 2089492L,
-                1534663L, new Point(-656419.00, -1069916.00),
+                1534663L, GeoJsonPoint.of(new Point(-656419.00, -1069916.00)),
+                GeoJsonPolygon.of(points),
                 null, sdf.parse("1990-11-24T00:00:00"));
 
         Pou pouActual = new Pou(kod, nazev, nespravny, spravniObecKod, kodOrp,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, definicniBod,
+                hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(pouExpected, pouActual);
     }
@@ -601,7 +657,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         MluvnickeCharakteristiky mluvChar = (MluvnickeCharakteristiky) getMluvChar.invoke(filesParser, element, prefix);
         String vlajkaText = (String) getVlajkaText.invoke(filesParser, element, prefix);
         String vlajkaObrazek = (String) getVlajkaObrazek.invoke(filesParser, element, prefix);
@@ -618,6 +675,12 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-657677.99, -1087738.86));
+        points.add(new Point(-657678.99, -1087739.86));
+        points.add(new Point(-657672.71, -1087682.56));
+        points.add(new Point(-657616.44, -1087590.72));
+
         Obec obecExpected = new Obec(569089, "Maleč", false, 2, 3601, 1970,
                 sdf.parse("2019-01-16T00:00:00"), null, 2718946L,
                 1933345L,
@@ -625,12 +688,13 @@ class FilesParserTest {
                 "List tvoří dva žluté žerďové klíny s vrcholy v první čtvrtině délky listu, červené pole s bílým mořským psem se žlutou zbrojí a dva svislé pruhy, bílý a modrý, každý široký jednu osminu délky listu. Poměr šířky k délce listu je 2:3.",
                 null, "V červeném štítě se stříbrno-modře vlnitě dělenou vlnitou patou, pod dvěma zlatými, ke středu prolomenými zvýšenými klíny stříbrný mořský pes se zlatou zbrojí.", null,
                 null, null, "CZ0631569089",
-                new Point(-657903.00, -1089346.00), null, null);
+                GeoJsonPoint.of(new Point(-657903.00, -1089346.00)),
+                GeoJsonPolygon.of(points),null, null);
 
         Obec obecActual = new Obec(kod, nazev, nespravny, statusKod, kodOkresu, kodPou,
                 platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, mluvChar, vlajkaText, vlajkaObrazek,
-                znakText, znakObrazek, cleneniSMTypKod, cleneniSMRozsahKod, nutsLau, pos,
-                nespravnyUdaj, datumVzniku);
+                znakText, znakObrazek, cleneniSMTypKod, cleneniSMRozsahKod, nutsLau, definicniBod,
+                hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(obecExpected, obecActual);
     }
@@ -664,7 +728,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -673,13 +738,20 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-743272.11, -1042309.04));
+        points.add(new Point(-743273.11, -1042310.04));
+        points.add(new Point(-743242.23, -1042305.23));
+        points.add(new Point(-743203.74, -1042302.40));
+
         SpravniObvod spravniObvodExpected = new SpravniObvod(19, "Praha 1", false, 500054,
                 554782, sdf.parse("2013-11-13T00:00:00"), null,
                 393750L, 452737L,
-                new Point(-742600.00, -1043000.00), null, null);
+                GeoJsonPoint.of(new Point(-742600.00, -1043000.00)),
+                GeoJsonPolygon.of(points),null, null);
 
         SpravniObvod spravniObvodActual = new SpravniObvod(kod, nazev, nespravny, spravniMomcKod, kodObce, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                idTransakce, globalniIdNavrhuZmeny, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(spravniObvodExpected, spravniObvodActual);
     }
@@ -712,7 +784,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -721,13 +794,20 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-743272.11, -1042309.04));
+        points.add(new Point(-743273.11, -1042310.04));
+        points.add(new Point(-743242.23, -1042305.23));
+        points.add(new Point(-743203.74, -1042302.40));
+
         Mop mopExpected = new Mop(19, "Praha 1", false, 554782,
                 sdf.parse("2015-06-05T00:00:00"), null,
                 895747L, 731637L,
-                new Point(-742600.00, -1043000.00), null, sdf.parse("1960-04-11T00:00:00"));
+                GeoJsonPoint.of(new Point(-742600.00, -1043000.00)),
+                GeoJsonPolygon.of(points), null, sdf.parse("1960-04-11T00:00:00"));
 
         Mop mopActual = new Mop(kod, nazev, nespravny, kodObce, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj, datumVzniku);
+                idTransakce, globalniIdNavrhuZmeny, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(mopExpected, mopActual);
     }
@@ -762,7 +842,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         MluvnickeCharakteristiky mluvChar = (MluvnickeCharakteristiky) getMluvChar.invoke(filesParser, element, prefix);
         String vlajkaText = (String) getVlajkaText.invoke(filesParser, element, prefix);
         String vlajkaObrazek = (String) getVlajkaObrazek.invoke(filesParser, element, prefix);
@@ -775,6 +856,12 @@ class FilesParserTest {
         }
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
+
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-733972.62, -1034123.26));
+        points.add(new Point(-733973.62, -1034124.26));
+        points.add(new Point(-733959.18, -1034126.77));
+        points.add(new Point(-733954.37, -1034129.44));
 
         Momc momcExpected = new Momc(547310, "Praha-Čakovice", false, 94,
                 554782, 221, sdf.parse("2021-03-23T00:00:00"), null,
@@ -792,12 +879,12 @@ class FilesParserTest {
                         "střechami a makovicemi. Pravá věž, viditelná z poloviny, je vyšší a širší, má polovinu černého " +
                         "trojdílného okna ve stříbrném rámu a valbovou střechu. Levá, nižší a užší věž má jedno černé " +
                         "dvoudílné okno ve stříbrném rámu a stanovou střechu.",
-                null, new Point(-734200.00, -1036800.00), null,
-                sdf.parse("1977-01-01T00:00:00"));
+                null, GeoJsonPoint.of(new Point(-734200.00, -1036800.00)),
+                GeoJsonPolygon.of(points), null, sdf.parse("1977-01-01T00:00:00"));
 
         Momc momcActual = new Momc(kod, nazev, nespravny, kodMop, kodObce, kodSpravniObvod, platiOd, platiDo,
                 idTransakce, globalniIdNavrhuZmeny, vlajkaText, vlajkaObrazek, mluvChar, znakText, znakObrazek,
-                pos, nespravnyUdaj, datumVzniku);
+                definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(momcExpected, momcActual);
     }
@@ -830,7 +917,8 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         MluvnickeCharakteristiky mluvChar = (MluvnickeCharakteristiky) getMluvChar.invoke(filesParser, element, prefix);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
@@ -844,10 +932,11 @@ class FilesParserTest {
                 sdf.parse("2013-11-11T00:00:00"), null,
                 391375L, 450266L,
                 new MluvnickeCharakteristiky("Dobrše", "Dobrši", "Dobrš", "Dobrši", "Dobrší"),
-                new Point(-805130.00, -1138781.00), null, null);
+                GeoJsonPoint.of(new Point(-805130.00, -1138781.00)),
+                null, null, null);
 
         CastObce castObceActual = new CastObce(kod, nazev, nespravny, kodObce, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, mluvChar, pos, nespravnyUdaj, datumVzniku);
+                idTransakce, globalniIdNavrhuZmeny, mluvChar, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(castObceExpected, castObceActual);
     }
@@ -882,7 +971,8 @@ class FilesParserTest {
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
         Long rizeniId = (Long) getIdRizeni.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         MluvnickeCharakteristiky mluvChar = (MluvnickeCharakteristiky) getMluvChar.invoke(filesParser, element, prefix);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
@@ -892,15 +982,22 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-753388.46, -1177300.38));
+        points.add(new Point(-753389.46, -1177301.38));
+        points.add(new Point(-753299.33, -1177323.05));
+        points.add(new Point(-753145.06, -1177338.88));
+
         KatastralniUzemi katastralniUzemiExpected = new KatastralniUzemi(668761, "Pašinovice", false,
                 true, 535877, sdf.parse("2019-06-13T00:00:00"), null, 2902615L,
                 0L, 64903676010L,
                 new MluvnickeCharakteristiky("Pašinovic", "Pašinovicím", "Pašinovice", "Pašinovicích", "Pašinovicemi"),
-                new Point(-753602.46, -1177927.54), null, sdf.parse("1923-01-01T00:00:00"));
+                GeoJsonPoint.of(new Point(-753602.46, -1177927.54)),
+                GeoJsonPolygon.of(points), null, sdf.parse("1923-01-01T00:00:00"));
 
         KatastralniUzemi katastralniUzemiActual = new KatastralniUzemi(kod, nazev, nespravny,
                 existujeDigitalniMapa, kodObce, platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny,
-                rizeniId, mluvChar, pos, nespravnyUdaj, datumVzniku);
+                rizeniId, mluvChar, definicniBod, hranice, nespravnyUdaj, datumVzniku);
 
         assertEquals(katastralniUzemiExpected, katastralniUzemiActual);
     }
@@ -935,7 +1032,8 @@ class FilesParserTest {
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
         Long vymera = (Long) getVymera.invoke(filesParser, element, prefix);
         Integer charakterZsjKod = (Integer) getCharakterZsjKod.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         MluvnickeCharakteristiky mluvChar = (MluvnickeCharakteristiky) getMluvChar.invoke(filesParser, element, prefix);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
@@ -945,14 +1043,20 @@ class FilesParserTest {
 
         Date datumVzniku = (Date) getDatumVzniku.invoke(filesParser, element, prefix);
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-692061.58, -1005217.93));
+        points.add(new Point(-692062.58, -1005218.93));
+        points.add(new Point(-692067.54, -1005213.71));
+        points.add(new Point(-692072.85, -1005209.95));
+
         Zsj zsjExpected = new Zsj(67067, "Suhrovice", false, 667064,
                 sdf.parse("2015-06-05T00:00:00"), null, 895630L, 731555L, null,
-                1753652L, 11, new Point(-691855.00, -1004625.00),
-                null, sdf.parse("1970-12-01T00:00:00"));
-
+                1753652L, 11, GeoJsonPoint.of(new Point(-691855.00, -1004625.00)),
+                GeoJsonPolygon.of(points), null, sdf.parse("1970-12-01T00:00:00"));
 
         Zsj zsjActual = new Zsj(kod, nazev, nespravny, kodKatastralniUzemi, platiOd, platiDo, idTransakce,
-                globalniIdNavrhuZmeny, mluvChar, vymera, charakterZsjKod, pos, nespravnyUdaj, datumVzniku);
+                globalniIdNavrhuZmeny, mluvChar, vymera, charakterZsjKod, definicniBod,
+                hranice, nespravnyUdaj, datumVzniku);
 
 
         assertEquals(zsjExpected, zsjActual);
@@ -986,17 +1090,33 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
+        GeoJsonMultiLineString definicniCara = (GeoJsonMultiLineString) getDefinicniCara.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
             nespravny = true;
         }
 
+        List<Point> points1 = new ArrayList<>();
+        points1.add(new Point(-515244.88, -1166620.04));
+        points1.add(new Point(-515262.38, -1166596.12));
+        points1.add(new Point(-515278.17, -1166577.53));
+
+        List<Point> points2 = new ArrayList<>();
+        points2.add(new Point(-515183.48, -1166654.22));
+        points2.add(new Point(-515146.99, -1166665.95));
+        points2.add(new Point(-515122.60, -1166672.64));
+
+        List<GeoJsonLineString> definicniCaraList = new ArrayList<>();
+        definicniCaraList.add(GeoJsonLineString.of(points1));
+        definicniCaraList.add(GeoJsonLineString.of(points2));
+
         Ulice uliceExpected = new Ulice(644196, "4. května", false, 500011,
-                sdf.parse("2018-01-22T00:00:00"), null, 2277057L, 1672622L, null);
+                sdf.parse("2018-01-22T00:00:00"), null, 2277057L, 1672622L,
+                GeoJsonMultiLineString.of(definicniCaraList),null);
 
         Ulice uliceActual = new Ulice(kod, nazev, nespravny, kodObce,
-                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, nespravnyUdaj);
+                platiOd, platiDo, idTransakce, globalniIdNavrhuZmeny, definicniCara, nespravnyUdaj);
 
         assertEquals(uliceExpected, uliceActual);
     }
@@ -1035,21 +1155,29 @@ class FilesParserTest {
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         List<BonitovanyDil> bonitovaneDily = (List<BonitovanyDil>) getBonitovaneDily.invoke(filesParser, element, prefix);
         ZpusobOchranyPozemku zpusobOchranyPozemku = (ZpusobOchranyPozemku) getZpusobOchranyPozemku.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
             nespravny = true;
         }
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-516104.71, -1166826.42));
+        points.add(new Point(-516105.71, -1166827.42));
+        points.add(new Point(-516105.35, -1166833.31));
+        points.add(new Point(-516106.98, -1166833.16));
+
         Parcela parcelaExpected = new Parcela(79432960010L, false, 457, 22, 200L,
                 2, 13, 795909, sdf.parse("2020-11-13T00:00:00"),
                 null, 3587101L, 78837743010L, null, null,
-                new Point(-516112.58, -1166833.49), null);
+                GeoJsonPoint.of(new Point(-516112.58, -1166833.49)),
+                GeoJsonPolygon.of(points), null);
 
         Parcela parcelaActual = new Parcela(id, nespravny, kmenoveCislo, pododdeleniCisla, vymeraParcely,
                 druhCislovaniKod, druhPozemkuKod, kodKatastralniUzemi, platiOd, platiDo, idTransakce,
-                rizeniId, bonitovaneDily, zpusobOchranyPozemku, pos, nespravnyUdaj);
+                rizeniId, bonitovaneDily, zpusobOchranyPozemku, definicniBod, hranice, nespravnyUdaj);
 
         assertEquals(parcelaExpected, parcelaActual);
     }
@@ -1100,7 +1228,8 @@ class FilesParserTest {
         Date platiOd = (Date) getPlatiOd.invoke(filesParser, element, prefix);
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
+        GeoJsonPolygon hranice = (GeoJsonPolygon) getHranice.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1119,19 +1248,26 @@ class FilesParserTest {
                     10, 4,3,1,3,1, 4,4195230));
         }};
 
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(-514663.37, -1166842.49));
+        points.add(new Point(-514680.76, -1166832.56));
+        points.add(new Point(-514698.33, -1166822.53));
+        points.add(new Point(-514693.10, -1166813.40));
+
         StavebniObjekt stavebniObjektExpected = new StavebniObjekt(4165586, false, cislaDomovniExpected, 3563823705L,
                 1, 6, 195901, sdf.parse("2019-03-07T00:00:00"), null, 2780214L,
                 1964039L, 691202705L, sdf.parse("2019-03-06T00:00:00"), 10, 3850,
                 8, 3, 1050, 1, 1, 1,
                 2, 422, 1, null, detailniTeaListExpected,
-                new Point(-514688.19, -1166820.85), null);
+                GeoJsonPoint.of(new Point(-514688.19, -1166820.85)),
+                GeoJsonPolygon.of(points), null);
 
         StavebniObjekt stavebniObjektActual = new StavebniObjekt(kod, nespravny, cislaDomovni, identifikacniParcelaId,
                 typStavebnihoObjektuKod, zpusobVyuzitiKod, castObceKod, platiOd, platiDo, idTransakce,
                 globalniIdNavrhuZmeny, isknBudovaId, dokonceni, druhKonstrukceKod, obestavenyProstor, pocetBytu,
                 pocetPodlazi, podlahovaPlocha, pripojeniKanalizaceKod, pripojeniPlynKod, pripojeniVodovodKod,
                 vybaveniVytahemKod, zastavenaPlocha, zpusobVytapeniKod, zpusobyOchranyKod, detailniTEAList,
-                pos, nespravnyUdaj);
+                definicniBod, hranice, nespravnyUdaj);
 
         assertEquals(stavebniObjektExpected, stavebniObjektActual);
     }
@@ -1169,7 +1305,7 @@ class FilesParserTest {
         Date platiDo = (Date) getPlatiDo.invoke(filesParser, element, prefix);
         Long idTransakce = (Long) getIdTransakce.invoke(filesParser, element, prefix);
         Long globalniIdNavrhuZmeny = (Long) getGlobalniIdNavrhuZmeny.invoke(filesParser, element, prefix);
-        Point pos = (Point) getPos.invoke(filesParser, element);
+        GeoJsonPoint definicniBod = (GeoJsonPoint) getDefinicniBod.invoke(filesParser, element);
         NespravnyUdaj nespravnyUdaj = (NespravnyUdaj) getNespravneUdaje.invoke(filesParser, element, prefix);
 
         if (nespravnyUdaj != null) {
@@ -1179,11 +1315,11 @@ class FilesParserTest {
         AdresniMisto adresniMistoExpected = new AdresniMisto(72850124, false, "668", "55",
                 "A", "76311", 78171482, 647268, 42877,
                 sdf.parse("2014-06-26T00:00:00"), null,
-                630728L, 594036L, new Point(-516005.93, -1168276.78), null);
+                630728L, 594036L, GeoJsonPoint.of(new Point(-516005.93, -1168276.78)), null);
 
         AdresniMisto adresniMistoActual = new AdresniMisto(kod, nespravny, cisloDomovni, cisloOrientacni,
                 cisloOrientacniPismeno, psc, stavebniObjektKod, uliceKod, voKod, platiOd, platiDo,
-                idTransakce, globalniIdNavrhuZmeny, pos, nespravnyUdaj);
+                idTransakce, globalniIdNavrhuZmeny, definicniBod, nespravnyUdaj);
 
         assertEquals(adresniMistoExpected, adresniMistoActual);
     }

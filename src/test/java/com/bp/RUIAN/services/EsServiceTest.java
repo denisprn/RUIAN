@@ -39,7 +39,7 @@ public class EsServiceTest {
     void findStaty() {
         List<Stat> staty = new ArrayList<>();
 
-        Stat stat = new Stat(1, null, null, null,null,
+        Stat stat = new Stat(1, null,null, null, null,null,
                 null, null, null, null, null, null);
 
         staty.add(stat);
@@ -50,7 +50,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should find Stat by id")
     void shouldFindStatById() {
-        Stat stat = new Stat(1, null, null, null,null,
+        Stat stat = new Stat(1, null,null, null, null,null,
                 null, null, null, null, null, null);
 
         Mockito.when(statRepository.findById(1L)).thenReturn(Optional.of(stat));
@@ -59,7 +59,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should save Stat")
     void saveStat() {
-        Stat stat = new Stat(1, null, null, null,null,
+        Stat stat = new Stat(1, null, null, null, null,null,
                 null, null, null, null, null, null);
 
         statRepository.save(stat);
@@ -71,7 +71,7 @@ public class EsServiceTest {
     void findRs() {
         List<RegionSoudrznosti> regionSoudrznostiList = new ArrayList<>();
 
-        RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null, null, null,
+        RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null,null, null, null,
                 null, null, null, null, null,
                 null, null, null);
 
@@ -86,7 +86,7 @@ public class EsServiceTest {
     void findRsById() {
         RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null, null, 1,
                 null, null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         Mockito.when(regionSoudrznostiRepository.findById(19L)).thenReturn(Optional.of(regionSoudrznosti));
     }
@@ -96,7 +96,7 @@ public class EsServiceTest {
     void saveRs() {
         RegionSoudrznosti regionSoudrznosti = new RegionSoudrznosti(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         regionSoudrznostiRepository.save(regionSoudrznosti);
         Mockito.verify(regionSoudrznostiRepository, Mockito.times(1))
@@ -110,7 +110,7 @@ public class EsServiceTest {
 
         Vusc vusc = new Vusc(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         vuscList.add(vusc);
         vuscList.add(vusc);
@@ -123,7 +123,7 @@ public class EsServiceTest {
     void findVuscById() {
         Vusc vusc = new Vusc(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         Mockito.when(vuscRepository.findById(19L)).thenReturn(Optional.of(vusc));
     }
@@ -133,7 +133,7 @@ public class EsServiceTest {
     void saveVusc() {
         Vusc vusc = new Vusc(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         vuscRepository.save(vusc);
         Mockito.verify(vuscRepository, Mockito.times(1))
@@ -147,7 +147,7 @@ public class EsServiceTest {
 
         Okres okres = new Okres(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         okresList.add(okres);
         okresList.add(okres);
@@ -160,7 +160,7 @@ public class EsServiceTest {
     void findOkresById() {
         Okres okres = new Okres(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         Mockito.when(okresRepository.findById(19L)).thenReturn(Optional.of(okres));
     }
@@ -170,7 +170,7 @@ public class EsServiceTest {
     void saveOkres() {
         Okres okres = new Okres(19, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         okresRepository.save(okres);
         Mockito.verify(okresRepository, Mockito.times(1))
@@ -184,7 +184,7 @@ public class EsServiceTest {
 
         Orp orp = new Orp(315, null, null, null, null,
                 null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         orpList.add(orp);
         orpList.add(orp);
@@ -197,7 +197,7 @@ public class EsServiceTest {
     void findOrpById() {
        Orp orp = new Orp(315, null, null, null, null,
                null, null, null, null,
-               null, null, null);
+               null, null, null, null);
 
         Mockito.when(orpRepository.findById(315L)).thenReturn(Optional.of(orp));
     }
@@ -207,7 +207,7 @@ public class EsServiceTest {
     void saveOrp() {
         Orp orp = new Orp(315, null, null, null, null,
                 null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         orpRepository.save(orp);
         Mockito.verify(orpRepository, Mockito.times(1))
@@ -221,7 +221,7 @@ public class EsServiceTest {
 
         Pou pou = new Pou(3163, null, null, null, null,
                 null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         pouList.add(pou);
         pouList.add(pou);
@@ -234,7 +234,7 @@ public class EsServiceTest {
     void findPouById() {
         Pou pou = new Pou(3163, null, null, null, null,
                 null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         Mockito.when(pouRepository.findById(315L)).thenReturn(Optional.of(pou));
     }
@@ -244,7 +244,7 @@ public class EsServiceTest {
     void savePou() {
         Pou pou = new Pou(3163, null, null, null, null,
                 null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         pouRepository.save(pou);
         Mockito.verify(pouRepository, Mockito.times(1))
@@ -259,7 +259,7 @@ public class EsServiceTest {
         Obec obec = new Obec(3163, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null,null, null, null, null);
+                null, null, null,null, null, null, null);
 
         obecList.add(obec);
         obecList.add(obec);
@@ -273,7 +273,7 @@ public class EsServiceTest {
         Obec obec = new Obec(3163, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null,null, null, null, null);
+                null, null, null,null, null, null, null);
 
         Mockito.when(obecRepository.findById(3163L)).thenReturn(Optional.of(obec));
     }
@@ -284,7 +284,7 @@ public class EsServiceTest {
         Obec obec = new Obec(3163, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null,null, null, null, null);
+                null, null,null, null,null, null, null);
 
         obecRepository.save(obec);
         Mockito.verify(obecRepository, Mockito.times(1))
@@ -297,7 +297,7 @@ public class EsServiceTest {
         List<SpravniObvod> spravniObvodList = new ArrayList<>();
 
         SpravniObvod spravniObvod = new SpravniObvod(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null, null,null, null,
                 null, null);
 
         spravniObvodList.add(spravniObvod);
@@ -310,7 +310,7 @@ public class EsServiceTest {
     @DisplayName("Should find a Spravni obvod by id")
     void findSOById() {
         SpravniObvod spravniObvod = new SpravniObvod(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null, null,null, null,
                 null, null);
 
         Mockito.when(spravniObvodRepository.findById(1515L)).thenReturn(Optional.of(spravniObvod));
@@ -320,7 +320,7 @@ public class EsServiceTest {
     @DisplayName("Should save Spravni obvod")
     void saveSO() {
         SpravniObvod spravniObvod = new SpravniObvod(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null, null,null, null,
                 null, null);
 
         spravniObvodRepository.save(spravniObvod);
@@ -334,7 +334,7 @@ public class EsServiceTest {
         List<Mop> mopList = new ArrayList<>();
 
         Mop mop = new Mop(513, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null,null, null, null,
                 null);
 
         mopList.add(mop);
@@ -347,7 +347,7 @@ public class EsServiceTest {
     @DisplayName("Should find a Mop by id")
     void findMopById() {
         Mop mop = new Mop(513, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null, null, null, null,
                 null);
 
         Mockito.when(mopRepository.findById(513L)).thenReturn(Optional.of(mop));
@@ -357,7 +357,7 @@ public class EsServiceTest {
     @DisplayName("Should save Mop")
     void saveMop() {
         Mop mop = new Mop(513, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null,null, null, null,
                 null);
 
         mopRepository.save(mop);
@@ -373,7 +373,7 @@ public class EsServiceTest {
         Momc momc = new Momc(1515, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null, null, null);
 
         momcList.add(momc);
         momcList.add(momc);
@@ -387,7 +387,7 @@ public class EsServiceTest {
         Momc momc = new Momc(1515, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null,null, null);
 
         Mockito.when(momcRepository.findById(1515L)).thenReturn(Optional.of(momc));
     }
@@ -398,7 +398,7 @@ public class EsServiceTest {
         Momc momc = new Momc(1515, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null);
+                null, null, null,null);
 
         momcRepository.save(momc);
         Mockito.verify(momcRepository, Mockito.times(1))
@@ -411,7 +411,7 @@ public class EsServiceTest {
         List<CastObce> castObceList = new ArrayList<>();
 
         CastObce castObce = new CastObce(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null, null, null, null,
                 null, null);
 
         castObceList.add(castObce);
@@ -424,7 +424,7 @@ public class EsServiceTest {
     @DisplayName("Should find a Cast obce by id")
     void findCastObceById() {
         CastObce castObce = new CastObce(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null,null, null, null, null,
                 null, null);
 
         Mockito.when(castObceRepository.findById(1515L)).thenReturn(Optional.of(castObce));
@@ -434,7 +434,7 @@ public class EsServiceTest {
     @DisplayName("Should save Cast obce")
     void saveCastObce() {
         CastObce castObce = new CastObce(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null,null, null, null, null,
                 null, null);
 
         castObceRepository.save(castObce);
@@ -448,7 +448,7 @@ public class EsServiceTest {
         List<KatastralniUzemi> katastralniUzemiList = new ArrayList<>();
 
         KatastralniUzemi katastralniUzemi = new KatastralniUzemi(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null,null, null, null,
                 null, null, null, null);
 
         katastralniUzemiList.add(katastralniUzemi);
@@ -461,7 +461,7 @@ public class EsServiceTest {
     @DisplayName("Should find a Katastralni uzemi by id")
     void findKatastralniUzemiById() {
         KatastralniUzemi katastralniUzemi = new KatastralniUzemi(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null,null, null, null,
                 null, null, null, null);
 
         Mockito.when(katastralniUzemiRepository.findById(1515L)).thenReturn(Optional.of(katastralniUzemi));
@@ -471,7 +471,7 @@ public class EsServiceTest {
     @DisplayName("Should save Katastralni uzemi")
     void saveKatastralniUzemi() {
         KatastralniUzemi katastralniUzemi = new KatastralniUzemi(1515, null, null, null, null,
-                null, null, null, null, null,
+                null, null, null,null, null, null,
                 null, null, null, null);
 
         katastralniUzemiRepository.save(katastralniUzemi);
@@ -486,7 +486,7 @@ public class EsServiceTest {
 
         Zsj zsj = new Zsj(1515, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null);
 
         zsjList.add(zsj);
         zsjList.add(zsj);
@@ -499,7 +499,7 @@ public class EsServiceTest {
     void findZsjById() {
         Zsj zsj = new Zsj(1515, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null);
 
         Mockito.when(zsjRepository.findById(1515L)).thenReturn(Optional.of(zsj));
     }
@@ -509,7 +509,7 @@ public class EsServiceTest {
     void saveZsj() {
         Zsj zsj = new Zsj(1515, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null, null);
+                null, null, null, null, null);
 
         zsjRepository.save(zsj);
         Mockito.verify(zsjRepository, Mockito.times(1))
@@ -521,7 +521,7 @@ public class EsServiceTest {
     void findUlice() {
         List<Ulice> uliceList = new ArrayList<>();
 
-        Ulice ulice = new Ulice(1515, null, null, null, null,
+        Ulice ulice = new Ulice(1515, null, null, null, null, null,
                 null, null, null, null);
 
         uliceList.add(ulice);
@@ -533,7 +533,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should find an Ulice by id")
     void findUliceById() {
-        Ulice ulice = new Ulice(1515, null, null, null, null,
+        Ulice ulice = new Ulice(1515, null, null, null, null, null,
                 null, null, null, null);
 
         Mockito.when(uliceRepository.findById(1515L)).thenReturn(Optional.of(ulice));
@@ -542,7 +542,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should save Ulice")
     void saveUlice() {
-        Ulice ulice = new Ulice(1515, null, null, null, null,
+        Ulice ulice = new Ulice(1515, null, null, null, null, null,
                 null, null, null, null);
 
         uliceRepository.save(ulice);
@@ -555,7 +555,7 @@ public class EsServiceTest {
     void findParcely() {
         List<Parcela> parcelaList = new ArrayList<>();
 
-        Parcela parcela = new Parcela(161L,null, null, null, null,
+        Parcela parcela = new Parcela(161L,null, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
                 null);
@@ -569,7 +569,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should find a parcela by id")
     void findParcelaById() {
-        Parcela parcela = new Parcela(161L,null, null, null, null,
+        Parcela parcela = new Parcela(161L,null,null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
                 null);
@@ -580,7 +580,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should save Parcela")
     void saveParcela() {
-        Parcela parcela = new Parcela(161L,null, null, null, null,
+        Parcela parcela = new Parcela(161L,null, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
                 null);
@@ -595,7 +595,7 @@ public class EsServiceTest {
     void findStavebniObjekty() {
         List<StavebniObjekt> stavebniObjektList = new ArrayList<>();
 
-        StavebniObjekt stavebniObjekt = new StavebniObjekt(1515, null, null, null, null,
+        StavebniObjekt stavebniObjekt = new StavebniObjekt(1515, null, null, null, null, null,
                 null, null, null, null, null, null,
                 null, null, null, null, null, null,
                 null, null, null, null, null,
@@ -610,7 +610,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should find a stavebni objekt by id")
     void findStavebniObjektById() {
-        StavebniObjekt stavebniObjekt = new StavebniObjekt(1515, null, null, null, null,
+        StavebniObjekt stavebniObjekt = new StavebniObjekt(1515, null, null, null, null, null,
                 null, null, null, null, null, null,
                 null, null, null, null, null, null,
                 null, null, null, null, null,
@@ -622,7 +622,7 @@ public class EsServiceTest {
     @Test
     @DisplayName("Should save Stavebni objekt")
     void saveStavebniObjekt() {
-        StavebniObjekt stavebniObjekt = new StavebniObjekt(1515, null, null, null, null,
+        StavebniObjekt stavebniObjekt = new StavebniObjekt(1515, null, null, null, null, null,
                 null, null, null, null, null, null,
                 null, null, null, null, null, null,
                 null, null, null, null, null,
