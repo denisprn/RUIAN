@@ -70,136 +70,142 @@ public class EsService {
         this.adresniMistoRepository = adresniMistoRepository;
     }
 
-    public Optional<Stat> findStatById(Long id) {
-        return statRepository.findById(id);
+    public List<Object> findById(Long id) {
+        List<Object> objects = new ArrayList<>();
+
+        Optional<Stat> stat = statRepository.findById(id);
+
+        if (stat.isPresent()) objects.add(stat);
+
+        Optional<RegionSoudrznosti> regionSoudrznosti = regionSoudrznostiRepository.findById(id);
+
+        if (regionSoudrznosti.isPresent()) objects.add(regionSoudrznosti);
+
+        Optional<Vusc> vusc = vuscRepository.findById(id);
+
+        if (vusc.isPresent()) objects.add(vusc);
+
+        Optional<Okres> okres = okresRepository.findById(id);
+
+        if (okres.isPresent()) objects.add(okres);
+
+        Optional<Orp> orp = orpRepository.findById(id);
+
+        if (orp.isPresent()) objects.add(orp);
+
+        Optional<Pou> pou = pouRepository.findById(id);
+
+        if (pou.isPresent()) objects.add(pou);
+
+        Optional<Obec> obec = obecRepository.findById(id);
+
+        if (obec.isPresent()) objects.add(obec);
+
+        Optional<SpravniObvod> spravniObvod = spravniObvodRepository.findById(id);
+
+        if (spravniObvod.isPresent()) objects.add(spravniObvod);
+
+        Optional<Mop> mop = mopRepository.findById(id);
+
+        if (mop.isPresent()) objects.add(mop);
+
+        Optional<Momc> momc = momcRepository.findById(id);
+
+        if (momc.isPresent()) objects.add(momc);
+
+        Optional<CastObce> castObce = castObceRepository.findById(id);
+
+        if (castObce.isPresent()) objects.add(castObce);
+
+        Optional<KatastralniUzemi> katastralniUzemi = katastralniUzemiRepository.findById(id);
+
+        if (katastralniUzemi.isPresent()) objects.add(katastralniUzemi);
+
+        Optional<Zsj> zsj = zsjRepository.findById(id);
+
+        if (zsj.isPresent()) objects.add(zsj);
+
+        Optional<Ulice> ulice = uliceRepository.findById(id);
+
+        if (ulice.isPresent()) objects.add(ulice);
+
+        Optional<Parcela> parcela = parcelaRepository.findById(id);
+
+        if (parcela.isPresent()) objects.add(parcela);
+
+        Optional<StavebniObjekt> stavebniObjekt = stavebniObjektRepository.findById(id);
+
+        if (stavebniObjekt.isPresent()) objects.add(stavebniObjekt);
+
+        Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
+
+        if (adresniMisto.isPresent()) objects.add(adresniMisto);
+
+        return objects;
     }
 
     public void saveStat(Stat stat) {
         statRepository.save(stat);
     }
 
-    public Optional<RegionSoudrznosti> findRsById(Long id) {
-        return regionSoudrznostiRepository.findById(id);
-    }
-
     public void saveRs(RegionSoudrznosti regionSoudrznosti) {
         regionSoudrznostiRepository.save(regionSoudrznosti);
-    }
-
-    public Optional<Vusc> findVuscById(Long id) {
-        return vuscRepository.findById(id);
     }
 
     public void saveVusc(Vusc vusc) {
         vuscRepository.save(vusc);
     }
 
-    public Optional<Okres> findOkresById(Long id) {
-        return okresRepository.findById(id);
-    }
-
     public void saveOkres(Okres okres) {
         okresRepository.save(okres);
-    }
-
-    public Optional<Orp> findOrpById(Long id) {
-        return orpRepository.findById(id);
     }
 
     public void saveOrp(Orp orp) {
         orpRepository.save(orp);
     }
 
-    public Optional<Pou> findPouById(Long id) {
-        return pouRepository.findById(id);
-    }
-
     public void savePou(Pou pou) {
         pouRepository.save(pou);
-    }
-
-    public Optional<Obec> findObecById(Long id) {
-        return obecRepository.findById(id);
     }
 
     public void saveObec(Obec obec) {
         obecRepository.save(obec);
     }
 
-    public Optional<SpravniObvod> findSOById(Long id) {
-        return spravniObvodRepository.findById(id);
-    }
-
     public void saveSO(SpravniObvod spravniObvod) {
         spravniObvodRepository.save(spravniObvod);
-    }
-
-    public Optional<Mop> findMopById(Long id) {
-        return mopRepository.findById(id);
     }
 
     public void saveMop(Mop mop) {
         mopRepository.save(mop);
     }
 
-    public Optional<Momc> findMomcById(Long id) {
-        return momcRepository.findById(id);
-    }
-
     public void saveMomc(Momc momc) {
         momcRepository.save(momc);
-    }
-
-    public Optional<CastObce> findCastObceById(Long id) {
-        return castObceRepository.findById(id);
     }
 
     public void saveCastObce(CastObce castObce) {
         castObceRepository.save(castObce);
     }
 
-    public Optional<KatastralniUzemi> findKatastralniUzemiById(Long id) {
-        return katastralniUzemiRepository.findById(id);
-    }
-
     public void saveKatastralniUzemi(KatastralniUzemi katastralniUzemi) {
         katastralniUzemiRepository.save(katastralniUzemi);
-    }
-
-    public Optional<Zsj> findZsjById(Long id) {
-        return zsjRepository.findById(id);
     }
 
     public void saveZsj(Zsj zsj) {
         zsjRepository.save(zsj);
     }
 
-    public Optional<Ulice> findUliceById(Long id) {
-        return uliceRepository.findById(id);
-    }
-
     public void saveUlice(Ulice ulice) {
         uliceRepository.save(ulice);
-    }
-
-    public Optional<Parcela> findParcelaById(Long id) {
-        return parcelaRepository.findById(id);
     }
 
     public void saveParcela(Parcela parcela) {
         parcelaRepository.save(parcela);
     }
 
-    public Optional<StavebniObjekt> findStavebniObjektById(Long id) {
-        return stavebniObjektRepository.findById(id);
-    }
-
     public void saveStavebniObjekt(StavebniObjekt stavebniObjekt) {
         stavebniObjektRepository.save(stavebniObjekt);
-    }
-
-    public Optional<AdresniMisto> findAdresniMistoById(Long id) {
-        return adresniMistoRepository.findById(id);
     }
 
     public void saveAdresniMisto(AdresniMisto adresniMisto) {
@@ -225,23 +231,23 @@ public class EsService {
 
             switch(hitIndexName) {
                 case "okres" -> {
-                    Optional<Okres> okres = findOkresById(id);
+                    Optional<Okres> okres = okresRepository.findById(id);
                     founded.add(okres.orElse(null));
                 }
                 case "obec" -> {
-                    Optional<Obec> obec = findObecById(id);
+                    Optional<Obec> obec = obecRepository.findById(id);
                     founded.add(obec.orElse(null));
                 }
                 case "castobce" -> {
-                    Optional<CastObce> castObce = findCastObceById(id);
+                    Optional<CastObce> castObce = castObceRepository.findById(id);
                     founded.add(castObce.orElse(null));
                 }
                 case "ulice" -> {
-                    Optional<Ulice> ulice = findUliceById(id);
+                    Optional<Ulice> ulice = uliceRepository.findById(id);
                     founded.add(ulice.orElse(null));
                 }
                 case "adresnimisto" -> {
-                    Optional<AdresniMisto> adresniMisto = findAdresniMistoById(id);
+                    Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
                     founded.add(adresniMisto.orElse(null));
                 }
             }
