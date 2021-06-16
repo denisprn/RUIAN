@@ -1,4 +1,4 @@
-# RUIAN 
+# RUIAN REST API
 Converts RÚIAN data to Elasticsearch database with the ability to retrieve it.
 ## General info
 It is an JSON RESTful API, that imports RÚIAN data from XML file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
@@ -33,6 +33,7 @@ ES is the core of the ELK stack (Elastic Stack), which, in addition to Elasticse
 * Logstash - tool for collecting, converting and saving events from various sources (files, databases, logs, etc.) in a common storage in real time;
 * Kibana - web interface for Elasticsearch to interact with data stored in its ES indexes through dynamic dashboards, tables, graphs and charts that display changes in ES queries in real time;
 * FileBeat - agent on servers for sending various types of live data to ES.
+
 Some of the key features of Elasticsearch are:
 * automatic indexing of new JSON objects that are loaded into the database and immediately become available for search, due to the absence of a schema according to a typical NoSQL concept. This allows you to speed up prototyping of Big Data search solutions.
 * support for oriental languages (Chinese, Japanese, Korean);
