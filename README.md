@@ -8,7 +8,7 @@ Int addition to this, API allows retrieval of individual items according to RÚI
 * Spring Boot 2.5.0
 * Elasticsearch 7.13.0
 ## What is REST API?
-A REST API is an application programming interface (API) that uses HTTP requests to retrieve, retrieve, place, and delete data. REST stands for Representational State Transfer in the context of an API.
+A REST API is an application programming interface (API) that uses HTTP requests to retrieve, place, and delete data. REST stands for Representational State Transfer in the context of an API.
 Let's start with what an API is. For a website, this is the code that allows two programs to communicate with each other. The API offers developers the correct way to write a program that requests services from an operating system or other application. Simply put, it is a kind of standard that allows programs and applications to understand each other; it is the language of the Internet, which is essential for almost all sites and applications to work.
 Another common use case is in the cloud, where a REST API is needed to provide and organize access to web services. The technology allows users to flexibly connect to, manage and interact with cloud services in a distributed environment.
 A REST (or RESTful) API is based on representational state transfer, an architectural style, and a communications approach often used when developing web services.
