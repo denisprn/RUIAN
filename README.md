@@ -16,16 +16,21 @@ A REST (or RESTful) API is based on representational state transfer, an architec
 * Unified interface
 Resources must be uniquely identified using a single URL and only using basic network protocol methods (DELETE, PUT, GET, HTTP).
 * Client-server
+
 There should be a clear distinction between client and server:
--user interface and query collection issues - on the client side.
--data access, workload management and security - on the server side.
+- user interface and query collection issues - on the client side.
+- data access, workload management and security - on the server side.
 * Saved State
+
 All client/server operations must be stateless. Any necessary state management should be done on the client, not on the server.
 * Caching
+
 All resources must enable caching unless explicitly stated that it is not possible.
 * Multilevel system 
+
 The REST API allows an architecture that consists of multiple server tiers.
 * Code request
+
 In most cases, the server sends back static representations of resources in XML or JSON format. However, servers can send executable code directly to the client if needed.
 ## What is Elasticsearch?
 Elasticsearch (ES) is a scalable full-text search and analytics utility that allows you to quickly store, search, and analyze large amounts of data in real time. ES provides scale-out search with multithreading support. The system is based on the Apache Lucene library, which is designed for indexing and searching information in any type of documents. All Lucene features are available through JSON and Java APIs. ES allows you to work with GET requests in real time, but does not support distributed transactions.
