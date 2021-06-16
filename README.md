@@ -1,4 +1,4 @@
-# RUIAN REST API
+# RÚIAN REST API
 Converts RÚIAN data to Elasticsearch database with the ability to retrieve it.
 ## General info
 It is an JSON RESTful API, that imports RÚIAN data from XML file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
