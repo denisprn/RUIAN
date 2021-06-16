@@ -14,12 +14,13 @@ Another common use case is in the cloud, where a REST API is needed to provide a
 A REST (or RESTful) API is based on representational state transfer, an architectural style, and a communications approach often used when developing web services.
 ### REST API principles:
 * Unified interface
+
 Resources must be uniquely identified using a single URL and only using basic network protocol methods (DELETE, PUT, GET, HTTP).
 * Client-server
 
 There should be a clear distinction between client and server:
-- user interface and query collection issues - on the client side.
-- data access, workload management and security - on the server side.
+  * user interface and query collection issues - on the client side.
+  * data access, workload management and security - on the server side.
 * Saved State
 
 All client/server operations must be stateless. Any necessary state management should be done on the client, not on the server.
