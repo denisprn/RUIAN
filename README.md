@@ -13,24 +13,25 @@ Let's start with what an API is. For a website, this is the code that allows two
 Another common use case is in the cloud, where a REST API is needed to provide and organize access to web services. The technology allows users to flexibly connect to, manage and interact with cloud services in a distributed environment.
 A REST (or RESTful) API is based on representational state transfer, an architectural style, and a communications approach often used when developing web services.
 ### REST API principles:
-* Unified interface
+* Unified interface:
 
 Resources must be uniquely identified using a single URL and only using basic network protocol methods (DELETE, PUT, GET, HTTP).
-* Client-server
+* Client-server:
 
 There should be a clear distinction between client and server:
-  * user interface and query collection issues - on the client side.
-  * data access, workload management and security - on the server side.
-* Saved State
+  1. user interface and query collection issues - on the client side.
+  2. data access, workload management and security - on the server side.
+
+* Saved State:
 
 All client/server operations must be stateless. Any necessary state management should be done on the client, not on the server.
-* Caching
+* Caching:
 
 All resources must enable caching unless explicitly stated that it is not possible.
-* Multilevel system 
+* Multilevel system:
 
 The REST API allows an architecture that consists of multiple server tiers.
-* Code request
+* Code request:
 
 In most cases, the server sends back static representations of resources in XML or JSON format. However, servers can send executable code directly to the client if needed.
 ## What is Elasticsearch?
