@@ -1,6 +1,5 @@
 package com.bp.RUIAN.controllers;
 
-import com.bp.RUIAN.controllers.RuianController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
