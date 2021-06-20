@@ -2,8 +2,6 @@ package com.bp.RUIAN.parsers;
 
 import com.bp.RUIAN.entities.NespravnyUdaj;
 import com.bp.RUIAN.entities.Okres;
-import com.bp.RUIAN.entities.Stat;
-import com.bp.RUIAN.services.EsService;
 import com.bp.RUIAN.utils.Prefixes;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
@@ -12,37 +10,48 @@ import org.w3c.dom.Element;
 import java.text.ParseException;
 import java.util.Date;
 
-public class OkresParser extends AbstractSaveParser {
+public class OkresParser implements RecordParser<Okres> {
     private static final String PREFIX = Prefixes.OKRES_PREFIX;
+    private final IntegerParser integerParser;
+    private final LongParser longParser;
+    private final StringParser stringParser;
+    private final DateParser dateParser;
+    private final DefinicniBodParser definicniBodParser;
+    private final HraniceParser hraniceParser;
+    private final NespravnyUdajParser nespravnyUdajParser;
 
-    public OkresParser(EsService esService, Element element) {
-        super(esService, element, PREFIX);
+    public OkresParser(Element element) {
+        this.integerParser = new IntegerParser(element, PREFIX);
+        this.longParser = new LongParser(element, PREFIX);
+        this.stringParser = new StringParser(element, PREFIX);
+        this.dateParser = new DateParser(element, PREFIX);
+        this.definicniBodParser = new DefinicniBodParser(element);
+        this.hraniceParser = new HraniceParser(element);
+        this.nespravnyUdajParser = new NespravnyUdajParser(element, PREFIX);
     }
 
     @Override
-    public void parse() throws ParseException {
+    public Okres parse() throws ParseException {
         boolean nespravny = false;
-        Integer kod = attributeParser.getKod();
-        String nazev = attributeParser.getNazev();
-        Integer kodVusc = attributeParser.getKodVusc();
-        Date platiOd = attributeParser.getPlatiOd();
-        Date platiDo = attributeParser.getPlatiDo();
-        Long idTransakce = attributeParser.getIdTransakce();
-        Long globalniIdNavrhuZmeny = attributeParser.getGlobalniIdNavrhuZmeny();
-        String nutsLau = attributeParser.getNutsLau();
-        GeoJsonPoint definicniBod = attributeParser.getDefinicniBod();
-        GeoJsonPolygon hranice = attributeParser.getHranice();
-        NespravnyUdaj nespravnyUdaj = attributeParser.getNespravneUdaje();
+        Integer kod = integerParser.parse("Kod");
+        String nazev = stringParser.parse("Nazev");
+        Integer kodVusc = integerParser.parse("vci:Kod");
+        Date platiOd = dateParser.parse("PlatiOd");
+        Date platiDo = dateParser.parse("PlatiDo");
+        Long idTransakce = longParser.parse("IdTransakce");
+        Long globalniIdNavrhuZmeny = longParser.parse("GlobalniIdNavrhuZmeny");
+        String nutsLau = stringParser.parse("NutsLau");
+        GeoJsonPoint definicniBod = definicniBodParser.parse("pos");
+        GeoJsonPolygon hranice = hraniceParser.parse("posList");
+        NespravnyUdaj nespravnyUdaj = nespravnyUdajParser.parse("NespravneUdaje");
 
         if (nespravnyUdaj != null) {
             nespravny = true;
         }
 
-        Date datumVzniku = attributeParser.getDatumVzniku();
+        Date datumVzniku = dateParser.parse("DatumVzniku");
 
-        Okres okres = new Okres(kod, nazev, nespravny, kodVusc, platiOd, platiDo, idTransakce,
+        return new Okres(kod, nazev, nespravny, kodVusc, platiOd, platiDo, idTransakce,
                 globalniIdNavrhuZmeny, nutsLau, definicniBod, hranice, nespravnyUdaj, datumVzniku);
-
-        esService.saveOkres(okres);
     }
 }
