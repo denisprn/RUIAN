@@ -73,69 +73,21 @@ public class EsService {
     public List<Object> findById(Long id) {
         List<Object> objects = new ArrayList<>();
 
-        Optional<Stat> stat = statRepository.findById(id);
-
-        if (stat.isPresent()) objects.add(stat);
-
-        Optional<RegionSoudrznosti> regionSoudrznosti = regionSoudrznostiRepository.findById(id);
-
-        if (regionSoudrznosti.isPresent()) objects.add(regionSoudrznosti);
-
-        Optional<Vusc> vusc = vuscRepository.findById(id);
-
-        if (vusc.isPresent()) objects.add(vusc);
-
         Optional<Okres> okres = okresRepository.findById(id);
 
         if (okres.isPresent()) objects.add(okres);
-
-        Optional<Orp> orp = orpRepository.findById(id);
-
-        if (orp.isPresent()) objects.add(orp);
-
-        Optional<Pou> pou = pouRepository.findById(id);
-
-        if (pou.isPresent()) objects.add(pou);
 
         Optional<Obec> obec = obecRepository.findById(id);
 
         if (obec.isPresent()) objects.add(obec);
 
-        Optional<SpravniObvod> spravniObvod = spravniObvodRepository.findById(id);
-
-        if (spravniObvod.isPresent()) objects.add(spravniObvod);
-
-        Optional<Mop> mop = mopRepository.findById(id);
-
-        if (mop.isPresent()) objects.add(mop);
-
-        Optional<Momc> momc = momcRepository.findById(id);
-
-        if (momc.isPresent()) objects.add(momc);
-
         Optional<CastObce> castObce = castObceRepository.findById(id);
 
         if (castObce.isPresent()) objects.add(castObce);
 
-        Optional<KatastralniUzemi> katastralniUzemi = katastralniUzemiRepository.findById(id);
-
-        if (katastralniUzemi.isPresent()) objects.add(katastralniUzemi);
-
-        Optional<Zsj> zsj = zsjRepository.findById(id);
-
-        if (zsj.isPresent()) objects.add(zsj);
-
         Optional<Ulice> ulice = uliceRepository.findById(id);
 
         if (ulice.isPresent()) objects.add(ulice);
-
-        Optional<Parcela> parcela = parcelaRepository.findById(id);
-
-        if (parcela.isPresent()) objects.add(parcela);
-
-        Optional<StavebniObjekt> stavebniObjekt = stavebniObjektRepository.findById(id);
-
-        if (stavebniObjekt.isPresent()) objects.add(stavebniObjekt);
 
         Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
 
