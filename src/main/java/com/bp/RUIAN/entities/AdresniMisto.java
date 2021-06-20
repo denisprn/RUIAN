@@ -6,7 +6,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.geo.Point;
-
 import java.util.Date;
 
 /**
@@ -14,7 +13,7 @@ import java.util.Date;
  * @author Denys Peresychanskyi
  */
 @Document(indexName = "adresnimisto")
-public record AdresniMisto(
+public record AdresniMisto (
         @Id
         @Field(type = FieldType.Integer, name = "kod")
         Integer kod,
@@ -60,4 +59,13 @@ public record AdresniMisto(
 
         @Field(type = FieldType.Object, name = "nespravnyUdaj")
         NespravnyUdaj nespravnyUdaj
-) { }
+) {
+        public static AdresniMisto createDefault() {
+                GeoJsonPoint definicniBod = GeoJsonPoint.of(new Point(1L, 1L));
+
+                return new AdresniMisto(1, false, "1", "2", "A",
+                        "12345", 1, 1, 1, new Date(),
+                        null, 1L, 1L,
+                        definicniBod,null);
+        }
+}
