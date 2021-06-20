@@ -6,20 +6,13 @@ import com.bp.RUIAN.entities.NespravnyUdaj;
 import com.bp.RUIAN.utils.Prefixes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 import org.springframework.data.geo.Point;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,41 +33,37 @@ public class KatastralniUzemiParserTest {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         boolean nespravny = false;
 
-        File file = new ClassPathResource("xml/ruian_test.xml").getFile();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(file);
-        document.getDocumentElement().normalize();
-        NodeList nListDataNode = document.getElementsByTagName("vf:Data");
-        NodeList nodeListData = nListDataNode.item(0).getChildNodes();
-        NodeList nodeL = nodeListData.item(23).getChildNodes();
-        Node node = nodeL.item(1);
+        Element element = ElementParser.getElement(23);
 
-        assertEquals("vf:KatastralniUzemi", node.getNodeName());
+        IntegerParser integerParser = new IntegerParser(element, PREFIX);
+        LongParser longParser = new LongParser(element, PREFIX);
+        StringParser stringParser = new StringParser(element, PREFIX);
+        BooleanParser booleanParser = new BooleanParser(element, PREFIX);
+        DateParser dateParser = new DateParser(element, PREFIX);
+        DefinicniBodParser definicniBodParser = new DefinicniBodParser(element);
+        HraniceParser hraniceParser = new HraniceParser(element);
+        MluvnickeCharakteristikyParser mluvCharParser = new MluvnickeCharakteristikyParser(element, PREFIX);
+        NespravnyUdajParser nespravnyUdajParser = new NespravnyUdajParser(element, PREFIX);
 
-        Element element = (Element) node;
-
-        AttributeParser attributeParser = new AttributeParser(element, PREFIX);
-
-        Integer kod = attributeParser.getKod();
-        String nazev = attributeParser.getNazev();
-        Boolean existujeDigitalniMapa = attributeParser.getExistujeDigitalniMapa();
-        Integer kodObce = attributeParser.getKodObce();
-        Date platiOd = attributeParser.getPlatiOd();
-        Date platiDo = attributeParser.getPlatiDo();
-        Long idTransakce = attributeParser.getIdTransakce();
-        Long globalniIdNavrhuZmeny = attributeParser.getGlobalniIdNavrhuZmeny();
-        Long rizeniId = attributeParser.getIdRizeni();
-        GeoJsonPoint definicniBod = attributeParser.getDefinicniBod();
-        GeoJsonPolygon hranice = attributeParser.getHranice();
-        MluvnickeCharakteristiky mluvChar = attributeParser.getMluvChar();
-        NespravnyUdaj nespravnyUdaj = attributeParser.getNespravneUdaje();
+        Integer kod = integerParser.parse("Kod");
+        String nazev = stringParser.parse("Nazev");
+        Boolean existujeDigitalniMapa = booleanParser.parse("ExistujeDigitalniMapa");
+        Integer kodObce = integerParser.parse("obi:Kod");
+        Date platiOd = dateParser.parse("PlatiOd");
+        Date platiDo = dateParser.parse("PlatiDo");
+        Long idTransakce = longParser.parse("IdTransakce");
+        Long globalniIdNavrhuZmeny = longParser.parse("GlobalniIdNavrhuZmeny");
+        Long rizeniId = longParser.parse("RizeniId");
+        MluvnickeCharakteristiky mluvChar = mluvCharParser.parse("MluvnickeCharakteristiky");
+        GeoJsonPoint definicniBod = definicniBodParser.parse("pos");
+        GeoJsonPolygon hranice = hraniceParser.parse("posList");
+        NespravnyUdaj nespravnyUdaj = nespravnyUdajParser.parse("NespravneUdaje");
 
         if (nespravnyUdaj != null) {
             nespravny = true;
         }
 
-        Date datumVzniku = attributeParser.getDatumVzniku();
+        Date datumVzniku = dateParser.parse("DatumVzniku");
 
         List<Point> points = new ArrayList<>();
         points.add(new Point(-753388.46, -1177300.38));

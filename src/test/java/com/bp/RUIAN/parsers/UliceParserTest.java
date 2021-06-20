@@ -5,20 +5,13 @@ import com.bp.RUIAN.entities.Ulice;
 import com.bp.RUIAN.utils.Prefixes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonLineString;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
 import org.springframework.data.geo.Point;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,31 +32,24 @@ public class UliceParserTest {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         boolean nespravny = false;
 
-        File file = new ClassPathResource("xml/ruian_test.xml").getFile();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(file);
-        document.getDocumentElement().normalize();
-        NodeList nListDataNode = document.getElementsByTagName("vf:Data");
-        NodeList nodeListData = nListDataNode.item(0).getChildNodes();
-        NodeList nodeL = nodeListData.item(27).getChildNodes();
-        Node node = nodeL.item(1);
+        Element element = ElementParser.getElement(27);
 
-        assertEquals("vf:Ulice", node.getNodeName());
+        IntegerParser integerParser = new IntegerParser(element, PREFIX);
+        LongParser longParser = new LongParser(element, PREFIX);
+        StringParser stringParser = new StringParser(element, PREFIX);
+        DateParser dateParser = new DateParser(element, PREFIX);
+        DefinicniCaraParser definicniCaraParser = new DefinicniCaraParser(element);
+        NespravnyUdajParser nespravnyUdajParser = new NespravnyUdajParser(element, PREFIX);
 
-        Element element = (Element) node;
-
-        AttributeParser attributeParser = new AttributeParser(element, PREFIX);
-
-        Integer kod = attributeParser.getKod();
-        String nazev = attributeParser.getNazev();
-        Integer kodObce = attributeParser.getKodObce();
-        Date platiOd = attributeParser.getPlatiOd();
-        Date platiDo = attributeParser.getPlatiDo();
-        Long idTransakce = attributeParser.getIdTransakce();
-        Long globalniIdNavrhuZmeny = attributeParser.getGlobalniIdNavrhuZmeny();
-        GeoJsonMultiLineString definicniCara = attributeParser.getDefinicniCara();
-        NespravnyUdaj nespravnyUdaj = attributeParser.getNespravneUdaje();
+        Integer kod = integerParser.parse("Kod");
+        String nazev = stringParser.parse("Nazev");
+        Integer kodObce = integerParser.parse("obi:Kod");
+        Date platiOd = dateParser.parse("PlatiOd");
+        Date platiDo = dateParser.parse("PlatiDo");
+        Long idTransakce = longParser.parse("IdTransakce");
+        Long globalniIdNavrhuZmeny = longParser.parse("GlobalniIdNavrhuZmeny");
+        GeoJsonMultiLineString definicniCara = definicniCaraParser.parse("posList");
+        NespravnyUdaj nespravnyUdaj = nespravnyUdajParser.parse("NespravneUdaje");
 
         if (nespravnyUdaj != null) {
             nespravny = true;

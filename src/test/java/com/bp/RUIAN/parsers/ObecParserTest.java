@@ -6,20 +6,13 @@ import com.bp.RUIAN.entities.Obec;
 import com.bp.RUIAN.utils.Prefixes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 import org.springframework.data.geo.Point;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,48 +33,43 @@ public class ObecParserTest {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         boolean nespravny = false;
 
-        File file = new ClassPathResource("xml/ruian_test.xml").getFile();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(file);
-        document.getDocumentElement().normalize();
-        NodeList nListDataNode = document.getElementsByTagName("vf:Data");
-        NodeList nodeListData = nListDataNode.item(0).getChildNodes();
-        NodeList nodeL = nodeListData.item(13).getChildNodes();
-        Node node = nodeL.item(1);
+        Element element = ElementParser.getElement(13);
 
-        assertEquals("vf:Obec", node.getNodeName());
+        IntegerParser integerParser = new IntegerParser(element, PREFIX);
+        LongParser longParser = new LongParser(element, PREFIX);
+        StringParser stringParser = new StringParser(element, PREFIX);
+        DateParser dateParser = new DateParser(element, PREFIX);
+        DefinicniBodParser definicniBodParser = new DefinicniBodParser(element);
+        HraniceParser hraniceParser = new HraniceParser(element);
+        MluvnickeCharakteristikyParser mluvCharParser = new MluvnickeCharakteristikyParser(element, PREFIX);
+        NespravnyUdajParser nespravnyUdajParser = new NespravnyUdajParser(element, PREFIX);
 
-        Element element = (Element) node;
-
-        AttributeParser attributeParser = new AttributeParser(element, PREFIX);
-
-        Integer kod = attributeParser.getKod();
-        String nazev = attributeParser.getNazev();
-        Integer statusKod = attributeParser.getStatusKod();
-        Integer kodOkresu = attributeParser.getKodOkresu();
-        Integer kodPou = attributeParser.getKodPou();
-        Date platiOd = attributeParser.getPlatiOd();
-        Date platiDo = attributeParser.getPlatiDo();
-        Long idTransakce = attributeParser.getIdTransakce();
-        Long globalniIdNavrhuZmeny = attributeParser.getGlobalniIdNavrhuZmeny();
-        GeoJsonPoint definicniBod = attributeParser.getDefinicniBod();
-        GeoJsonPolygon hranice = attributeParser.getHranice();
-        MluvnickeCharakteristiky mluvChar = attributeParser.getMluvChar();
-        String vlajkaText = attributeParser.getVlajkaText();
-        String vlajkaObrazek = attributeParser.getVlajkaObrazek();
-        String znakText = attributeParser.getZnakText();
-        String znakObrazek = attributeParser.getZnakObrazek();
-        String nutsLau = attributeParser.getNutsLau();
-        Integer cleneniSMTypKod = attributeParser.getCleneniSMTypKod();
-        Integer cleneniSMRozsahKod = attributeParser.getCleneniSMRozsahKod();
-        NespravnyUdaj nespravnyUdaj = attributeParser.getNespravneUdaje();
+        Integer kod = integerParser.parse("Kod");
+        String nazev = stringParser.parse("Nazev");
+        Integer statusKod = integerParser.parse("StatusKod");
+        Integer kodOkresu = integerParser.parse("oki:Kod");
+        Integer kodPou = integerParser.parse("pui:Kod");
+        Date platiOd = dateParser.parse("PlatiOd");
+        Date platiDo = dateParser.parse("PlatiDo");
+        Long idTransakce = longParser.parse("IdTransakce");
+        Long globalniIdNavrhuZmeny = longParser.parse("GlobalniIdNavrhuZmeny");
+        MluvnickeCharakteristiky mluvChar = mluvCharParser.parse("MluvnickeCharakteristiky");
+        String vlajkaText = stringParser.parse("VlajkaText");
+        String vlajkaObrazek = stringParser.parse("VlajkaObrazek");
+        String znakText = stringParser.parse("ZnakText");
+        String znakObrazek = stringParser.parse("ZnakObrazek");
+        Integer cleneniSMRozsahKod = integerParser.parse("CleneniSMRozsahKod");
+        Integer cleneniSMTypKod = integerParser.parse("CleneniSMTypKod");
+        String nutsLau = stringParser.parse("NutsLau");
+        GeoJsonPoint definicniBod = definicniBodParser.parse("pos");
+        GeoJsonPolygon hranice = hraniceParser.parse("posList");
+        NespravnyUdaj nespravnyUdaj = nespravnyUdajParser.parse("NespravneUdaje");
 
         if (nespravnyUdaj != null) {
             nespravny = true;
         }
 
-        Date datumVzniku = attributeParser.getDatumVzniku();
+        Date datumVzniku = dateParser.parse("DatumVzniku");
 
         List<Point> points = new ArrayList<>();
         points.add(new Point(-657677.99, -1087738.86));

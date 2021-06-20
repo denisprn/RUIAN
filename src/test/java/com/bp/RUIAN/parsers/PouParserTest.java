@@ -5,19 +5,13 @@ import com.bp.RUIAN.entities.Pou;
 import com.bp.RUIAN.utils.Prefixes;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 import org.springframework.data.geo.Point;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,39 +32,33 @@ public class PouParserTest {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         boolean nespravny = false;
 
-        File file = new ClassPathResource("xml/ruian_test.xml").getFile();
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document document = builder.parse(file);
-        document.getDocumentElement().normalize();
-        NodeList nListDataNode = document.getElementsByTagName("vf:Data");
-        NodeList nodeListData = nListDataNode.item(0).getChildNodes();
-        NodeList nodeL = nodeListData.item(11).getChildNodes();
-        Node node = nodeL.item(1);
+        Element element = ElementParser.getElement(11);
 
-        assertEquals("vf:Pou", node.getNodeName());
+        IntegerParser integerParser = new IntegerParser(element, PREFIX);
+        LongParser longParser = new LongParser(element, PREFIX);
+        StringParser stringParser = new StringParser(element, PREFIX);
+        DateParser dateParser = new DateParser(element, PREFIX);
+        DefinicniBodParser definicniBodParser = new DefinicniBodParser(element);
+        HraniceParser hraniceParser = new HraniceParser(element);
+        NespravnyUdajParser nespravnyUdajParser = new NespravnyUdajParser(element, PREFIX);
 
-        Element element = (Element) node;
-
-        AttributeParser attributeParser = new AttributeParser(element, PREFIX);
-
-        Integer kod = attributeParser.getKod();
-        String nazev = attributeParser.getNazev();
-        Integer spravniObecKod = attributeParser.getKodSpravniObec();
-        Integer kodOrp = attributeParser.getKodOrp();
-        Date platiOd = attributeParser.getPlatiOd();
-        Date platiDo = attributeParser.getPlatiDo();
-        Long idTransakce = attributeParser.getIdTransakce();
-        Long globalniIdNavrhuZmeny = attributeParser.getGlobalniIdNavrhuZmeny();
-        GeoJsonPoint definicniBod = attributeParser.getDefinicniBod();
-        GeoJsonPolygon hranice = attributeParser.getHranice();
-        NespravnyUdaj nespravnyUdaj = attributeParser.getNespravneUdaje();
+        Integer kod = integerParser.parse("Kod");
+        String nazev = stringParser.parse("Nazev");
+        Integer spravniObecKod = integerParser.parse("SpravniObecKod");
+        Integer kodOrp = integerParser.parse("opi:Kod");
+        Date platiOd = dateParser.parse("PlatiOd");
+        Date platiDo = dateParser.parse("PlatiDo");
+        Long idTransakce = longParser.parse("IdTransakce");
+        Long globalniIdNavrhuZmeny = longParser.parse("GlobalniIdNavrhuZmeny");
+        GeoJsonPoint definicniBod = definicniBodParser.parse("pos");
+        GeoJsonPolygon hranice = hraniceParser.parse("posList");
+        NespravnyUdaj nespravnyUdaj = nespravnyUdajParser.parse("NespravneUdaje");
 
         if (nespravnyUdaj != null) {
             nespravny = true;
         }
 
-        Date datumVzniku = attributeParser.getDatumVzniku();
+        Date datumVzniku = dateParser.parse("DatumVzniku");
 
         List<Point> points = new ArrayList<>();
         points.add(new Point(-656589.83, -1067506.21));
