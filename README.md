@@ -6,7 +6,7 @@ Int addition to this, API allows retrieval of individual items according to RÚI
 ## Technologies
 * JDK 16
 * Spring Boot 2.5.0
-* Elasticsearch 7.13.0
+* Elasticsearch 7.13.2
 ## What is REST API?
 A REST API is an application programming interface (API) that uses HTTP requests to retrieve, place, and delete data. REST stands for Representational State Transfer in the context of an API.
 
