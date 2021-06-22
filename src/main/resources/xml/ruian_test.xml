@@ -661,7 +661,7 @@
 		</vf:Pou>
 		<vf:Obce>
 			<vf:Obec gml:id="OB.569089">
-				<obi:Kod>569089</obi:Kod>
+				<obi:Kod>500011</obi:Kod>
 				<obi:Nazev>Maleč</obi:Nazev>
 				<obi:StatusKod>2</obi:StatusKod>
 				<obi:Okres>
@@ -1764,7 +1764,7 @@
 				<uli:Kod>645192</uli:Kod>
 				<uli:Nazev>Družstevníků</uli:Nazev>
 				<uli:Obec>
-					<obi:Kod>500011</obi:Kod>
+					<obi:Kod>569143</obi:Kod>
 				</uli:Obec>
 				<uli:PlatiOd>2018-01-22T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>2277057</uli:IdTransakce>
@@ -1774,7 +1774,7 @@
 				<uli:Kod>645427</uli:Kod>
 				<uli:Nazev>Klínek</uli:Nazev>
 				<uli:Obec>
-					<obi:Kod>500011</obi:Kod>
+					<obi:Kod>569143</obi:Kod>
 				</uli:Obec>
 				<uli:PlatiOd>2011-07-01T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>0</uli:IdTransakce>
@@ -1784,7 +1784,7 @@
 				<uli:Kod>645486</uli:Kod>
 				<uli:Nazev>Kút</uli:Nazev>
 				<uli:Obec>
-					<obi:Kod>500011</obi:Kod>
+					<obi:Kod>569143</obi:Kod>
 				</uli:Obec>
 				<uli:PlatiOd>2018-01-22T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>2277057</uli:IdTransakce>
@@ -1794,7 +1794,7 @@
 				<uli:Kod>895652</uli:Kod>
 				<uli:Nazev>Lipská</uli:Nazev>
 				<uli:Obec>
-					<obi:Kod>500011</obi:Kod>
+					<obi:Kod>569194</obi:Kod>
 				</uli:Obec>
 				<uli:PlatiOd>2018-01-22T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>2277057</uli:IdTransakce>
@@ -1804,7 +1804,7 @@
 				<uli:Kod>644251</uli:Kod>
 				<uli:Nazev>Lysá</uli:Nazev>
 				<uli:Obec>
-					<obi:Kod>500011</obi:Kod>
+					<obi:Kod>569194</obi:Kod>
 				</uli:Obec>
 				<uli:PlatiOd>2018-07-11T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>2480652</uli:IdTransakce>
@@ -1814,7 +1814,7 @@
 				<uli:Kod>645907</uli:Kod>
 				<uli:Nazev>Nad Školou</uli:Nazev>
 				<uli:Obec>
-					<obi:Kod>500011</obi:Kod>
+					<obi:Kod>569194</obi:Kod>
 				</uli:Obec>
 				<uli:PlatiOd>2018-07-11T00:00:00</uli:PlatiOd>
 				<uli:IdTransakce>2480652</uli:IdTransakce>
@@ -2185,7 +2185,7 @@
 					<soi:Kod>78171482</soi:Kod>
 				</ami:StavebniObjekt>
 				<ami:Ulice>
-					<uli:Kod>647268</uli:Kod>
+					<uli:Kod>644196</uli:Kod>
 				</ami:Ulice>
 				<ami:VOKod>42877</ami:VOKod>
 				<ami:PlatiOd>2014-06-26T00:00:00</ami:PlatiOd>
@@ -2203,11 +2203,16 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.73100072">
 				<ami:Kod>73100072</ami:Kod>
-				<ami:CisloDomovni>162</ami:CisloDomovni>
+				<ami:CisloDomovni>669</ami:CisloDomovni>
+				<ami:CisloOrientacni>1</ami:CisloOrientacni>
+				<ami:CisloOrientacniPismeno>A</ami:CisloOrientacniPismeno>
 				<ami:Psc>76311</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>78466105</soi:Kod>
 				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>644196</uli:Kod>
+				</ami:Ulice>
 				<ami:VOKod>42877</ami:VOKod>
 				<ami:PlatiOd>2014-10-02T00:00:00</ami:PlatiOd>
 				<ami:IdTransakce>686685</ami:IdTransakce>
@@ -2224,13 +2229,15 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.72507900">
 				<ami:Kod>72507900</ami:Kod>
-				<ami:CisloDomovni>667</ami:CisloDomovni>
+				<ami:CisloDomovni>12</ami:CisloDomovni>
+				<ami:CisloOrientacni>4</ami:CisloOrientacni>
+				<ami:CisloOrientacniPismeno>B</ami:CisloOrientacniPismeno>
 				<ami:Psc>76311</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>77882261</soi:Kod>
 				</ami:StavebniObjekt>
 				<ami:Ulice>
-					<uli:Kod>647268</uli:Kod>
+					<uli:Kod>645907</uli:Kod>
 				</ami:Ulice>
 				<ami:VOKod>42877</ami:VOKod>
 				<ami:PlatiOd>2014-04-03T00:00:00</ami:PlatiOd>
@@ -2248,13 +2255,15 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.72456213">
 				<ami:Kod>72456213</ami:Kod>
-				<ami:CisloDomovni>665</ami:CisloDomovni>
+				<ami:CisloDomovni>61</ami:CisloDomovni>
+				<ami:CisloOrientacni>5</ami:CisloOrientacni>
+				<ami:CisloOrientacniPismeno>A</ami:CisloOrientacniPismeno>
 				<ami:Psc>76311</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>77834194</soi:Kod>
 				</ami:StavebniObjekt>
 				<ami:Ulice>
-					<uli:Kod>647268</uli:Kod>
+					<uli:Kod>645907</uli:Kod>
 				</ami:Ulice>
 				<ami:VOKod>42877</ami:VOKod>
 				<ami:PlatiOd>2014-03-25T00:00:00</ami:PlatiOd>
@@ -2272,14 +2281,13 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.4197348">
 				<ami:Kod>4197348</ami:Kod>
-				<ami:CisloDomovni>546</ami:CisloDomovni>
+				<ami:CisloDomovni>91</ami:CisloDomovni>
+				<ami:CisloOrientacni>11</ami:CisloOrientacni>
+				<ami:CisloOrientacniPismeno>B</ami:CisloOrientacniPismeno>
 				<ami:Psc>76311</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>4167694</soi:Kod>
 				</ami:StavebniObjekt>
-				<ami:Ulice>
-					<uli:Kod>644960</uli:Kod>
-				</ami:Ulice>
 				<ami:VOKod>16907</ami:VOKod>
 				<ami:PlatiOd>2013-12-04T00:00:00</ami:PlatiOd>
 				<ami:IdTransakce>421088</ami:IdTransakce>
@@ -2294,6 +2302,6 @@
 					</ami:DefinicniBod>
 				</ami:Geometrie>
 			</vf:AdresniMisto>
-		</vf:AdresniMista>-->
+		</vf:AdresniMista>
 	</vf:Data>
 </vf:VymennyFormat>
