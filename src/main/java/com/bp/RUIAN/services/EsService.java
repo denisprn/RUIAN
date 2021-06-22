@@ -120,10 +120,18 @@ public class EsService {
     }
 
     public String searchAdresa(SearchHit hit, Long id) {
+        String cisloO = "", cisloOP = "";
         Map<String, Object> sourceAsMap = hit.getSourceAsMap();
         String cisloD = sourceAsMap.get("cisloDomovni").toString();
-        String cisloO = sourceAsMap.get("cisloOrientacni").toString();
-        String cisloOP = sourceAsMap.get("cisloOrientacniPismeno").toString();
+
+        if (sourceAsMap.get("cisloOrientacni") != null) {
+            cisloO = sourceAsMap.get("cisloOrientacni").toString();
+            cisloO += "/";
+        }
+
+        if (sourceAsMap.get("cisloOrientacniPismeno") != null) {
+            cisloOP = sourceAsMap.get("cisloOrientacniPismeno").toString();
+        }
 
         Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
 
@@ -140,15 +148,15 @@ public class EsService {
                     if (obec.isPresent()) {
                         String nazevObce = obec.get().nazev();
 
-                        return String.format("<b>%s %s/%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
+                        return String.format("<b>%s %s%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
                                 cisloD, cisloOP, nazevObce);
                     } else {
-                        return String.format("<b>%s %s/%s%s</b><br>Adresa", nazevUlice, cisloO,
+                        return String.format("<b>%s %s%s%s</b><br>Adresa", nazevUlice, cisloO,
                                 cisloD, cisloOP);
                     }
                 }
             } else {
-                return String.format("<b>%s/%s%s</b><br>Adresa", cisloO,
+                return String.format("<b>%s%s%s</b><br>Adresa", cisloO,
                         cisloD, cisloOP);
             }
         }

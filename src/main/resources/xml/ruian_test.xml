@@ -1,6 +1,6 @@
 <vf:VymennyFormat xsi:schemaLocation="urn:cz:isvs:ruian:schemas:VymennyFormatTypy:v1 ../ruian/xsd/vymenny_format/VymennyFormatTypy.xsd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ami="urn:cz:isvs:ruian:schemas:AdrMistoIntTypy:v1" xmlns:base="urn:cz:isvs:ruian:schemas:BaseTypy:v1" xmlns:coi="urn:cz:isvs:ruian:schemas:CastObceIntTypy:v1" xmlns:com="urn:cz:isvs:ruian:schemas:CommonTypy:v1" xmlns:kui="urn:cz:isvs:ruian:schemas:KatUzIntTypy:v1" xmlns:kri="urn:cz:isvs:ruian:schemas:KrajIntTypy:v1" xmlns:mci="urn:cz:isvs:ruian:schemas:MomcIntTypy:v1" xmlns:mpi="urn:cz:isvs:ruian:schemas:MopIntTypy:v1" xmlns:obi="urn:cz:isvs:ruian:schemas:ObecIntTypy:v1" xmlns:oki="urn:cz:isvs:ruian:schemas:OkresIntTypy:v1" xmlns:opi="urn:cz:isvs:ruian:schemas:OrpIntTypy:v1" xmlns:pai="urn:cz:isvs:ruian:schemas:ParcelaIntTypy:v1" xmlns:pui="urn:cz:isvs:ruian:schemas:PouIntTypy:v1" xmlns:rsi="urn:cz:isvs:ruian:schemas:RegSouIntiTypy:v1" xmlns:spi="urn:cz:isvs:ruian:schemas:SpravObvIntTypy:v1" xmlns:sti="urn:cz:isvs:ruian:schemas:StatIntTypy:v1" xmlns:soi="urn:cz:isvs:ruian:schemas:StavObjIntTypy:v1" xmlns:uli="urn:cz:isvs:ruian:schemas:UliceIntTypy:v1" xmlns:vci="urn:cz:isvs:ruian:schemas:VuscIntTypy:v1" xmlns:vf="urn:cz:isvs:ruian:schemas:VymennyFormatTypy:v1" xmlns:zji="urn:cz:isvs:ruian:schemas:ZsjIntTypy:v1" xmlns:voi="urn:cz:isvs:ruian:schemas:VOIntTypy:v1">
 	<vf:Data>
-		<vf:Staty>
+		<!--<vf:Staty>
 			<vf:Stat gml:id="ST.1">
 				<sti:Kod>1</sti:Kod>
 				<sti:Nazev>Česká republika</sti:Nazev>
@@ -658,7 +658,7 @@
 				</pui:Geometrie>
 				<pui:DatumVzniku>1990-11-24T00:00:00</pui:DatumVzniku>
 			</vf:Pou>
-		</vf:Pou>
+		</vf:Pou>-->
 		<vf:Obce>
 			<vf:Obec gml:id="OB.569089">
 				<obi:Kod>500011</obi:Kod>
@@ -849,8 +849,44 @@
 				</obi:Geometrie>
 				<obi:DatumVzniku>1990-11-24T00:00:00</obi:DatumVzniku>
 			</vf:Obec>
+			<vf:Obec gml:id="OB.586846">
+				<obi:Kod>586846</obi:Kod>
+				<obi:Nazev>Jihlava</obi:Nazev>
+				<obi:StatusKod>4</obi:StatusKod>
+				<obi:Okres>
+					<oki:Kod>3707</oki:Kod>
+				</obi:Okres>
+				<obi:Pou>
+					<pui:Kod>3018</pui:Kod>
+				</obi:Pou>
+				<obi:PlatiOd>2018-11-15T00:00:00</obi:PlatiOd>
+				<obi:IdTransakce>2635960</obi:IdTransakce>
+				<obi:GlobalniIdNavrhuZmeny>1886956</obi:GlobalniIdNavrhuZmeny>
+				<obi:MluvnickeCharakteristiky>
+					<com:Pad2>Jihlavy</com:Pad2>
+					<com:Pad3>Jihlavě</com:Pad3>
+					<com:Pad4>Jihlavu</com:Pad4>
+					<com:Pad6>Jihlavě</com:Pad6>
+					<com:Pad7>Jihlavou</com:Pad7>
+				</obi:MluvnickeCharakteristiky>
+				<obi:VlajkaText>Kosmo dělený list, horní pole bílé s červeným ježkem, dolní červené s českým lvem. Poměr šířky k délce listu je 2:3.</obi:VlajkaText>
+				<obi:NutsLau>CZ0632586846</obi:NutsLau>
+				<obi:Geometrie>
+					<obi:DefinicniBod>
+						<gml:MultiPoint gml:id="DOB.586846"
+										srsName="urn:ogc:def:crs:EPSG::5514"
+										srsDimension="2">
+							<gml:pointMembers>
+								<gml:Point gml:id="DOB.586846.1">
+									<gml:pos>-669075.00 -1130105.00</gml:pos>
+								</gml:Point>
+							</gml:pointMembers>
+						</gml:MultiPoint>
+					</obi:DefinicniBod>
+				</obi:Geometrie>
+			</vf:Obec>
 		</vf:Obce>
-		<vf:SpravniObvody>
+		<!--<vf:SpravniObvody>
 			<vf:SpravniObvod gml:id="SP.19">
 				<spi:Kod>19</spi:Kod>
 				<spi:Nazev>Praha 1</spi:Nazev>
@@ -1722,7 +1758,7 @@
 				</zji:Geometrie>
 				<zji:DatumVzniku>1970-12-01T00:00:00</zji:DatumVzniku>
 			</vf:Zsj>
-		</vf:Zsj>
+		</vf:Zsj>-->
 		<vf:Ulice>
 			<vf:Ulice gml:id="UL.644196">
 				<uli:Kod>644196</uli:Kod>
@@ -1820,8 +1856,18 @@
 				<uli:IdTransakce>2480652</uli:IdTransakce>
 				<uli:GlobalniIdNavrhuZmeny>1800470</uli:GlobalniIdNavrhuZmeny>
 			</vf:Ulice>
+			<vf:Ulice gml:id="UL.171441">
+				<uli:Kod>171441</uli:Kod>
+				<uli:Nazev>Masarykovo náměstí</uli:Nazev>
+				<uli:Obec>
+					<obi:Kod>586846</obi:Kod>
+				</uli:Obec>
+				<uli:PlatiOd>2017-05-16T00:00:00</uli:PlatiOd>
+				<uli:IdTransakce>1850590</uli:IdTransakce>
+				<uli:GlobalniIdNavrhuZmeny>1368563</uli:GlobalniIdNavrhuZmeny>
+			</vf:Ulice>
 		</vf:Ulice>
-		<vf:Parcely>
+		<!--<vf:Parcely>
 			<vf:Parcela gml:id="PA.79432960010">
 				<pai:Id>79432960010</pai:Id>
 				<pai:KmenoveCislo>457</pai:KmenoveCislo>
@@ -2173,7 +2219,7 @@
 					</soi:OriginalniHranice>
 				</soi:Geometrie>
 			</vf:StavebniObjekt>
-		</vf:StavebniObjekty>
+		</vf:StavebniObjekty>-->
 		<vf:AdresniMista>
 			<vf:AdresniMisto gml:id="AD.72850124">
 				<ami:Kod>72850124</ami:Kod>
@@ -2297,6 +2343,141 @@
 						<ami:AdresniBod>
 							<gml:Point gml:id="DAM.4197348.1" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
 								<gml:pos>-515717.78 -1166529.50</gml:pos>
+							</gml:Point>
+						</ami:AdresniBod>
+					</ami:DefinicniBod>
+				</ami:Geometrie>
+			</vf:AdresniMisto>
+			<vf:AdresniMisto gml:id="AD.12331163">
+				<ami:Kod>12331163</ami:Kod>
+				<ami:CisloDomovni>61</ami:CisloDomovni>
+				<ami:CisloOrientacni>18</ami:CisloOrientacni>
+				<ami:Psc>58601</ami:Psc>
+				<ami:StavebniObjekt>
+					<soi:Kod>12263176</soi:Kod>
+				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>171441</uli:Kod>
+				</ami:Ulice>
+				<ami:VOKod>18293</ami:VOKod>
+				<ami:PlatiOd>2013-12-05T00:00:00</ami:PlatiOd>
+				<ami:IdTransakce>422022</ami:IdTransakce>
+				<ami:GlobalniIdNavrhuZmeny>468348</ami:GlobalniIdNavrhuZmeny>
+				<ami:Geometrie>
+					<ami:DefinicniBod>
+						<ami:AdresniBod>
+							<gml:Point gml:id="DAM.12331163.1"
+									   srsName="urn:ogc:def:crs:EPSG::5514"
+									   srsDimension="2">
+								<gml:pos>-669017.44 -1130307.50</gml:pos>
+							</gml:Point>
+						</ami:AdresniBod>
+					</ami:DefinicniBod>
+				</ami:Geometrie>
+			</vf:AdresniMisto>
+			<vf:AdresniMisto gml:id="AD.12331198">
+				<ami:Kod>12331198</ami:Kod>
+				<ami:CisloDomovni>64</ami:CisloDomovni>
+				<ami:CisloOrientacni>17</ami:CisloOrientacni>
+				<ami:Psc>58601</ami:Psc>
+				<ami:StavebniObjekt>
+					<soi:Kod>12263206</soi:Kod>
+				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>171441</uli:Kod>
+				</ami:Ulice>
+				<ami:VOKod>18293</ami:VOKod>
+				<ami:PlatiOd>2013-12-05T00:00:00</ami:PlatiOd>
+				<ami:IdTransakce>422022</ami:IdTransakce>
+				<ami:GlobalniIdNavrhuZmeny>468348</ami:GlobalniIdNavrhuZmeny>
+				<ami:Geometrie>
+					<ami:DefinicniBod>
+						<ami:AdresniBod>
+							<gml:Point gml:id="DAM.12331198.1"
+									   srsName="urn:ogc:def:crs:EPSG::5514"
+									   srsDimension="2">
+								<gml:pos>-669018.06 -1130297.00</gml:pos>
+							</gml:Point>
+						</ami:AdresniBod>
+					</ami:DefinicniBod>
+				</ami:Geometrie>
+			</vf:AdresniMisto>
+			<vf:AdresniMisto gml:id="AD.12331201">
+				<ami:Kod>12331201</ami:Kod>
+				<ami:CisloDomovni>65</ami:CisloDomovni>
+				<ami:CisloOrientacni>16</ami:CisloOrientacni>
+				<ami:Psc>58601</ami:Psc>
+				<ami:StavebniObjekt>
+					<soi:Kod>12263214</soi:Kod>
+				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>171441</uli:Kod>
+				</ami:Ulice>
+				<ami:VOKod>18293</ami:VOKod>
+				<ami:PlatiOd>2018-09-18T00:00:00</ami:PlatiOd>
+				<ami:IdTransakce>2554788</ami:IdTransakce>
+				<ami:GlobalniIdNavrhuZmeny>1844739</ami:GlobalniIdNavrhuZmeny>
+				<ami:Geometrie>
+					<ami:DefinicniBod>
+						<ami:AdresniBod>
+							<gml:Point gml:id="DAM.12331201.1"
+									   srsName="urn:ogc:def:crs:EPSG::5514"
+									   srsDimension="2">
+								<gml:pos>-669029.19 -1130284.05</gml:pos>
+							</gml:Point>
+						</ami:AdresniBod>
+					</ami:DefinicniBod>
+				</ami:Geometrie>
+			</vf:AdresniMisto>
+			<vf:AdresniMisto gml:id="AD.12331503">
+				<ami:Kod>12331503</ami:Kod>
+				<ami:CisloDomovni>66</ami:CisloDomovni>
+				<ami:CisloOrientacni>3</ami:CisloOrientacni>
+				<ami:Psc>58601</ami:Psc>
+				<ami:StavebniObjekt>
+					<soi:Kod>12263516</soi:Kod>
+				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>171441</uli:Kod>
+				</ami:Ulice>
+				<ami:VOKod>18293</ami:VOKod>
+				<ami:PlatiOd>2013-12-05T00:00:00</ami:PlatiOd>
+				<ami:IdTransakce>422022</ami:IdTransakce>
+				<ami:GlobalniIdNavrhuZmeny>468348</ami:GlobalniIdNavrhuZmeny>
+				<ami:Geometrie>
+					<ami:DefinicniBod>
+						<ami:AdresniBod>
+							<gml:Point gml:id="DAM.12331503.1"
+									   srsName="urn:ogc:def:crs:EPSG::5514"
+									   srsDimension="2">
+								<gml:pos>-669070.25 -1130134.00</gml:pos>
+							</gml:Point>
+						</ami:AdresniBod>
+					</ami:DefinicniBod>
+				</ami:Geometrie>
+			</vf:AdresniMisto>
+			<vf:AdresniMisto gml:id="AD.12331511">
+				<ami:Kod>12331511</ami:Kod>
+				<ami:CisloDomovni>67</ami:CisloDomovni>
+				<ami:CisloOrientacni>2</ami:CisloOrientacni>
+				<ami:Psc>58601</ami:Psc>
+				<ami:StavebniObjekt>
+					<soi:Kod>12263524</soi:Kod>
+				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>171441</uli:Kod>
+				</ami:Ulice>
+				<ami:VOKod>18293</ami:VOKod>
+				<ami:PlatiOd>2013-12-05T00:00:00</ami:PlatiOd>
+				<ami:IdTransakce>422022</ami:IdTransakce>
+				<ami:GlobalniIdNavrhuZmeny>468348</ami:GlobalniIdNavrhuZmeny>
+				<ami:Geometrie>
+					<ami:DefinicniBod>
+						<ami:AdresniBod>
+							<gml:Point gml:id="DAM.12331511.1"
+									   srsName="urn:ogc:def:crs:EPSG::5514"
+									   srsDimension="2">
+								<gml:pos>-669073.75 -1130125.00</gml:pos>
 							</gml:Point>
 						</ami:AdresniBod>
 					</ami:DefinicniBod>
