@@ -96,6 +96,94 @@ public class EsService {
         return objects;
     }
 
+    public String searchUlice(SearchHit hit, Long id) {
+        Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+        String nazevUlice = sourceAsMap.get("nazev").toString();
+
+        Optional<Ulice> ulice = uliceRepository.findById(id);
+
+        if (ulice.isPresent()) {
+            Long kodObce = Long.parseLong(ulice.get().kodObce().toString());
+
+            Optional<Obec> obec = obecRepository.findById(kodObce);
+
+            if (obec.isPresent()) {
+                String nazevObce = obec.get().nazev();
+
+                return String.format("<b>%s</b><br>Ulice, %s", nazevUlice, nazevObce);
+            } else {
+                return String.format("<b>%s</b><br>Ulice", nazevUlice);
+            }
+        }
+
+        return null;
+    }
+
+    public String searchAdresa(SearchHit hit, Long id) {
+        Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+        String cisloD = sourceAsMap.get("cisloDomovni").toString();
+        String cisloO = sourceAsMap.get("cisloOrientacni").toString();
+        String cisloOP = sourceAsMap.get("cisloOrientacniPismeno").toString();
+
+        Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
+
+        if (adresniMisto.isPresent()) {
+            if (adresniMisto.get().uliceKod() != null) {
+                Long kodUlice = Long.parseLong(adresniMisto.get().uliceKod().toString());
+                Optional<Ulice> ulice = uliceRepository.findById(kodUlice);
+
+                if (ulice.isPresent()) {
+                    String nazevUlice = ulice.get().nazev();
+                    Long kodObce = Long.parseLong(ulice.get().kodObce().toString());
+                    Optional<Obec> obec = obecRepository.findById(kodObce);
+
+                    if (obec.isPresent()) {
+                        String nazevObce = obec.get().nazev();
+
+                        return String.format("<b>%s %s/%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
+                                cisloD, cisloOP, nazevObce);
+                    } else {
+                        return String.format("<b>%s %s/%s%s</b><br>Adresa", nazevUlice, cisloO,
+                                cisloD, cisloOP);
+                    }
+                }
+            } else {
+                return String.format("<b>%s/%s%s</b><br>Adresa", cisloO,
+                        cisloD, cisloOP);
+            }
+        }
+
+        return null;
+    }
+
+    public List<String> search(String searchString) throws IOException {
+        SearchRequest searchRequest = new SearchRequest("ulice", "adresnimisto");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(searchString,
+                "nazev", "cisloDomovni", "cisloOrientacni", "cisloOrientacniPismeno")
+                .fuzziness("AUTO"));
+
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+
+        List<String> found = new ArrayList<>();
+        String result = null;
+
+        for (SearchHit hit : searchResponse.getHits().getHits()) {
+            String hitIndexName = hit.getIndex();
+            Long id = Long.parseLong(hit.getId());
+
+            switch(hitIndexName) {
+                case "adresnimisto" -> result = searchAdresa(hit, id);
+                case "ulice" -> result = searchUlice(hit, id);
+            }
+
+            found.add(result);
+        }
+
+        return found;
+    }
+
     public void saveStat(Stat stat) {
         statRepository.save(stat);
     }
@@ -162,49 +250,5 @@ public class EsService {
 
     public void saveAdresniMisto(AdresniMisto adresniMisto) {
         adresniMistoRepository.save(adresniMisto);
-    }
-
-    public List<Object> search(String searchString) throws IOException {
-        SearchRequest searchRequest = new SearchRequest("okres", "obec", "castobce",
-                "ulice", "adresnimisto");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(searchString,
-                "nazev", "cisloDomovni", "cisloOrientacni", "cisloOrientacniPismeno",
-                "psc", "nutsLau").fuzziness("AUTO"));
-
-        searchRequest.source(searchSourceBuilder);
-        SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
-
-        List<Object> founded = new ArrayList<>();
-
-        for (SearchHit hit : searchResponse.getHits().getHits()) {
-            String hitIndexName = hit.getIndex();
-            Long id = Long.parseLong(hit.getId());
-
-            switch(hitIndexName) {
-                case "okres" -> {
-                    Optional<Okres> okres = okresRepository.findById(id);
-                    founded.add(okres.orElse(null));
-                }
-                case "obec" -> {
-                    Optional<Obec> obec = obecRepository.findById(id);
-                    founded.add(obec.orElse(null));
-                }
-                case "castobce" -> {
-                    Optional<CastObce> castObce = castObceRepository.findById(id);
-                    founded.add(castObce.orElse(null));
-                }
-                case "ulice" -> {
-                    Optional<Ulice> ulice = uliceRepository.findById(id);
-                    founded.add(ulice.orElse(null));
-                }
-                case "adresnimisto" -> {
-                    Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
-                    founded.add(adresniMisto.orElse(null));
-                }
-            }
-        }
-
-        return founded;
     }
 }
