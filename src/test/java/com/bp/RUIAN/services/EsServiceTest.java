@@ -76,7 +76,7 @@ public class EsServiceTest {
         String[] keys;
 
         // napr. '4. kvetna 5'
-        if (searchString.matches("\\d*\\.*\\s*([a-zA-Z]\\s*)+\\d+")) {
+        if (searchString.matches("\\d*\\.*\\s*([a-žA-Ž]\\s*)+\\d+")) {
             Long idUlice;
             keys = searchString.split("\\s+");
             String result, nazevUlice, kodObce, nazevObce = "", cisloO = keys[keys.length - 1];
