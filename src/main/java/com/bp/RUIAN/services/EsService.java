@@ -2,13 +2,23 @@ package com.bp.RUIAN.services;
 
 import com.bp.RUIAN.entities.*;
 import com.bp.RUIAN.repositories.*;
+import org.elasticsearch.action.search.MultiSearchRequest;
+import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -119,7 +129,7 @@ public class EsService {
         return null;
     }
 
-    public String searchAdresa(SearchHit hit, Long id) {
+    public String searchAdresy(SearchHit hit, String nazevUlice, String nazevObce) {
         String cisloO = "", cisloOP = "";
         Map<String, Object> sourceAsMap = hit.getSourceAsMap();
         String cisloD = sourceAsMap.get("cisloDomovni").toString();
@@ -133,60 +143,70 @@ public class EsService {
             cisloOP = sourceAsMap.get("cisloOrientacniPismeno").toString();
         }
 
-        Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
-
-        if (adresniMisto.isPresent()) {
-            if (adresniMisto.get().uliceKod() != null) {
-                Long kodUlice = Long.parseLong(adresniMisto.get().uliceKod().toString());
-                Optional<Ulice> ulice = uliceRepository.findById(kodUlice);
-
-                if (ulice.isPresent()) {
-                    String nazevUlice = ulice.get().nazev();
-                    Long kodObce = Long.parseLong(ulice.get().kodObce().toString());
-                    Optional<Obec> obec = obecRepository.findById(kodObce);
-
-                    if (obec.isPresent()) {
-                        String nazevObce = obec.get().nazev();
-
-                        return String.format("<b>%s %s%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
-                                cisloD, cisloOP, nazevObce);
-                    } else {
-                        return String.format("<b>%s %s%s%s</b><br>Adresa", nazevUlice, cisloO,
-                                cisloD, cisloOP);
-                    }
-                }
-            } else {
-                return String.format("<b>%s%s%s</b><br>Adresa", cisloO,
-                        cisloD, cisloOP);
-            }
-        }
-
-        return null;
+        return String.format("<b>%s %s%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
+                cisloD, cisloOP, nazevObce);
     }
 
     public List<String> search(String searchString) throws IOException {
-        SearchRequest searchRequest = new SearchRequest("ulice", "adresnimisto");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(searchString,
-                "nazev", "cisloDomovni", "cisloOrientacni", "cisloOrientacniPismeno")
-                .fuzziness("AUTO"));
-
-        searchRequest.source(searchSourceBuilder);
-        SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
-
         List<String> found = new ArrayList<>();
-        String result = null;
+        String[] keys;
 
-        for (SearchHit hit : searchResponse.getHits().getHits()) {
-            String hitIndexName = hit.getIndex();
-            Long id = Long.parseLong(hit.getId());
+        // napr. '4. kvetna 5'
+        if (searchString.matches("\\d*\\.*\\s*([a-zA-Z]\\s*)+\\d+")) {
+            Long idUlice;
+            keys = searchString.split("\\s+");
+            String result, nazevUlice, kodObce, nazevObce = "", cisloO = keys[keys.length - 1];
+            StringBuilder nazevUliceFromSearch = new StringBuilder();
 
-            switch(hitIndexName) {
-                case "adresnimisto" -> result = searchAdresa(hit, id);
-                case "ulice" -> result = searchUlice(hit, id);
+            for (int i = 0; i < keys.length - 1; i++) {
+                if (i != keys.length - 2) {
+                    nazevUliceFromSearch.append(keys[i]).append(" ");
+                } else {
+                    nazevUliceFromSearch.append(keys[i]);
+                }
             }
 
-            found.add(result);
+            SearchRequest searchRequest = new SearchRequest("ulice");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            searchSourceBuilder.query(QueryBuilders.matchQuery("nazev", nazevUliceFromSearch.toString())
+                    .fuzziness(2));
+
+            searchRequest.source(searchSourceBuilder);
+            SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+
+            if (searchResponse.getHits().getHits().length > 0) {
+                SearchHit uliceHit = searchResponse.getHits().getHits()[0];
+                Map<String, Object> sourceAsMap = uliceHit.getSourceAsMap();
+                idUlice = Long.parseLong(sourceAsMap.get("kod").toString());
+                nazevUlice = sourceAsMap.get("nazev").toString();
+
+                if (sourceAsMap.get("kodObce") != null) {
+                    kodObce = sourceAsMap.get("kodObce").toString();
+
+                    Optional<Obec> obec = obecRepository.findById(Long.parseLong(kodObce));
+
+                    if (obec.isPresent()) {
+                        nazevObce = obec.get().nazev();
+                    }
+                }
+
+                searchRequest = new SearchRequest("adresnimisto");
+                searchSourceBuilder = new SearchSourceBuilder();
+                BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+                boolQueryBuilder
+                        .must(QueryBuilders.matchQuery("uliceKod", Integer.parseInt(idUlice.toString())))
+                        .should(QueryBuilders.matchQuery("cisloOrientacni", cisloO));
+
+                searchSourceBuilder.query(boolQueryBuilder);
+                searchRequest.source(searchSourceBuilder);
+                searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+
+                for (SearchHit hit : searchResponse.getHits().getHits()) {
+                    result = searchAdresy(hit, nazevUlice, nazevObce);
+
+                    found.add(result);
+                }
+            }
         }
 
         return found;
