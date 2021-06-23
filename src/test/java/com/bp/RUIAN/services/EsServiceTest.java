@@ -1,9 +1,7 @@
 package com.bp.RUIAN.services;
 
 import com.bp.RUIAN.FilesParser;
-import com.bp.RUIAN.entities.AdresniMisto;
 import com.bp.RUIAN.entities.Obec;
-import com.bp.RUIAN.entities.Ulice;
 import com.bp.RUIAN.repositories.AdresniMistoRepository;
 import com.bp.RUIAN.repositories.ObecRepository;
 import com.bp.RUIAN.repositories.UliceRepository;
@@ -11,13 +9,11 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,61 +50,97 @@ public class EsServiceTest {
         filesParser.walk(xmlDirectoryPath);
     }
 
+    public String searchAdresy(SearchHit hit, String nazevUlice, String nazevObce) {
+        String cisloO = "", cisloOP = "";
+        Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+        String cisloD = sourceAsMap.get("cisloDomovni").toString();
+
+        if (sourceAsMap.get("cisloOrientacni") != null) {
+            cisloO = sourceAsMap.get("cisloOrientacni").toString();
+            cisloO += "/";
+        }
+
+        if (sourceAsMap.get("cisloOrientacniPismeno") != null) {
+            cisloOP = sourceAsMap.get("cisloOrientacniPismeno").toString();
+        }
+
+        return String.format("<b>%s %s%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
+                cisloD, cisloOP, nazevObce);
+    }
+
     @Test
     @DisplayName("Should find the address, its street and the municipality")
     public void search() throws IOException {
-        String searchString = "668 55";
-        SearchRequest searchRequest = new SearchRequest("adresnimisto");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.multiMatchQuery(searchString,
-                "cisloDomovni", "cisloOrientacni", "cisloOrientacniPismeno"));
+        String searchString = "4 kvetna 5";
+        List<String> found = new ArrayList<>();
+        String[] keys;
 
-        searchRequest.source(searchSourceBuilder);
-        SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+        // napr. '4. kvetna 5'
+        if (searchString.matches("\\d*\\.*\\s*([a-zA-Z]\\s*)+\\d+")) {
+            Long idUlice;
+            keys = searchString.split("\\s+");
+            String result, nazevUlice, kodObce, nazevObce = "", cisloO = keys[keys.length - 1];
+            StringBuilder nazevUliceFromSearch = new StringBuilder();
 
-        String resultActual = null;
+            for (int i = 0; i < keys.length - 1; i++) {
+                if (i != keys.length - 2) {
+                    nazevUliceFromSearch.append(keys[i]).append(" ");
+                } else {
+                    nazevUliceFromSearch.append(keys[i]);
+                }
+            }
 
-        for (SearchHit hit : searchResponse.getHits().getHits()) {
-            String hitIndexName = hit.getIndex();
-            Long id = Long.parseLong(hit.getId());
+            SearchRequest searchRequest = new SearchRequest("ulice");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            searchSourceBuilder.query(QueryBuilders.matchQuery("nazev", nazevUliceFromSearch.toString())
+                    .fuzziness(2));
 
-            if ("adresnimisto".equals(hitIndexName)) {
-                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-                String cisloD = (String) sourceAsMap.get("cisloDomovni");
-                String cisloO = (String) sourceAsMap.get("cisloOrientacni");
-                String cisloOP = (String) sourceAsMap.get("cisloOrientacniPismeno");
+            searchRequest.source(searchSourceBuilder);
+            SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
 
-                Optional<AdresniMisto> adresniMisto = adresniMistoRepository.findById(id);
+            if (searchResponse.getHits().getHits().length > 0) {
+                SearchHit uliceHit = searchResponse.getHits().getHits()[0];
+                Map<String, Object> sourceAsMap = uliceHit.getSourceAsMap();
+                idUlice = Long.parseLong(sourceAsMap.get("kod").toString());
+                nazevUlice = sourceAsMap.get("nazev").toString();
 
-                if (adresniMisto.isPresent()) {
-                    if (adresniMisto.get().uliceKod() != null) {
-                        Long kodUlice = Long.parseLong(adresniMisto.get().uliceKod().toString());
-                        Optional<Ulice> ulice = uliceRepository.findById(kodUlice);
+                if (sourceAsMap.get("kodObce") != null) {
+                    kodObce = sourceAsMap.get("kodObce").toString();
 
-                        if (ulice.isPresent()) {
-                            String nazevUlice = ulice.get().nazev();
-                            Long kodObce = Long.parseLong(ulice.get().kodObce().toString());
-                            Optional<Obec> obec = obecRepository.findById(kodObce);
+                    Optional<Obec> obec = obecRepository.findById(Long.parseLong(kodObce));
 
-                            if (obec.isPresent()) {
-                                String nazevObce = obec.get().nazev();
-
-                                resultActual = String.format("<b>%s %s/%s%s</b><br>Adresa, %s", nazevUlice, cisloO,
-                                        cisloD, cisloOP, nazevObce);
-                            } else {
-                                resultActual = String.format("<b>%s %s/%s%s</b><br>Adresa", nazevUlice, cisloO,
-                                        cisloD, cisloOP);
-                            }
-                        }
-                    } else {
-                        resultActual = String.format("<b>%s/%s%s</b><br>Adresa", cisloO,
-                                cisloD, cisloOP);
+                    if (obec.isPresent()) {
+                        nazevObce = obec.get().nazev();
                     }
+                }
+
+                searchRequest = new SearchRequest("adresnimisto");
+                searchSourceBuilder = new SearchSourceBuilder();
+                BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+                boolQueryBuilder
+                        .must(QueryBuilders.matchQuery("uliceKod", Integer.parseInt(idUlice.toString())))
+                        .should(QueryBuilders.matchQuery("cisloOrientacni", cisloO));
+
+                searchSourceBuilder.query(boolQueryBuilder);
+                searchRequest.source(searchSourceBuilder);
+                searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+
+                for (SearchHit hit : searchResponse.getHits().getHits()) {
+                    result = searchAdresy(hit, nazevUlice, nazevObce);
+
+                    found.add(result);
                 }
             }
         }
 
-        String resultExpected = "<b>4. května 55/668A</b><br>Adresa, Maleč";
-        assertEquals(resultExpected, resultActual);
+        List<String> addresses = new ArrayList<>();
+        String firstAddress = "<b>4. května 55/668A</b><br>Adresa, Maleč";
+        String secondAddress = "<b>4. května 56/667B</b><br>Adresa, Maleč";
+        String thirdAddress = "<b>4. května 1/669A</b><br>Adresa, Maleč";
+        addresses.add(firstAddress);
+        addresses.add(secondAddress);
+        addresses.add(thirdAddress);
+
+        assertEquals(addresses, found);
     }
 }
