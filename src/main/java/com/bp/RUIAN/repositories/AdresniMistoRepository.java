@@ -13,6 +13,9 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
  */
 @EnableElasticsearchRepositories
 public interface AdresniMistoRepository extends ElasticsearchRepository<AdresniMisto, Long> {
+    Page<AdresniMisto> findAdresniMistosByUliceKodAndCisloDomovniStartingWithAndCisloOrientacniStartingWith(
+            Integer uliceKod, String cisloDomovni, String cisloOrientacni, Pageable pageable);
+
     Page<AdresniMisto>
             findAdresniMistosByUliceKodAndCisloDomovniLikeAndCisloOrientacniLikeAndCisloOrientacniPismenoLike(
             Integer uliceKod, String cisloDomovni, String cisloOrientacni,
