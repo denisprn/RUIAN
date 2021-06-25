@@ -24,9 +24,7 @@ public class EsServiceTest {
                 [
                     "<b>Masarykovo náměstí 18/16</b><br>Adresa, Jihlava",
                     "<b>Masarykovo náměstí 67/14</b><br>Adresa, Jihlava",
-                    "<b>Masarykovo náměstí 16/65A</b><br>Adresa, Jihlava",
-                    "<b>Masarykovo náměstí 63/56</b><br>Adresa, Jihlava",
-                    "<b>Masarykovo náměstí 62/57</b><br>Adresa, Jihlava"
+                    "<b>Masarykovo náměstí 16/65A</b><br>Adresa, Jihlava"
                 ]""";
 
         this.mockMvc.perform(get("/ruian/search?query={query}", "masarykovo naměstí 1"))
@@ -43,6 +41,20 @@ public class EsServiceTest {
                 ]""";
 
         this.mockMvc.perform(get("/ruian/search?query={query}", "masarykovo naměstí 1/6A"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json(result));
+    }
+
+    @Test
+    @DisplayName("Should return search result of street and numbers with '/'")
+    public void result3() throws Exception {
+        String result = """
+                [
+                    "<b>Masarykovo náměstí 63/56</b><br>Adresa, Jihlava",
+                    "<b>Masarykovo náměstí 62/57</b><br>Adresa, Jihlava"
+                ]""";
+
+        this.mockMvc.perform(get("/ruian/search?query={query}", "masarykovo naměstí 6/5"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(result));
     }
