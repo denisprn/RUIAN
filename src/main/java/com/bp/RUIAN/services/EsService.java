@@ -134,7 +134,7 @@ public class EsService {
 
         if (adresniBod.matches("\\d+")) {
             adresniMista = adresniMistoRepository.
-                    findByUliceKodWithCisloDomAndOrient(kodUlice, adresniBod, Pageable.ofSize(5));
+                    findByUliceKodWithCisloDomAndOrient(kodUlice, adresniBod, Pageable.ofSize(3));
         } else if (adresniBod.matches("\\d+/\\d+[a-zA-Z]?")) {
             bod = adresniBod.split("/");
             cisloOrientacni = bod[0];
@@ -161,6 +161,10 @@ public class EsService {
                         findAdresniMistosByUliceKodAndCisloDomovniLikeAndCisloOrientacniLikeAndCisloOrientacniPismenoLike(
                                 kodUlice, cisloDomovni, cisloOrientacni, cisloOrientacniPismeno,
                                 Pageable.ofSize(3));
+            } else if (cisloDomovni.matches("\\d+")){
+                adresniMista = adresniMistoRepository.
+                        findAdresniMistosByUliceKodAndCisloDomovniStartingWithAndCisloOrientacniStartingWith(
+                                kodUlice, cisloDomovni, cisloOrientacni, Pageable.ofSize(3));
             }
         }
 
