@@ -81,11 +81,20 @@ public class Search {
                         findAdresniMistosByUliceKodAndCisloDomovniLikeAndCisloOrientacniLikeAndCisloOrientacniPismenoLike(
                                 kodUlice, cisloDomovni, cisloOrientacni, cisloOrientacniPismeno,
                                 Pageable.ofSize(3));
-            } else if (cisloDomovni.matches("\\d+")){
+            } else if (cisloDomovni.matches("\\d+")) {
                 adresniMista = adresniMistoRepository.
                         findAdresniMistosByUliceKodAndCisloDomovniStartingWithAndCisloOrientacniStartingWith(
                                 kodUlice, cisloDomovni, cisloOrientacni, Pageable.ofSize(3));
             }
+        }
+
+        if (adresniBod.matches("\\d+/")) {
+            bod = adresniBod.split("/");
+            cisloOrientacni = bod[0];
+
+            adresniMista = adresniMistoRepository.
+                    findAdresniMistosByUliceKodAndCisloOrientacniStartingWith(
+                            kodUlice, cisloOrientacni, Pageable.ofSize(3));
         }
 
         for (AdresniMisto adresniMisto : adresniMista) {
