@@ -33,7 +33,7 @@ public class EsServiceTest {
     }
 
     @Test
-    @DisplayName("Should return search result of street and numbers with '/'")
+    @DisplayName("Should return search result of street and numbers with the '/'")
     public void result2() throws Exception {
         String result = """
                 [
@@ -46,7 +46,7 @@ public class EsServiceTest {
     }
 
     @Test
-    @DisplayName("Should return search result of street and numbers with '/'")
+    @DisplayName("Should return search result of street and numbers before and after the '/'")
     public void result3() throws Exception {
         String result = """
                 [
@@ -55,6 +55,20 @@ public class EsServiceTest {
                 ]""";
 
         this.mockMvc.perform(get("/ruian/search?query={query}", "masarykovo naměstí 6/5"))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().json(result));
+    }
+
+    @Test
+    @DisplayName("Should return search result of street and number before the '/'")
+    public void result4() throws Exception {
+        String result = """
+                [
+                    "<b>Masarykovo náměstí 18/16</b><br>Adresa, Jihlava",
+                    "<b>Masarykovo náměstí 16/65A</b><br>Adresa, Jihlava"
+                ]""";
+
+        this.mockMvc.perform(get("/ruian/search?query={query}", "masarykovo naměstí 1/"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().json(result));
     }
