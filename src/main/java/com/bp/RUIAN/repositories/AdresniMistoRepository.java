@@ -16,6 +16,9 @@ public interface AdresniMistoRepository extends ElasticsearchRepository<AdresniM
     Page<AdresniMisto> findAdresniMistosByUliceKodAndCisloDomovniStartingWithAndCisloOrientacniStartingWith(
             Integer uliceKod, String cisloDomovni, String cisloOrientacni, Pageable pageable);
 
+    Page<AdresniMisto> findAdresniMistosByUliceKodAndCisloOrientacniStartingWith(
+            Integer uliceKod, String cisloOrientacni, Pageable pageable);
+
     Page<AdresniMisto>
             findAdresniMistosByUliceKodAndCisloDomovniLikeAndCisloOrientacniLikeAndCisloOrientacniPismenoLike(
             Integer uliceKod, String cisloDomovni, String cisloOrientacni,
