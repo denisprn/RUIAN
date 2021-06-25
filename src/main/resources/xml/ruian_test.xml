@@ -1,6 +1,6 @@
 <vf:VymennyFormat xsi:schemaLocation="urn:cz:isvs:ruian:schemas:VymennyFormatTypy:v1 ../ruian/xsd/vymenny_format/VymennyFormatTypy.xsd" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ami="urn:cz:isvs:ruian:schemas:AdrMistoIntTypy:v1" xmlns:base="urn:cz:isvs:ruian:schemas:BaseTypy:v1" xmlns:coi="urn:cz:isvs:ruian:schemas:CastObceIntTypy:v1" xmlns:com="urn:cz:isvs:ruian:schemas:CommonTypy:v1" xmlns:kui="urn:cz:isvs:ruian:schemas:KatUzIntTypy:v1" xmlns:kri="urn:cz:isvs:ruian:schemas:KrajIntTypy:v1" xmlns:mci="urn:cz:isvs:ruian:schemas:MomcIntTypy:v1" xmlns:mpi="urn:cz:isvs:ruian:schemas:MopIntTypy:v1" xmlns:obi="urn:cz:isvs:ruian:schemas:ObecIntTypy:v1" xmlns:oki="urn:cz:isvs:ruian:schemas:OkresIntTypy:v1" xmlns:opi="urn:cz:isvs:ruian:schemas:OrpIntTypy:v1" xmlns:pai="urn:cz:isvs:ruian:schemas:ParcelaIntTypy:v1" xmlns:pui="urn:cz:isvs:ruian:schemas:PouIntTypy:v1" xmlns:rsi="urn:cz:isvs:ruian:schemas:RegSouIntiTypy:v1" xmlns:spi="urn:cz:isvs:ruian:schemas:SpravObvIntTypy:v1" xmlns:sti="urn:cz:isvs:ruian:schemas:StatIntTypy:v1" xmlns:soi="urn:cz:isvs:ruian:schemas:StavObjIntTypy:v1" xmlns:uli="urn:cz:isvs:ruian:schemas:UliceIntTypy:v1" xmlns:vci="urn:cz:isvs:ruian:schemas:VuscIntTypy:v1" xmlns:vf="urn:cz:isvs:ruian:schemas:VymennyFormatTypy:v1" xmlns:zji="urn:cz:isvs:ruian:schemas:ZsjIntTypy:v1" xmlns:voi="urn:cz:isvs:ruian:schemas:VOIntTypy:v1">
 	<vf:Data>
-		<!--<vf:Staty>
+		<vf:Staty>
 			<vf:Stat gml:id="ST.1">
 				<sti:Kod>1</sti:Kod>
 				<sti:Nazev>Česká republika</sti:Nazev>
@@ -658,7 +658,7 @@
 				</pui:Geometrie>
 				<pui:DatumVzniku>1990-11-24T00:00:00</pui:DatumVzniku>
 			</vf:Pou>
-		</vf:Pou>-->
+		</vf:Pou>
 		<vf:Obce>
 			<vf:Obec gml:id="OB.569089">
 				<obi:Kod>500011</obi:Kod>
@@ -886,7 +886,7 @@
 				</obi:Geometrie>
 			</vf:Obec>
 		</vf:Obce>
-		<!--<vf:SpravniObvody>
+		<vf:SpravniObvody>
 			<vf:SpravniObvod gml:id="SP.19">
 				<spi:Kod>19</spi:Kod>
 				<spi:Nazev>Praha 1</spi:Nazev>
@@ -1758,7 +1758,7 @@
 				</zji:Geometrie>
 				<zji:DatumVzniku>1970-12-01T00:00:00</zji:DatumVzniku>
 			</vf:Zsj>
-		</vf:Zsj>-->
+		</vf:Zsj>
 		<vf:Ulice>
 			<vf:Ulice gml:id="UL.644196">
 				<uli:Kod>644196</uli:Kod>
@@ -1867,7 +1867,7 @@
 				<uli:GlobalniIdNavrhuZmeny>1368563</uli:GlobalniIdNavrhuZmeny>
 			</vf:Ulice>
 		</vf:Ulice>
-		<!--<vf:Parcely>
+		<vf:Parcely>
 			<vf:Parcela gml:id="PA.79432960010">
 				<pai:Id>79432960010</pai:Id>
 				<pai:KmenoveCislo>457</pai:KmenoveCislo>
@@ -2219,13 +2219,39 @@
 					</soi:OriginalniHranice>
 				</soi:Geometrie>
 			</vf:StavebniObjekt>
-		</vf:StavebniObjekty>-->
+		</vf:StavebniObjekty>
 		<vf:AdresniMista>
 			<vf:AdresniMisto gml:id="AD.72850124">
 				<ami:Kod>72850124</ami:Kod>
 				<ami:CisloDomovni>668</ami:CisloDomovni>
 				<ami:CisloOrientacni>55</ami:CisloOrientacni>
 				<ami:CisloOrientacniPismeno>A</ami:CisloOrientacniPismeno>
+				<ami:Psc>76311</ami:Psc>
+				<ami:StavebniObjekt>
+					<soi:Kod>78171482</soi:Kod>
+				</ami:StavebniObjekt>
+				<ami:Ulice>
+					<uli:Kod>644196</uli:Kod>
+				</ami:Ulice>
+				<ami:VOKod>42877</ami:VOKod>
+				<ami:PlatiOd>2014-06-26T00:00:00</ami:PlatiOd>
+				<ami:IdTransakce>630728</ami:IdTransakce>
+				<ami:GlobalniIdNavrhuZmeny>594036</ami:GlobalniIdNavrhuZmeny>
+				<ami:Geometrie>
+					<ami:DefinicniBod>
+						<ami:AdresniBod>
+							<gml:Point gml:id="DAM.72850124.1" srsName="urn:ogc:def:crs:EPSG::5514" srsDimension="2">
+								<gml:pos>-516005.93 -1168276.78</gml:pos>
+							</gml:Point>
+						</ami:AdresniBod>
+					</ami:DefinicniBod>
+				</ami:Geometrie>
+			</vf:AdresniMisto>
+			<vf:AdresniMisto gml:id="AD.72850124">
+				<ami:Kod>72850121</ami:Kod>
+				<ami:CisloDomovni>667</ami:CisloDomovni>
+				<ami:CisloOrientacni>56</ami:CisloOrientacni>
+				<ami:CisloOrientacniPismeno>B</ami:CisloOrientacniPismeno>
 				<ami:Psc>76311</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>78171482</soi:Kod>
@@ -2350,7 +2376,7 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.12331163">
 				<ami:Kod>12331163</ami:Kod>
-				<ami:CisloDomovni>61</ami:CisloDomovni>
+				<ami:CisloDomovni>16</ami:CisloDomovni>
 				<ami:CisloOrientacni>18</ami:CisloOrientacni>
 				<ami:Psc>58601</ami:Psc>
 				<ami:StavebniObjekt>
@@ -2377,8 +2403,8 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.12331198">
 				<ami:Kod>12331198</ami:Kod>
-				<ami:CisloDomovni>64</ami:CisloDomovni>
-				<ami:CisloOrientacni>17</ami:CisloOrientacni>
+				<ami:CisloDomovni>14</ami:CisloDomovni>
+				<ami:CisloOrientacni>67</ami:CisloOrientacni>
 				<ami:Psc>58601</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>12263206</soi:Kod>
@@ -2406,6 +2432,7 @@
 				<ami:Kod>12331201</ami:Kod>
 				<ami:CisloDomovni>65</ami:CisloDomovni>
 				<ami:CisloOrientacni>16</ami:CisloOrientacni>
+				<ami:CisloOrientacniPismeno>A</ami:CisloOrientacniPismeno>
 				<ami:Psc>58601</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>12263214</soi:Kod>
@@ -2431,8 +2458,8 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.12331503">
 				<ami:Kod>12331503</ami:Kod>
-				<ami:CisloDomovni>66</ami:CisloDomovni>
-				<ami:CisloOrientacni>3</ami:CisloOrientacni>
+				<ami:CisloDomovni>56</ami:CisloDomovni>
+				<ami:CisloOrientacni>63</ami:CisloOrientacni>
 				<ami:Psc>58601</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>12263516</soi:Kod>
@@ -2458,8 +2485,8 @@
 			</vf:AdresniMisto>
 			<vf:AdresniMisto gml:id="AD.12331511">
 				<ami:Kod>12331511</ami:Kod>
-				<ami:CisloDomovni>67</ami:CisloDomovni>
-				<ami:CisloOrientacni>2</ami:CisloOrientacni>
+				<ami:CisloDomovni>57</ami:CisloDomovni>
+				<ami:CisloOrientacni>62</ami:CisloOrientacni>
 				<ami:Psc>58601</ami:Psc>
 				<ami:StavebniObjekt>
 					<soi:Kod>12263524</soi:Kod>
