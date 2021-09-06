@@ -19,17 +19,17 @@ import org.springframework.data.domain.Pageable;
 import java.io.IOException;
 import java.util.*;
 
-public class Search {
+public class CustomSearch {
     private final RestHighLevelClient esClient;
     private final AdresniMistoRepository adresniMistoRepository;
     private final UliceRepository uliceRepository;
     private final ObecRepository obecRepository;
     private final List<String> found = new ArrayList<>();
-    private final int DEFAULT_OBEC_KOD = 586846;
+    private final int DEFAULT_OBEC_KOD = 586846, DEFAULT_STREET_KOD = 171441;
 
 
-    public Search(RestHighLevelClient esClient, AdresniMistoRepository adresniMistoRepository,
-                  UliceRepository uliceRepository, ObecRepository obecRepository) {
+    public CustomSearch(RestHighLevelClient esClient, AdresniMistoRepository adresniMistoRepository,
+                        UliceRepository uliceRepository, ObecRepository obecRepository) {
         this.esClient = esClient;
         this.adresniMistoRepository = adresniMistoRepository;
         this.uliceRepository = uliceRepository;
@@ -45,6 +45,10 @@ public class Search {
         String nazevUlice = "", adresniBod = "", nazevObce = "";
         StringBuilder nameStrBuilder = new StringBuilder();
         List<String> addressTokens = new ArrayList<>();
+
+        if (!found.isEmpty()) {
+            found.clear();
+        }
 
         String[] tokens = searchString.split("[,\\s/]+");
 
@@ -69,66 +73,86 @@ public class Search {
             }
         }
 
-        //if (nameStrBuilder.length() > 0) {
-        int kodObce = 0, kodObceUlice = 0;
-        SearchRequest searchRequest = new SearchRequest("ulice", "obec");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(
-                QueryBuilders.matchQuery("nazev", nameStrBuilder.toString())
-                        .fuzziness(2));
-        searchRequest.source(searchSourceBuilder);
-        SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
+        if (!nameStrBuilder.isEmpty()) {
+            int kodObce = 0, kodObceUlice = 0;
+            SearchRequest searchRequest = new SearchRequest("ulice", "obec");
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(
+                    QueryBuilders.matchQuery("nazev", nameStrBuilder.toString())
+                            .fuzziness(2));
+            searchRequest.source(searchSourceBuilder);
+            SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
 
-        for (SearchHit hit : searchResponse.getHits().getHits()) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            for (SearchHit hit : searchResponse.getHits().getHits()) {
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 
-            if (hit.getIndex().equals("obec")) {
-                obecExist = true;
-                nazevObce = sourceAsMap.get("nazev").toString();
-                kodObce = Integer.parseInt(sourceAsMap.get("kod").toString());
-            } else if (hit.getIndex().equals("ulice")) {
-                uliceExist = true;
-                nazevUlice = sourceAsMap.get("nazev").toString();
-                kodUlice = Integer.parseInt(sourceAsMap.get("kod").toString());
-                kodObceUlice = Integer.parseInt(sourceAsMap.get("kodObce").toString());
+                if (hit.getIndex().equals("obec")) {
+                    obecExist = true;
+                    nazevObce = sourceAsMap.get("nazev").toString();
+                    kodObce = Integer.parseInt(sourceAsMap.get("kod").toString());
+                } else if (hit.getIndex().equals("ulice")) {
+                    uliceExist = true;
+                    nazevUlice = sourceAsMap.get("nazev").toString();
+                    kodUlice = Integer.parseInt(sourceAsMap.get("kod").toString());
+                    kodObceUlice = Integer.parseInt(sourceAsMap.get("kodObce").toString());
 
-                if (obecExist) {
-                    if (kodObce == kodObceUlice) {
-                        uliceInObecExist = true;
+                    if (obecExist) {
+                        if (kodObce == kodObceUlice) {
+                            uliceInObecExist = true;
+                        }
                     }
                 }
             }
-        }
 
-        if (uliceInObecExist || uliceExist) {
-            if (!obecExist) {
-                nazevObce = obecRepository.findObecByKod(kodObceUlice).nazev();
-            }
-
-            if (addressTokens.isEmpty()) {
-                String address = String.format("<b>%s</b><br>Ulice, %s",
-                        nazevUlice, nazevObce);
-                found.add(address);
-            } else {
-                Page<AdresniMisto> adresniMista = findAddresses(addressTokens, kodUlice);
-
-                if (adresniMista != null) {
-                    return addAddressToFoundList(adresniMista, nazevUlice, nazevObce);
+            if (uliceInObecExist || uliceExist) {
+                if (!obecExist) {
+                    nazevObce = obecRepository.findObecByKod(kodObceUlice).nazev();
                 }
-            }
-        } else if (obecExist) {
-            if (addressTokens.isEmpty()) {
-                String address = String.format("<b>%s</b><br>Obec, Česká republika", nazevObce);
-                found.add(address);
-            } else {
-                Page<Ulice> streetsByObec = uliceRepository.findUlicesByKodObce(kodObce, Pageable.ofSize(5));
 
-                for (Ulice ulice : streetsByObec) {
-                    Page<AdresniMisto> adresniMista = findAddresses(addressTokens, ulice.kod());
+                if (addressTokens.isEmpty()) {
+                    String address = String.format("<b>%s</b><br>Ulice, %s",
+                            nazevUlice, nazevObce);
+                    found.add(address);
+                } else {
+                    Page<AdresniMisto> adresniMista = findAddresses(addressTokens, kodUlice);
 
                     if (adresniMista != null) {
-                        nazevUlice = ulice.nazev();
-                        return addAddressToFoundList(adresniMista, nazevUlice, nazevObce);
+                        for (AdresniMisto adresniMisto : adresniMista) {
+                            addAddressToFoundList(adresniMisto, nazevUlice, nazevObce);
+                        }
                     }
+                }
+            } else if (obecExist) {
+                if (addressTokens.isEmpty()) {
+                    String address = String.format("<b>%s</b><br>Obec, Česká republika", nazevObce);
+                    found.add(address);
+                } else {
+                    Page<Ulice> streetsByObec = uliceRepository.findUlicesByKodObce(kodObce, Pageable.ofSize(5));
+
+                    for (Ulice ulice : streetsByObec) {
+                        Page<AdresniMisto> adresniMista = findAddresses(addressTokens, ulice.kod());
+
+                        if (adresniMista != null) {
+                            nazevUlice = ulice.nazev();
+
+                            for (AdresniMisto adresniMisto : adresniMista) {
+                                addAddressToFoundList(adresniMisto, nazevUlice, nazevObce);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (!addressTokens.isEmpty()) {
+            Page<AdresniMisto> adresniMista = findAddresses(addressTokens, DEFAULT_STREET_KOD);
+
+            if (adresniMista != null) {
+                int kodObce;
+
+                for (AdresniMisto adresniMisto : adresniMista) {
+                    kodUlice = adresniMisto.uliceKod();
+                    nazevUlice = uliceRepository.findUliceByKod(kodUlice).nazev();
+                    kodObce = uliceRepository.findUliceByKod(kodUlice).kodObce();
+                    nazevObce = obecRepository.findObecByKod(kodObce).nazev();
+                    addAddressToFoundList(adresniMisto, nazevUlice, nazevObce);
                 }
             }
         }
@@ -192,8 +216,33 @@ public class Search {
         return null;
     }
 
-    public List<String> addAddressToFoundList(@NotNull Page<AdresniMisto> adresniMista,
-                                       String nazevUlice, String nazevObce) {
+    public void addAddressToFoundList(AdresniMisto adresniMisto,
+                                      String nazevUlice, String nazevObce) {
+        String cisloDomovni = "", cisloOrientacni = "", cisloOrientacniPismeno = "";
+
+        cisloDomovni = adresniMisto.cisloDomovni();
+
+        if (adresniMisto.cisloOrientacni() != null) {
+            cisloOrientacni = adresniMisto.cisloOrientacni();
+            cisloOrientacni += "/";
+        } else {
+            cisloOrientacni += "";
+        }
+
+        if (adresniMisto.cisloOrientacniPismeno() != null) {
+            cisloOrientacniPismeno = adresniMisto.cisloOrientacniPismeno();
+        } else {
+            cisloOrientacniPismeno = "";
+        }
+
+        String adresa = String.format("<b>%s %s%s%s</b><br>Adresa, %s", nazevUlice, cisloOrientacni,
+                cisloDomovni, cisloOrientacniPismeno, nazevObce);
+
+        found.add(adresa);
+    }
+
+    /*public void addAddressesToFoundList(@NotNull Page<AdresniMisto> adresniMista,
+                                        String nazevUlice, String nazevObce) {
         String cisloDomovni = "", cisloOrientacni = "", cisloOrientacniPismeno = "";
 
         for (AdresniMisto adresniMisto : adresniMista) {
@@ -217,7 +266,5 @@ public class Search {
 
             found.add(adresa);
         }
-
-        return found;
-    }
+    }*/
 }
