@@ -1,9 +1,8 @@
 package com.bp.RUIAN.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
 
 import java.util.Date;
@@ -12,6 +11,7 @@ import java.util.Date;
  * Container for Ulice information
  * @author Denys Peresychanskyi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(indexName = "ulice")
 public record Ulice(
         @Id
