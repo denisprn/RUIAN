@@ -1,4 +1,4 @@
-package com.bp.RUIAN;
+package com.bp.RUIAN.parsers;
 
 import com.bp.RUIAN.entities.*;
 import com.bp.RUIAN.parsers.*;
