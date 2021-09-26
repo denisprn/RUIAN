@@ -25,7 +25,8 @@ public class AdresniMistoParserTest {
 
     @Test
     @DisplayName("Should parse AdresniMisto from XML file")
-    void parseAdresniMistoElement() throws ParseException, IOException, ParserConfigurationException, SAXException {
+    void parseAdresniMistoElement() throws ParseException, IOException,
+            ParserConfigurationException, SAXException {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         boolean nespravny = false;
 

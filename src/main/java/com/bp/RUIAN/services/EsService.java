@@ -2,23 +2,11 @@ package com.bp.RUIAN.services;
 
 import com.bp.RUIAN.entities.*;
 import com.bp.RUIAN.repositories.*;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Service for API's business logic
@@ -26,6 +14,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class EsService {
+    private final RestHighLevelClient esClient;
     private final StatRepository statRepository;
     private final RegionSoudrznostiRepository regionSoudrznostiRepository;
     private final VuscRepository vuscRepository;
@@ -43,8 +32,6 @@ public class EsService {
     private final ParcelaRepository parcelaRepository;
     private final StavebniObjektRepository stavebniObjektRepository;
     private final AdresniMistoRepository adresniMistoRepository;
-
-    private final RestHighLevelClient esClient;
 
     public EsService(RestHighLevelClient esClient, StatRepository statRepository,
                      RegionSoudrznostiRepository regionSoudrznostiRepository,
@@ -102,10 +89,8 @@ public class EsService {
         return objects;
     }
 
-    public List<String> search(String searchString) throws IOException {
-        Search search = new Search(esClient, adresniMistoRepository, obecRepository);
-
-        return search.search(searchString);
+    public List<Unit> search(String searchString) throws IOException {
+        return new AddressSearch(esClient, uliceRepository, obecRepository).search(searchString);
     }
 
     public void saveStat(Stat stat) {
