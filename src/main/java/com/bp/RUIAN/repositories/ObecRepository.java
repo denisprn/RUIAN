@@ -10,4 +10,5 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
  */
 @EnableElasticsearchRepositories
 public interface ObecRepository extends ElasticsearchRepository<Obec, Long> {
+    Obec findObecByKod(Integer kod);
 }

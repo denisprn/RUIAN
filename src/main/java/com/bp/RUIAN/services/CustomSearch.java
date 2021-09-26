@@ -1,3 +1,4 @@
+/*
 package com.bp.RUIAN.services;
 
 import com.bp.RUIAN.entities.AdresniMisto;
@@ -37,18 +38,15 @@ public class CustomSearch {
     }
 
     public List<String> search(String searchString) throws IOException {
+        List<String> found = new ArrayList<>();
         boolean cisloDomExist = false, cisloOrExist = false, cisloOPExist = false,
                 nameExist = false, obecExist = false, uliceExist = false,
                 uliceInObecExist = false, addressExist = false;
-        String cisloOr = "", cisloDom = "", cisloOrP = "";
         int kodUlice = 0;
-        String nazevUlice = "", adresniBod = "", nazevObce = "";
+        String nazevUlice = "", adresniBod = "", nazevObce = "",
+                cisloOr = "", cisloDom = "", cisloOrP = "";
         StringBuilder nameStrBuilder = new StringBuilder();
         List<String> addressTokens = new ArrayList<>();
-
-        if (!found.isEmpty()) {
-            found.clear();
-        }
 
         String[] tokens = searchString.split("[,\\s/]+");
 
@@ -126,7 +124,7 @@ public class CustomSearch {
                     String address = String.format("<b>%s</b><br>Obec, Česká republika", nazevObce);
                     found.add(address);
                 } else {
-                    Page<Ulice> streetsByObec = uliceRepository.findUlicesByKodObce(kodObce, Pageable.ofSize(5));
+                    Page<Ulice> streetsByObec = uliceRepository.findUlicesByKodObce(kodObce, Pageable.ofSize(2));
 
                     for (Ulice ulice : streetsByObec) {
                         Page<AdresniMisto> adresniMista = findAddresses(addressTokens, ulice.kod());
@@ -160,7 +158,7 @@ public class CustomSearch {
         return found;
     }
 
-    private Page<AdresniMisto> findAddresses(List<String> addressTokens, int kodUlice) {
+    private Page<AdresniMisto> findAddresses(@NotNull List<String> addressTokens, int kodUlice) {
         String cisloDom = "", cisloOr = "", cisloOP = "";
         boolean cisloDomExist = false, cisloOrExist = false, cisloOPExist = false;
 
@@ -240,31 +238,5 @@ public class CustomSearch {
 
         found.add(adresa);
     }
-
-    /*public void addAddressesToFoundList(@NotNull Page<AdresniMisto> adresniMista,
-                                        String nazevUlice, String nazevObce) {
-        String cisloDomovni = "", cisloOrientacni = "", cisloOrientacniPismeno = "";
-
-        for (AdresniMisto adresniMisto : adresniMista) {
-            cisloDomovni = adresniMisto.cisloDomovni();
-
-            if (adresniMisto.cisloOrientacni() != null) {
-                cisloOrientacni = adresniMisto.cisloOrientacni();
-                cisloOrientacni += "/";
-            } else {
-                cisloOrientacni += "";
-            }
-
-            if (adresniMisto.cisloOrientacniPismeno() != null) {
-                cisloOrientacniPismeno = adresniMisto.cisloOrientacniPismeno();
-            } else {
-                cisloOrientacniPismeno = "";
-            }
-
-            String adresa = String.format("<b>%s %s%s%s</b><br>Adresa, %s", nazevUlice, cisloOrientacni,
-                    cisloDomovni, cisloOrientacniPismeno, nazevObce);
-
-            found.add(adresa);
-        }
-    }*/
 }
+*/
