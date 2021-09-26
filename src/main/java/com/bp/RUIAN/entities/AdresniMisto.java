@@ -1,17 +1,18 @@
 package com.bp.RUIAN.entities;
 
+import com.bp.RUIAN.utils.GeoJsonDeserializer;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
-import org.springframework.data.geo.Point;
 import java.util.Date;
 
 /**
  * Container for AdresniMisto information
  * @author Denys Peresychanskyi
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(indexName = "adresnimisto")
 public record AdresniMisto (
         @Id
@@ -54,18 +55,10 @@ public record AdresniMisto (
         @Field(type = FieldType.Long, name = "globalniIdNavrhuZmeny")
         Long globalniIdNavrhuZmeny,
 
+        @JsonDeserialize(using = GeoJsonDeserializer.class)
         @Field(name = "definicniBod")
         GeoJsonPoint definicniBod,
 
         @Field(type = FieldType.Object, name = "nespravnyUdaj")
         NespravnyUdaj nespravnyUdaj
-) {
-        public static AdresniMisto createDefault() {
-                GeoJsonPoint definicniBod = GeoJsonPoint.of(new Point(1L, 1L));
-
-                return new AdresniMisto(1, false, "1", "2", "A",
-                        "12345", 1, 1, 1, new Date(),
-                        null, 1L, 1L,
-                        definicniBod,null);
-        }
-}
+) { }
