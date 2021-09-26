@@ -1,6 +1,7 @@
 package com.bp.RUIAN.controllers;
 
 import com.bp.RUIAN.services.EsService;
+import com.bp.RUIAN.entities.Unit;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class RuianController {
     }
 
     @GetMapping("/search")
-    public List<Object> search(@RequestParam("query") String query) throws IOException {
+    public List<Unit> search(@RequestParam("query") String query) throws IOException {
         return esService.search(query);
     }
 }
