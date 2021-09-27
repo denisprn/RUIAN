@@ -10,7 +10,10 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Container for Obec information
@@ -86,4 +89,15 @@ public record Obec(
 
         @Field(type = FieldType.Date, name = "datumVzniku")
         Date datumVzniku
-) { }
+) {
+        public static Obec create() {
+                MluvnickeCharakteristiky mluvChar = new MluvnickeCharakteristiky("Jihlavy", "Jihlave", "Jihlavu", "Jihlave",
+                        "Jihlavou");
+
+                return new Obec(586846, "Jihlava", false, 4, 3707, 3018,
+                        null, null, 2635960L, 1886956L,
+                        mluvChar, "Kosmo",
+                        null, null, null, null, null,
+                        "CZ0632586846", GeoJsonPoint.of(-669075.00, -1130105.00), null, null, null);
+        }
+}

@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -44,4 +45,10 @@ public record Ulice(
 
         @Field(type = FieldType.Object, name = "nespravnyUdaj")
         NespravnyUdaj nespravnyUdaj
-) { }
+) {
+        public static Ulice create() {
+                return new Ulice(171441, "Masarykovo namesti", false,586846,
+                        null, null, 1850590L, 1368563L,
+                        null, null);
+        }
+}

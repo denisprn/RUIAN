@@ -6,7 +6,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Container for AdresniMisto information
@@ -61,4 +65,11 @@ public record AdresniMisto (
 
         @Field(type = FieldType.Object, name = "nespravnyUdaj")
         NespravnyUdaj nespravnyUdaj
-) { }
+) {
+        public static AdresniMisto create() {
+                return new AdresniMisto(12331201, false,"65", "16",
+                        "A", "58601", 12263214, 171441, 18293,
+                        null, null, 2554788L, 1844739L,
+                        GeoJsonPoint.of(-669029.19, -1130284.05), null);
+        }
+}
