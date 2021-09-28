@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 
 import java.io.IOException;
 
-public class GeoJsonDeserializer extends JsonDeserializer<GeoJsonPoint> {
+public class GeoJsonPointDeserializer extends JsonDeserializer<GeoJsonPoint> {
     private final static String GEOJSON_TYPE_POINT = "Point";
     private final static String JSON_KEY_GEOJSON_TYPE = "type";
     private final static String JSON_KEY_GEOJSON_COORDS = "coordinates";
@@ -24,7 +24,7 @@ public class GeoJsonDeserializer extends JsonDeserializer<GeoJsonPoint> {
         double x = 0;
         double y = 0;
 
-        if(GEOJSON_TYPE_POINT.equalsIgnoreCase(type)) {
+        if (GEOJSON_TYPE_POINT.equalsIgnoreCase(type)) {
             x = coordsNode.get(0).asDouble();
             y = coordsNode.get(1).asDouble();
         }
