@@ -1,6 +1,6 @@
 package com.bp.RUIAN.entities;
 
-import com.bp.RUIAN.utils.GeoJsonDeserializer;
+import com.bp.RUIAN.utils.GeoJsonPointDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Id;
@@ -10,10 +10,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Container for Obec information
@@ -77,7 +74,7 @@ public record Obec(
         @Field(type = FieldType.Text, name = "nutsLau")
         String nutsLau,
 
-        @JsonDeserialize(using = GeoJsonDeserializer.class)
+        @JsonDeserialize(using = GeoJsonPointDeserializer.class)
         @Field(name = "definicniBod")
         GeoJsonPoint definicniBod,
 
