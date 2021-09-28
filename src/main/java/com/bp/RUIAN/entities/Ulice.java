@@ -1,6 +1,9 @@
 package com.bp.RUIAN.entities;
 
+import com.bp.RUIAN.utils.GeoJsonMultiLineStringDeserializer;
+import com.bp.RUIAN.utils.GeoJsonPointDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString;
@@ -40,6 +43,7 @@ public record Ulice(
         @Field(type = FieldType.Long, name = "globalniIdNavrhuZmeny")
         Long globalniIdNavrhuZmeny,
 
+        @JsonDeserialize(using = GeoJsonMultiLineStringDeserializer.class)
         @Field(name = "definicniCara")
         GeoJsonMultiLineString definicniCara,
 
