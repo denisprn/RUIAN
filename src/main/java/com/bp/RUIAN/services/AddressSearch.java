@@ -47,7 +47,6 @@ public class AddressSearch {
     }
 
     private List<Unit> findAddresses(SearchHit @NotNull [] searchHits) {
-        int limit = 0;
         List<SearchHit> obecHits = new ArrayList<>(), uliceHits = new ArrayList<>(),
                 adresnimHits = new ArrayList<>();
         String kodObce, kodObceUlice, kodUlice, kodUliceAM;
@@ -90,10 +89,6 @@ public class AddressSearch {
                                     Map<String, Object> amMap = adresniMistoHit.getSourceAsMap();
                                     AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                                     found.add(new Unit(adresniMisto, ulice, obec));
-
-                                    if (++limit == 5) {
-                                        return found;
-                                    }
                                 }
                             }
                         }
@@ -112,10 +107,6 @@ public class AddressSearch {
                             Map<String, Object> uliceMap = uliceHit.getSourceAsMap();
                             Ulice ulice = mapper.convertValue(uliceMap, Ulice.class);
                             found.add(new Unit(null, ulice, obec));
-
-                            if (++limit == 5) {
-                                return found;
-                            }
                         }
                     }
                 }
@@ -139,10 +130,6 @@ public class AddressSearch {
                                     Map<String, Object> amMap = adresniMistoHit.getSourceAsMap();
                                     AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                                     found.add(new Unit(adresniMisto, ulice, obec));
-
-                                    if (++limit == 5) {
-                                        return found;
-                                    }
                                 }
                             }
                         }
@@ -171,10 +158,6 @@ public class AddressSearch {
                             Map<String, Object> amMap = adresniMistoHit.getSourceAsMap();
                             AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                             found.add(new Unit(adresniMisto, ulice, obec));
-
-                            if (++limit == 5) {
-                                return found;
-                            }
                         }
                     }
                 }
@@ -185,10 +168,6 @@ public class AddressSearch {
                     kodObceUlice = ulice.kodObce().toString();
                     Obec obec = obecRepository.findObecByKod(Integer.parseInt(kodObceUlice));
                     found.add(new Unit(null, ulice, obec));
-
-                    if (++limit == 5) {
-                        return found;
-                    }
                 }
             }
         } else if (amExist) {
@@ -200,10 +179,6 @@ public class AddressSearch {
                 Map<String, Object> amMap = adresniMistoHit.getSourceAsMap();
                 AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                 found.add(new Unit(adresniMisto, ulice, obec));
-
-                if (++limit == 5) {
-                    return found;
-                }
             }
         }
 
