@@ -91,7 +91,7 @@ public class AddressSearch {
                                     AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                                     found.add(new Unit(adresniMisto, ulice, obec));
 
-                                    if (limit++ == 5) {
+                                    if (++limit == 5) {
                                         return found;
                                     }
                                 }
@@ -112,6 +112,10 @@ public class AddressSearch {
                             Map<String, Object> uliceMap = uliceHit.getSourceAsMap();
                             Ulice ulice = mapper.convertValue(uliceMap, Ulice.class);
                             found.add(new Unit(null, ulice, obec));
+
+                            if (++limit == 5) {
+                                return found;
+                            }
                         }
                     }
                 }
@@ -136,7 +140,7 @@ public class AddressSearch {
                                     AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                                     found.add(new Unit(adresniMisto, ulice, obec));
 
-                                    if (limit++ == 5) {
+                                    if (++limit == 5) {
                                         return found;
                                     }
                                 }
@@ -168,7 +172,7 @@ public class AddressSearch {
                             AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                             found.add(new Unit(adresniMisto, ulice, obec));
 
-                            if (limit++ == 5) {
+                            if (++limit == 5) {
                                 return found;
                             }
                         }
@@ -182,7 +186,7 @@ public class AddressSearch {
                     Obec obec = obecRepository.findObecByKod(Integer.parseInt(kodObceUlice));
                     found.add(new Unit(null, ulice, obec));
 
-                    if (limit++ == 5) {
+                    if (++limit == 5) {
                         return found;
                     }
                 }
@@ -197,7 +201,7 @@ public class AddressSearch {
                 AdresniMisto adresniMisto = mapper.convertValue(amMap, AdresniMisto.class);
                 found.add(new Unit(adresniMisto, ulice, obec));
 
-                if (limit++ == 5) {
+                if (++limit == 5) {
                     return found;
                 }
             }
