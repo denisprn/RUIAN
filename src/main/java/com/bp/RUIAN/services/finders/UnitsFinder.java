@@ -15,13 +15,10 @@ public class UnitsFinder {
     private final List<SearchHit> obecHits;
     private final List<SearchHit> uliceHits;
     private final List<SearchHit> amHits;
-    private final List<Unit> found;
-    private final Converter converter;
+    private final List<Unit> found = new ArrayList<>();
+    private final Converter converter = new Converter();
     private final UliceRepository uliceRepository;
     private final ObecRepository obecRepository;
-    private final boolean obecExist;
-    private final boolean uliceExist;
-    private final boolean amExist;
 
     public UnitsFinder(List<SearchHit> obecHits, List<SearchHit> uliceHits, List<SearchHit> amHits,
                        UliceRepository uliceRepository, ObecRepository obecRepository) {
@@ -30,14 +27,13 @@ public class UnitsFinder {
         this.amHits = amHits;
         this.uliceRepository = uliceRepository;
         this.obecRepository = obecRepository;
-        found = new ArrayList<>();
-        converter = new Converter();
-        obecExist = !obecHits.isEmpty();
-        uliceExist = !uliceHits.isEmpty();
-        amExist = !amHits.isEmpty();
     }
 
     public List<Unit> find() {
+        final boolean obecExist = !obecHits.isEmpty();
+        final boolean uliceExist = !uliceHits.isEmpty();
+        final boolean amExist = !amHits.isEmpty();
+
         if (obecExist) {
             if (uliceExist && amExist) {
                 return findIfAllExist();
