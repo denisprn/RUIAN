@@ -1,64 +1,81 @@
 package com.bp.RUIAN.services;
 
-import com.bp.RUIAN.entities.Unit;
-import com.bp.RUIAN.repositories.ObecRepository;
-import com.bp.RUIAN.repositories.UliceRepository;
-import com.bp.RUIAN.services.finders.UnitsFinder;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 public class AddressSearch {
     private final RestHighLevelClient esClient;
-    private final UliceRepository uliceRepository;
-    private final ObecRepository obecRepository;
 
-    public AddressSearch(RestHighLevelClient esClient,
-                         UliceRepository uliceRepository, ObecRepository obecRepository) {
+    public AddressSearch(RestHighLevelClient esClient) {
         this.esClient = esClient;
-        this.uliceRepository = uliceRepository;
-        this.obecRepository = obecRepository;
     }
 
-    public List<Unit> search(final String searchString) throws IOException {
-        SearchRequest searchRequest = new SearchRequest("obec", "ulice", "adresnimisto");
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder().query(
-                QueryBuilders.multiMatchQuery(searchString,"nazev","cisloDomovni",
-                        "cisloOrientacni", "cisloOrientacniPismeno").fuzziness("AUTO"));
+    public List<String> search(final String searchString) throws IOException {
+        SearchRequest searchRequest = new SearchRequest("address");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
+                .query(QueryBuilders.multiMatchQuery(searchString)
+                        .field("municipalityName")
+                        .field("municipalityPartName")
+                        .field("streetName")
+                        .field("houseNumber")
+                        .field("houseReferenceNumber")
+                        .field("houseReferenceSign")
+                        .field("zipCode")
+                        .type(MultiMatchQueryBuilder.Type.BOOL_PREFIX)
+                        .fuzziness(Fuzziness.AUTO))
+                .size(5);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHit[] searchHits = searchResponse.getHits().getHits();
 
-        return findAddresses(searchHits);
+        return Arrays.stream(searchHits).map(this::getHitsMainInfo).toList();
     }
 
-    private List<Unit> findAddresses(SearchHit @NotNull [] searchHits) {
-        List<SearchHit> obecHits = Arrays.stream(searchHits)
-                .filter(o -> o.getIndex().equals("obec"))
-                .toList();
+    private String getHitsMainInfo(SearchHit searchHit) {
+        String address, identificationNumber;
+        Map<String, Object> map = searchHit.getSourceAsMap();
+        String municipalityName = map.get("municipalityName").toString();
+        String municipalityPartName = map.get("municipalityPartName").toString();
+        String zipCode = map.get("zipCode").toString();
+        String houseNumber = map.get("houseNumber").toString();
 
-        List<SearchHit> uliceHits = Arrays.stream(searchHits)
-                .filter(u -> u.getIndex().equals("ulice"))
-                .toList();
+        if (map.get("houseReferenceNumber") != null) {
+            String houseReferenceNumber = map.get("houseReferenceNumber").toString();
 
-        List<SearchHit> adresnimHits = Arrays.stream(searchHits)
-                .filter(a -> a.getIndex().equals("adresnimisto"))
-                .toList();
+            if (map.get("houseReferenceSign") != null) {
+                String houseReferenceSign = map.get("houseReferenceSign").toString();
+                identificationNumber = String.format("%s/%s%s", houseNumber, houseReferenceNumber, houseReferenceSign);
+            } else {
+                identificationNumber = String.format("%s/%s", houseReferenceNumber, houseNumber);
+            }
+        } else {
+            identificationNumber = houseNumber;
+        }
 
-        UnitsFinder unitsFinder = new UnitsFinder(obecHits, uliceHits, adresnimHits,
-                uliceRepository, obecRepository);
+        if (map.get("streetName") != null) {
+            String streetName = map.get("streetName").toString();
+            address = String.format("%s %s, %s %s, %s",
+                    streetName, identificationNumber, zipCode, municipalityPartName, municipalityName);
+        } else {
+            String typeSO = map.get("typeSO").toString();
+            address = String.format("%s %s, %s %s, %s",
+                    typeSO, identificationNumber, zipCode, municipalityPartName, municipalityName);
+        }
 
-        return unitsFinder.find();
+        return address;
     }
 }
 
