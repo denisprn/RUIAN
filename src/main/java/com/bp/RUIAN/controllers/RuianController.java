@@ -1,11 +1,12 @@
 package com.bp.RUIAN.controllers;
 
+import com.bp.RUIAN.entities.AdresniMisto;
 import com.bp.RUIAN.services.EsService;
-import com.bp.RUIAN.entities.Unit;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller for RUIAN REST endpoints
@@ -20,20 +21,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/ruian")
 public class RuianController {
-
     private final EsService esService;
 
     public RuianController(EsService esService) {
         this.esService = esService;
     }
 
-    @GetMapping("/{id}")
-    public List<Object> getObjectsById(@PathVariable("id") Long id) {
-        return esService.findById(id);
+    @GetMapping("/search")
+    public List<String> search(@RequestParam("query") String query) throws IOException {
+        return esService.search(query);
     }
 
-    @GetMapping("/search")
-    public List<Unit> search(@RequestParam("query") String query) throws IOException {
-        return esService.search(query);
+    @GetMapping("/adresnimisto/{id}")
+    public Optional<AdresniMisto> findAdresniMistoById(@PathVariable("id") Long id) {
+        return esService.findAdresniMistoById(id);
     }
 }
