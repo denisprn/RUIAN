@@ -4,7 +4,6 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
@@ -12,6 +11,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,18 +24,22 @@ public class AddressSearch {
     }
 
     public List<String> search(final String searchString) throws IOException {
+        Map<String, Float> fields = new HashMap<>();
+        fields.put("municipalityName", 12.5F);
+        fields.put("municipalityPartName", 14.5F);
+        fields.put("streetName", 7.7F);
+        fields.put("houseNumber", 9F);
+        fields.put("houseReferenceNumber", 6.5F);
+        fields.put("houseReferenceSign", 5.5F);
+        fields.put("zipCode", 7.5F);
+
         SearchRequest searchRequest = new SearchRequest("address");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.multiMatchQuery(searchString)
-                        .field("municipalityName")
-                        .field("municipalityPartName")
-                        .field("streetName")
-                        .field("houseNumber")
-                        .field("houseReferenceNumber")
-                        .field("houseReferenceSign")
-                        .field("zipCode")
-                        .type(MultiMatchQueryBuilder.Type.BOOL_PREFIX)
-                        .fuzziness(Fuzziness.AUTO))
+                        .fields(fields)
+                        .prefixLength(3)
+                        .type(MultiMatchQueryBuilder.Type.MOST_FIELDS)
+                        .fuzziness(2))
                 .size(5);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
