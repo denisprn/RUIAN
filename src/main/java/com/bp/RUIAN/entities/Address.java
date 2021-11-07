@@ -4,10 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.util.Date;
 
 @Document(indexName = "address")
+@Setting(settingPath = "es-config/elastic-analyzer.json")
 public record Address(
         @Id
         @Field(type = FieldType.Integer, name = "id")
@@ -16,7 +18,7 @@ public record Address(
         @Field(type = FieldType.Integer, name = "municipalityId")
         Integer municipalityId,
 
-        @Field(type = FieldType.Text, name = "municipalityName")
+        @Field(type = FieldType.Text, name = "municipalityName", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
         String municipalityName,
 
         @Field(type = FieldType.Integer, name = "momcId")
@@ -34,28 +36,31 @@ public record Address(
         @Field(type = FieldType.Integer, name = "municipalityPartId")
         Integer municipalityPartId,
 
-        @Field(type = FieldType.Text, name = "municipalityPartName")
+        @Field(type = FieldType.Text, name = "municipalityPartName", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
         String municipalityPartName,
 
         @Field(type = FieldType.Integer, name = "streetId")
         Integer streetId,
 
-        @Field(type = FieldType.Text, name = "streetName")
+        @Field(type = FieldType.Text, name = "streetName", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
         String streetName,
 
         @Field(type = FieldType.Text, name = "typeSO")
         String typeSO,
 
-        @Field(type = FieldType.Text, name = "houseNumber")
+        @Field(type = FieldType.Text, name = "houseIdentificationNumber")
+        String houseIdentificationNumber,
+
+        @Field(type = FieldType.Text, name = "houseNumber", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
         String houseNumber,
 
-        @Field(type = FieldType.Text, name = "houseReferenceNumber")
+        @Field(type = FieldType.Text, name = "houseReferenceNumber", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
         String houseReferenceNumber,
 
         @Field(type = FieldType.Text, name = "houseReferenceSign")
         String houseReferenceSign,
 
-        @Field(type = FieldType.Text, name = "zipCode")
+        @Field(type = FieldType.Text, name = "zipCode", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
         String zipCode,
 
         @Field(type = FieldType.Text, name = "yCoordinate")
