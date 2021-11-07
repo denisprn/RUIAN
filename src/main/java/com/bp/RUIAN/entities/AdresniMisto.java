@@ -1,24 +1,18 @@
 package com.bp.RUIAN.entities;
 
-import com.bp.RUIAN.utils.GeoJsonDeserializer;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 import org.springframework.data.elasticsearch.core.geo.GeoJsonPoint;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * Container for AdresniMisto information
  * @author Denys Peresychanskyi
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(indexName = "adresnimisto")
-public record AdresniMisto (
+public record AdresniMisto(
         @Id
         @Field(type = FieldType.Integer, name = "kod")
         Integer kod,
@@ -59,7 +53,7 @@ public record AdresniMisto (
         @Field(type = FieldType.Long, name = "globalniIdNavrhuZmeny")
         Long globalniIdNavrhuZmeny,
 
-        @JsonDeserialize(using = GeoJsonDeserializer.class)
+        //@JsonDeserialize(using = GeoJsonPointDeserializer.class)
         @Field(name = "definicniBod")
         GeoJsonPoint definicniBod,
 
