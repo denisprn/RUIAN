@@ -2,10 +2,13 @@ package com.bp.RUIAN.controllers;
 
 import com.bp.RUIAN.entities.AdresniMisto;
 import com.bp.RUIAN.services.EsService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -35,5 +38,10 @@ public class RuianController {
     @GetMapping("/adresnimisto/{id}")
     public Optional<AdresniMisto> findAdresniMistoById(@PathVariable("id") Long id) {
         return esService.findAdresniMistoById(id);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
+        return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
