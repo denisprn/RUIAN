@@ -19,6 +19,7 @@ public class AddressParser implements RecordParser<Address> {
 
     @Override
     public Address parse() throws ParseException {
+        String houseReferenceNumber, houseReferenceSign, houseIdentificationNumber;
         Integer id = Integer.parseInt(line[0]);
         Integer municipalityId = Integer.parseInt(line[1]);
         String municipalityName = line[2];
@@ -32,15 +33,30 @@ public class AddressParser implements RecordParser<Address> {
         String streetName = line[10].isEmpty() ? null : line[10];
         String typeSO = line[11];
         String houseNumber = line[12];
-        String houseReferenceNumber = line[13].isEmpty() ? null : line[13];
-        String houseReferenceSign = line[14].isEmpty() ? null : line[14];
+
+        if (!line[13].isEmpty()) {
+            houseReferenceNumber = line[13];
+
+            if (!line[14].isEmpty()) {
+                houseReferenceSign = line[14];
+                houseIdentificationNumber = String.format("%s/%s%s", houseReferenceNumber, houseNumber, houseReferenceSign);
+            } else {
+                houseReferenceSign = null;
+                houseIdentificationNumber = String.format("%s/%s", houseReferenceNumber, houseNumber);
+            }
+        } else {
+            houseReferenceNumber = null;
+            houseReferenceSign = null;
+            houseIdentificationNumber = houseNumber;
+        }
+
         String zipCode = line[15];
         String yCoordinate = line[16];
         String xCoordinate = line[17];
         Date validSince = sdf.parse(line[18]);
 
         return new Address(id, municipalityId, municipalityName, momcId, momcName, mopId, mopName,
-                municipalityPartId, municipalityPartName, streetId, streetName, typeSO, houseNumber,
-                houseReferenceNumber, houseReferenceSign, zipCode, yCoordinate, xCoordinate, validSince);
+                municipalityPartId, municipalityPartName, streetId, streetName, typeSO, houseIdentificationNumber,
+                houseNumber, houseReferenceNumber, houseReferenceSign, zipCode, yCoordinate, xCoordinate, validSince);
     }
 }
