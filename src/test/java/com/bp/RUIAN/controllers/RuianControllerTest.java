@@ -28,7 +28,8 @@ class RuianControllerTest {
 	private RuianController ruianController;
 
 	@Test
-	void contextLoads() {
+	@DisplayName("Should assert that controller is not null")
+	public void contextLoads() {
 		Assertions.assertNotNull(ruianController);
 	}
 
