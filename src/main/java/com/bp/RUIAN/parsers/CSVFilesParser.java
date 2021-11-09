@@ -12,11 +12,10 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 
-public class CSVFilesParser implements FilesParser {
-    private final EsService esService;
-
+public class CSVFilesParser extends FilesParser {
     public CSVFilesParser(EsService esService) {
-        this.esService = esService;
+        super(esService);
+        this.fileExtension = ".csv";
     }
 
     @Override

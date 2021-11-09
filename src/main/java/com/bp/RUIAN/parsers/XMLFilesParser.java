@@ -20,12 +20,12 @@ import java.io.File;
  * </p>
  * @author Denys Peresychanskyi
  */
-public class XMLFilesParser implements FilesParser{
-    private final EsService esService;
-
+public class XMLFilesParser extends FilesParser{
     public XMLFilesParser(EsService esService) {
-        this.esService = esService;
+        super(esService);
+        this.fileExtension = ".xml";
     }
+
     @Override
     public void parseFile(String filePath) {
         try {
