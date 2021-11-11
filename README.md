@@ -38,10 +38,6 @@ The REST API allows an architecture that consists of multiple server tiers.
 In most cases, the server sends back static representations of resources in XML or JSON format. However, servers can send executable code directly to the client if needed.
 ## What is Elasticsearch?
 Elasticsearch (ES) is a scalable full-text search and analytics utility that allows you to quickly store, search, and analyze large amounts of data in real time. ES provides scale-out search with multithreading support. The system is based on the Apache Lucene library, which is designed for indexing and searching information in any type of documents. All Lucene features are available through JSON and Java APIs. ES allows you to work with GET requests in real time, but does not support distributed transactions.
-ES is the core of the ELK stack (Elastic Stack), which, in addition to Elasticsearch, includes the following products:
-* Logstash - tool for collecting, converting and saving events from various sources (files, databases, logs, etc.) in a common storage in real time;
-* Kibana - web interface for Elasticsearch to interact with data stored in its ES indexes through dynamic dashboards, tables, graphs and charts that display changes in ES queries in real time;
-* FileBeat - agent on servers for sending various types of live data to ES.
 
 Some of the key features of Elasticsearch are:
 * automatic indexing of new JSON objects that are loaded into the database and immediately become available for search, due to the absence of a schema according to a typical NoSQL concept. This allows you to speed up prototyping of Big Data search solutions.
