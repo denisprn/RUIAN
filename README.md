@@ -50,3 +50,5 @@ Hypothetically both store data objects that have key-value pair, and allow query
 * ElasticSearch is very efficient for specific task — indexing and searching big datasets.
 * Elasticsearch has been developed to make a ‘no SPOF’ (no Single Point Of Failure) engine -i.e. in a cluster of several Elasticsearch even if a node would turn off (for example a server crash) the data would always be available and the service would go on working.
 * Elasticsearch has got its own DSL based on a JSON format enabling to make some queries through REST API more easily.
+* Elasticsearch has ability to create custom analyzers.
+* Elasticsearch has ability to multi match search with custom field weights.
