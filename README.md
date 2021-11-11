@@ -4,9 +4,9 @@ Converts RÚIAN data to Elasticsearch database with the ability to retrieve and 
 It is an JSON RESTful API, that imports RÚIAN data from XML file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
 Int addition to this, API allows retrieval of individual items according to RÚIAN ID and fuzzy search in the list of districts, municipalities, parts of municipalities and streets, postal codes and entire address points in JSON format.
 ## Technologies
-* JDK 16
+* JDK 17
 * Spring Boot 2.5.0
-* Elasticsearch 7.13.2
+* Elasticsearch 7.14.2
 ## What is REST API?
 A REST API is an application programming interface (API) that uses HTTP requests to retrieve, place, and delete data. REST stands for Representational State Transfer in the context of an API.
 
