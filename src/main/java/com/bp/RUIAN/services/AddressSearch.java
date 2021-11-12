@@ -27,12 +27,12 @@ public class AddressSearch {
     public List<String> search(final String searchString) throws IOException {
         Map<String, Float> fields = new HashMap<>();
         fields.put("municipalityName", 12.5F);
-        fields.put("municipalityPartName", 14.5F);
-        fields.put("streetName", 7.7F);
+        fields.put("municipalityPartName", 12.5F);
+        fields.put("streetName", 9F);
         fields.put("houseIdentificationNumber", 9F);
         fields.put("houseNumber", 9F);
         fields.put("houseReferenceNumber", 6.5F);
-        fields.put("houseReferenceSign", 10F);
+        fields.put("houseReferenceSign", 6.5F);
         fields.put("zipCode", 7.5F);
 
         SearchRequest searchRequest = new SearchRequest("address");
@@ -41,7 +41,7 @@ public class AddressSearch {
                         .fields(fields)
                         .prefixLength(3)
                         .type(MultiMatchQueryBuilder.Type.MOST_FIELDS)
-                        .fuzziness(Fuzziness.AUTO))
+                        .fuzziness(Fuzziness.TWO))
                 .size(5);
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
