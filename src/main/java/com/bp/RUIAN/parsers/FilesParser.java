@@ -19,13 +19,14 @@ public abstract class FilesParser {
         File root = new File(directoryPath);
         File[] list = root.listFiles();
 
-        if (list == null) return;
+        if (list == null) {
+            return;
+        }
 
         for (File f : list) {
             if (f.isDirectory()) {
                 walk(f.getAbsolutePath());
-            }
-            else if (f.getName().endsWith(fileExtension)) {
+            } else if (f.getName().endsWith(fileExtension)) {
                 parseFile(f.getAbsolutePath());
             }
         }
