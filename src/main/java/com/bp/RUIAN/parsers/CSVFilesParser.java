@@ -22,10 +22,12 @@ public class CSVFilesParser extends FilesParser {
     public void parseFile(String filePath) {
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
 
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader(filePath, Charset.forName("windows-1250")))
+        try (CSVReader reader = new CSVReaderBuilder(
+                new FileReader(filePath, Charset.forName("windows-1250")))
                 .withCSVParser(csvParser)
                 .withSkipLines(1)
-                .build()) {
+                .build())
+        {
             String[] line;
 
             while ((line = reader.readNext()) != null) {
