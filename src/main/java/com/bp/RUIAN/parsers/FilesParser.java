@@ -2,7 +2,6 @@ package com.bp.RUIAN.parsers;
 
 
 import com.bp.RUIAN.services.EsService;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.FileNotFoundException;
