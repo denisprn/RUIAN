@@ -213,6 +213,10 @@ public class EsService {
         return adresniMistoRepository.findById(id);
     }
 
+    public Optional<Address> findAddressById(Integer id) {
+        return addressRepository.findById(id);
+    }
+
     public void saveAddress(Address address) {
         addressRepository.save(address);
     }

@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class AddressParser implements RecordParser<Address> {
-    final String[] line;
-    final SimpleDateFormat sdf;
+    private final String[] line;
+    private final SimpleDateFormat sdf;
 
     public AddressParser(String[] line) {
         this.line = line;

@@ -22,8 +22,8 @@ import java.io.File;
  */
 public class XMLFilesParser extends FilesParser{
     public XMLFilesParser(EsService esService) {
-        super(esService);
-        this.fileExtension = ".xml";
+        super(esService, "xml");
+        //this.fileExtension = ".xml";
     }
 
     @Override

@@ -14,8 +14,7 @@ import java.text.ParseException;
 
 public class CSVFilesParser extends FilesParser {
     public CSVFilesParser(EsService esService) {
-        super(esService);
-        this.fileExtension = ".csv";
+        super(esService, ".csv");
     }
 
     @Override
@@ -23,7 +22,7 @@ public class CSVFilesParser extends FilesParser {
         CSVParser csvParser = new CSVParserBuilder().withSeparator(';').build();
 
         try (CSVReader reader = new CSVReaderBuilder(
-                new FileReader(filePath, Charset.forName("windows-1250")))
+                new FileReader(filePath, Charset.forName(fileEncoding)))
                 .withCSVParser(csvParser)
                 .withSkipLines(1)
                 .build())

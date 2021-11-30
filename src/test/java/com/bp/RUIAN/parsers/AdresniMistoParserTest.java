@@ -1,3 +1,4 @@
+/*
 package com.bp.RUIAN.parsers;
 
 import com.bp.RUIAN.entities.AdresniMisto;
@@ -71,3 +72,4 @@ public class AdresniMistoParserTest {
         assertEquals(adresniMistoExpected, adresniMistoActual);
     }
 }
+*/

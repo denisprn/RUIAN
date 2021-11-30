@@ -18,7 +18,8 @@ public record Address(
         @Field(type = FieldType.Integer, name = "municipalityId")
         Integer municipalityId,
 
-        @Field(type = FieldType.Text, name = "municipalityName", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
+        @Field(type = FieldType.Text, name = "municipalityName", analyzer = "autocomplete_index",
+                searchAnalyzer = "autocomplete_search")
         String municipalityName,
 
         @Field(type = FieldType.Integer, name = "momcId")
@@ -36,13 +37,15 @@ public record Address(
         @Field(type = FieldType.Integer, name = "municipalityPartId")
         Integer municipalityPartId,
 
-        @Field(type = FieldType.Text, name = "municipalityPartName", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
+        @Field(type = FieldType.Text, name = "municipalityPartName", analyzer = "autocomplete_index",
+                searchAnalyzer = "autocomplete_search")
         String municipalityPartName,
 
         @Field(type = FieldType.Integer, name = "streetId")
         Integer streetId,
 
-        @Field(type = FieldType.Text, name = "streetName", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
+        @Field(type = FieldType.Text, name = "streetName", analyzer = "autocomplete_index",
+                searchAnalyzer = "autocomplete_search")
         String streetName,
 
         @Field(type = FieldType.Text, name = "typeSO")
@@ -51,16 +54,19 @@ public record Address(
         @Field(type = FieldType.Text, name = "houseIdentificationNumber")
         String houseIdentificationNumber,
 
-        @Field(type = FieldType.Text, name = "houseNumber", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
+        @Field(type = FieldType.Text, name = "houseNumber", analyzer = "autocomplete_index",
+                searchAnalyzer = "autocomplete_search")
         String houseNumber,
 
-        @Field(type = FieldType.Text, name = "houseReferenceNumber", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
+        @Field(type = FieldType.Text, name = "houseReferenceNumber", analyzer = "autocomplete_index",
+                searchAnalyzer = "autocomplete_search")
         String houseReferenceNumber,
 
         @Field(type = FieldType.Text, name = "houseReferenceSign")
         String houseReferenceSign,
 
-        @Field(type = FieldType.Text, name = "zipCode", analyzer = "autocomplete_index", searchAnalyzer = "autocomplete_search")
+        @Field(type = FieldType.Text, name = "zipCode", analyzer = "autocomplete_index",
+                searchAnalyzer = "autocomplete_search")
         String zipCode,
 
         @Field(type = FieldType.Text, name = "yCoordinate")

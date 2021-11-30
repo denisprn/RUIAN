@@ -2,17 +2,20 @@ package com.bp.RUIAN.parsers;
 
 
 import com.bp.RUIAN.services.EsService;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
 public abstract class FilesParser {
-    protected String fileExtension;
     protected final EsService esService;
+    protected final String fileExtension;
+    protected final String fileEncoding = "windows-1250";
 
-    public FilesParser(EsService esService) {
+    public FilesParser(EsService esService, String fileExtension) {
         this.esService = esService;
+        this.fileExtension = fileExtension;
     }
 
     public void walk(String directoryPath) throws FileNotFoundException, UnsupportedEncodingException {
