@@ -38,7 +38,8 @@ public class ScheduledTasks {
         try {
             String csvFileUrl = prepareUrl();
             InputStream inputStream = new URL(csvFileUrl).openStream();
-            Files.copy(inputStream, Paths.get("." + File.separator + "Addresses.zip"),
+            String destinationFilePath = "." + File.separator + "Addresses.zip";
+            Files.copy(inputStream, Paths.get(destinationFilePath),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -46,8 +47,10 @@ public class ScheduledTasks {
     }
 
     private void unzipArchiveWithCsvFiles() {
-        new UnzipFile().unzip("." + File.separator + "Addresses.zip",
-                "." + File.separator + "resources" + File.separator);
+        String zipFilePath = "." + File.separator + "Addresses.zip";
+        String destinationDirPath = "." + File.separator + "resources" + File.separator;
+
+        new UnzipFile().unzip(zipFilePath, destinationDirPath);
     }
 
     private void uploadDataFromCsvFiles() {
