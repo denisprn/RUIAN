@@ -21,6 +21,14 @@ public class CsvService {
     @Autowired
     private EsService esService;
 
+    private final String filePath = String.format(".%sAddresses.zip", File.separator);
+
+    public void updateData() {
+        downloadArchiveWithCsvFiles();
+        unzipArchiveWithCsvFiles();
+        parseAndUploadDataFromCsvFiles();
+    }
+
     private @NotNull String getLastMonthsLastDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Calendar calendar = Calendar.getInstance();
@@ -33,17 +41,17 @@ public class CsvService {
     }
 
     private String prepareUrl() {
-        String lastMonthsLastDate = getLastMonthsLastDate();
+        final String lastMonthsLastDate = getLastMonthsLastDate();
+
         return String.format(
                 "https://vdp.cuzk.cz/vymenny_format/csv/%s_OB_ADR_csv.zip", lastMonthsLastDate);
     }
 
     private void downloadArchiveWithCsvFiles() {
         try {
-            String csvFileUrl = prepareUrl();
+            final String csvFileUrl = prepareUrl();
             InputStream inputStream = new URL(csvFileUrl).openStream();
-            String destinationFilePath = "." + File.separator + "Addresses.zip";
-            Files.copy(inputStream, Paths.get(destinationFilePath),
+            Files.copy(inputStream, Paths.get(filePath),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception exception) {
             throw new RuntimeException("Failed to download csv data: " + exception.getMessage());
@@ -51,24 +59,16 @@ public class CsvService {
     }
 
     private void unzipArchiveWithCsvFiles() {
-        String zipFilePath = "." + File.separator + "Addresses.zip";
-        String destinationDirPath = "." + File.separator + "resources" + File.separator;
-
-        new UnzipFile().unzip(zipFilePath, destinationDirPath);
+        final String destinationDirPath = String.format(".%1$sresources%1$s", File.separator);
+        new UnzipFile().unzip(filePath, destinationDirPath);
     }
 
     private void parseAndUploadDataFromCsvFiles() {
         try {
-            String csvDirectoryPath = "." + File.separator + "resources" + File.separator + "CSV" + File.separator;
+            final String csvDirectoryPath = String.format(".%1$sresources%1$sCSV%1$s", File.separator);
             new CSVFilesParser(esService).walk(csvDirectoryPath);
         } catch (IOException exception) {
             throw new RuntimeException("Failed to upload csv data: " + exception.getMessage());
         }
-    }
-
-    public void updateData() {
-        downloadArchiveWithCsvFiles();
-        unzipArchiveWithCsvFiles();
-        parseAndUploadDataFromCsvFiles();
     }
 }
