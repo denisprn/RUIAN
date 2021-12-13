@@ -10,7 +10,7 @@ public class ScheduledTasks {
     @Autowired
     private CsvService csvService;
 
-    @Scheduled(cron = "0 0 1 1 * ?", zone = "Europe/Prague") //At 01:00:00am, on the 1st day, every month
+    @Scheduled(cron = "${cron.value}", zone = "${cron.zone}")
     public void updateData() {
         try {
             csvService.updateData();
