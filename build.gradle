@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 }
 
+compileJava.inputs.files(processResources)
+
 group = 'com.bp'
 version = '0.0.1-SNAPSHOT'
 
@@ -12,13 +14,14 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch:2.5.6'
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch:2.6.1'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation 'org.jetbrains:annotations:22.0.0'
 	implementation group: 'com.opencsv', name: 'opencsv', version: '5.5.2'
 	testImplementation 'org.testcontainers:elasticsearch:1.16.2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.1'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.6.1'
 }
 
 test {
