@@ -8,10 +8,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * Service for API's business logic
- * @author Denys Peresychanskyi
- */
 @Service
 public class EsService {
     private final RestHighLevelClient esClient;
