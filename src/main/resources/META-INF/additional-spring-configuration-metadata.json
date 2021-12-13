@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "database.host",
+      "type": "java.lang.String",
+      "description": "Database host."
+    },
+    {
+      "name": "database.port",
+      "type": "java.lang.String",
+      "description": "Database port."
+    },
+    {
+      "name": "file.encoding",
+      "type": "java.lang.String",
+      "description": "File encoding."
+    },
+    {
+      "name": "cron.value",
+      "type": "java.lang.String",
+      "description": "Cron value."
+    },
+    {
+      "name": "cron.zone",
+      "type": "java.lang.String",
+      "description": "Cron time zone."
+    }
+  ] }
