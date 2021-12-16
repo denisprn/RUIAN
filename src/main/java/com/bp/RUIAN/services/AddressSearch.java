@@ -26,14 +26,14 @@ public class AddressSearch {
 
     public List<String> search(final String searchString) throws IOException {
         Map<String, Float> fields = new HashMap<>();
-        fields.put("municipalityName", 12.5F);
-        fields.put("municipalityPartName", 12.5F);
-        fields.put("streetName", 9F);
-        fields.put("houseIdentificationNumber", 9F);
-        fields.put("houseNumber", 9F);
-        fields.put("houseReferenceNumber", 6.5F);
-        fields.put("houseReferenceSign", 6.5F);
-        fields.put("zipCode", 7.5F);
+        fields.put("municipalityName", 45F);
+        fields.put("municipalityPartName", 50F);
+        fields.put("streetName", 40F);
+        fields.put("houseIdentificationNumber", 50F);
+        fields.put("houseNumber", 50F);
+        fields.put("houseReferenceNumber", 35F);
+        fields.put("houseReferenceSign", 35F);
+        fields.put("zipCode", 25F);
 
         SearchRequest searchRequest = new SearchRequest("address");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
