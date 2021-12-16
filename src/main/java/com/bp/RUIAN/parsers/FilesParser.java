@@ -8,11 +8,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
+
 public abstract class FilesParser {
     protected final EsService esService;
     protected final String fileExtension;
 
-    @Value("{file.encoding}")
+    @Value("${file.encoding.windows1250}")
     protected String fileEncoding;
 
     public FilesParser(EsService esService, String fileExtension) {
