@@ -11,7 +11,7 @@
       "description": "Database port."
     },
     {
-      "name": "file.encoding",
+      "name": "file.encoding.windows1250",
       "type": "java.lang.String",
       "description": "File encoding."
     },
