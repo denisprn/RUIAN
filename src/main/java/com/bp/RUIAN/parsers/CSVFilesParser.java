@@ -7,11 +7,13 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.text.ParseException;
 
+@Component
 public class CSVFilesParser extends FilesParser {
     public CSVFilesParser(EsService esService) {
         super(esService, ".csv");
