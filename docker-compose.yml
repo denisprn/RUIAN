@@ -20,8 +20,25 @@ services:
       - "9300:9300"
     networks:
       - esnet
-  app:
-    container_name: docker-spring-boot
+  app_dev:
+    container_name: docker-spring-boot-dev
+    profiles: ["dev"]
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - elasticsearch
+    networks:
+      - esnet
+    restart: on-failure
+  app_test:
+    container_name: docker-spring-boot-test
+    profiles: ["test"]
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
     build:
       context: .
     ports:
