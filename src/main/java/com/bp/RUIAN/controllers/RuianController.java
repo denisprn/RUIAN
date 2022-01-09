@@ -2,6 +2,7 @@ package com.bp.RUIAN.controllers;
 
 import com.bp.RUIAN.entities.Address;
 import com.bp.RUIAN.services.EsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +15,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/ruian")
 public class RuianController {
-    private final EsService esService;
-
-    public RuianController(EsService esService) {
-        this.esService = esService;
-    }
+    @Autowired
+    private EsService esService;
 
     @GetMapping("/search")
     public List<String> search(@RequestParam("query") String query) throws IOException {
