@@ -52,3 +52,10 @@ Hypothetically both store data objects that have key-value pair, and allow query
 * Elasticsearch has got its own DSL based on a JSON format enabling to make some queries through REST API more easily.
 * Elasticsearch has ability to create custom analyzers.
 * Elasticsearch has ability to multi match search with custom field weights.
+## Instalation guide
+* Download and install Java SDK 17;
+* Download and install Gradle Build Tool;
+* Download and install Docker;
+* Run Docker;
+* Get inside project's root folder;
+* In command line run "docker-compose --profile=test up" for test purposes or "docker-compose --profile=dev up" for standart mode;
