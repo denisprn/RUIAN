@@ -55,8 +55,7 @@ Hypothetically both store data objects that have key-value pair, and allow query
 ## Instalation guide
 * Download and install Java SDK 17;
 * Download and install Gradle Build Tool;
-* Download and install Docker;
-* Run Docker;
+* Download, install and run Docker;
 * In command line get inside project's root folder;
 * In command line run "gradle build -x test" command;
 * In command line run "docker-compose --profile=dev up" command or "docker-compose --profile=test up" command for test purposes;
