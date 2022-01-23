@@ -1,7 +1,7 @@
 # RÚIAN REST API
 Converts RÚIAN data to Elasticsearch database with the ability to retrieve by ID and search by municipalities, parts thereof, streets, zip codes and full address points.
 ## General info
-It is an JSON RESTful API, that imports RÚIAN data from XML file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
+It is an JSON RESTful API, that imports RÚIAN data from CSV file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
 Int addition to this, API allows retrieval of individual items according to RÚIAN ID and fuzzy search in the list of districts, municipalities, parts of municipalities and streets, postal codes and entire address points in JSON format.
 ## Technologies
 * JDK 17
@@ -52,3 +52,10 @@ Hypothetically both store data objects that have key-value pair, and allow query
 * Elasticsearch has got its own DSL based on a JSON format enabling to make some queries through REST API more easily.
 * Elasticsearch has ability to create custom analyzers.
 * Elasticsearch has ability to multi match search with custom field weights.
+## Instalation guide
+* Download and install Java SDK 17;
+* Download and install Gradle Build Tool;
+* Download, install and run Docker;
+* In command line get inside project's root folder;
+* In command line run "gradle build -x test" command;
+* In command line run "docker-compose --profile=dev up" command or "docker-compose --profile=test up" command for test purposes;

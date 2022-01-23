@@ -16,7 +16,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch:2.6.1'
 	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
     implementation 'org.jetbrains:annotations:22.0.0'
 	implementation group: 'com.opencsv', name: 'opencsv', version: '5.5.2'
 	testImplementation 'org.testcontainers:elasticsearch:1.16.2'
