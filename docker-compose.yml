@@ -20,9 +20,9 @@ services:
       - "9300:9300"
     networks:
       - esnet
-  app_dev:
+  app_production:
     container_name: docker-spring-boot-dev
-    profiles: ["dev"]
+    profiles: ["production"]
     environment:
       - SPRING_PROFILES_ACTIVE=dev
     build:
