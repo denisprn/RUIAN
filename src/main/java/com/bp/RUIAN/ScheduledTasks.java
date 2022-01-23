@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("dev")
+@Profile("production")
 public class ScheduledTasks {
     @Autowired
     private CsvService csvService;
