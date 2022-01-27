@@ -1,6 +1,9 @@
 package com.bp.RUIAN.parsers;
 
 import com.bp.RUIAN.entities.Address;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,11 +20,12 @@ public class AddressParser implements RecordParser<Address> {
         this.sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 
-    private String checkIfEmptyString(String value) {
+    @Contract(pure = true)
+    private @Nullable String checkIfEmptyString(@NotNull String value) {
         return value.isEmpty() ? null : value;
     }
 
-    private Integer checkIfEmptyInteger(String value) {
+    private @Nullable Integer checkIfEmptyInteger(@NotNull String value) {
         return value.isEmpty() ? null : Integer.parseInt(value);
     }
 
