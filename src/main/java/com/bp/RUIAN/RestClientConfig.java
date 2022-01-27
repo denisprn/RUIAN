@@ -3,7 +3,6 @@ package com.bp.RUIAN;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -18,8 +17,6 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
 
     @Value("${database.port}")
     private String port;
-
-    public RestClientConfig() { }
 
     @Bean
     @Override
