@@ -57,5 +57,5 @@ Hypothetically both store data objects that have key-value pair, and allow query
 * Download and install Gradle Build Tool 7.3 or later;
 * Download, install and run Docker;
 * In command line get inside project's root folder;
-* In command line run "gradle build -x test" command;
-* In command line run "docker-compose --profile=production up" command or "docker-compose --profile=test up" command for test purposes;
+* In command line run `gradle build -x test` command;
+* In command line run `docker-compose --profile=production up` command or `docker-compose --profile=test up` command for test purposes;
