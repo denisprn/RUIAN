@@ -53,9 +53,9 @@ Hypothetically both store data objects that have key-value pair, and allow query
 * Elasticsearch has ability to create custom analyzers.
 * Elasticsearch has ability to multi match search with custom field weights.
 ## Instalation guide
-* Download and install Java SDK 17;
-* Download and install Gradle Build Tool 7.3 or later;
-* Download, install and run Docker;
-* In command line get inside project's root folder;
-* In command line run `gradle build -x test` command;
-* In command line run `docker-compose --profile=production up` command or `docker-compose --profile=test up` command for test purposes;
+1. Download and install Java SDK 17;
+2. Download and install Gradle Build Tool 7.3 or later;
+3. Download, install and run Docker;
+4. In command line get inside project's root folder;
+5. In command line run `gradle build -x test` command;
+6. In command line run `docker-compose --profile=production up` command or `docker-compose --profile=test up` command for test purposes;
