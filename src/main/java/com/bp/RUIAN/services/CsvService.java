@@ -6,9 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -50,8 +48,14 @@ public class CsvService {
     private void downloadArchiveWithCsvFiles() {
         final String csvFileUrl = prepareUrl();
 
-        try (InputStream inputStream = new URL(csvFileUrl).openStream()) {
-            Files.copy(inputStream, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+        try (BufferedInputStream in = new BufferedInputStream(new URL(csvFileUrl).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+            byte[] dataBuffer = new byte[1024];
+            int bytesRead;
+
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
         } catch (Exception exception) {
             throw new RuntimeException("Failed to download csv data: " + exception.getMessage());
         }
