@@ -9,6 +9,7 @@ import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class AddressSearch {
         return Arrays.stream(searchHits).map(this::getHitsMainInfo).toList();
     }
 
-    private String getHitsMainInfo(SearchHit searchHit) {
+    private String getHitsMainInfo(@NotNull SearchHit searchHit) {
         String address;
         Map<String, Object> map = searchHit.getSourceAsMap();
         String municipalityName = map.get("municipalityName").toString();
