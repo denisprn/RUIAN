@@ -48,14 +48,8 @@ public class CsvService {
     private void downloadArchiveWithCsvFiles() {
         final String csvFileUrl = prepareUrl();
 
-        try (BufferedInputStream in = new BufferedInputStream(new URL(csvFileUrl).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
-            byte[] dataBuffer = new byte[1024];
-            int bytesRead;
-
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
-            }
+        try (InputStream in = new URL(csvFileUrl).openStream()) {
+            Files.copy(in, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception exception) {
             throw new RuntimeException("Failed to download csv data: " + exception.getMessage());
         }
