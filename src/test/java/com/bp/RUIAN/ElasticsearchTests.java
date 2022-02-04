@@ -1,7 +1,6 @@
 package com.bp.RUIAN;
 import org.apache.http.HttpHost;
 import org.elasticsearch.ElasticsearchStatusException;
-import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -11,17 +10,12 @@ import org.junit.jupiter.api.*;
 import org.testcontainers.elasticsearch.ElasticsearchContainer;
 
 import java.util.Iterator;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * This class tests Elasticsearch congifuration
- * @author Denys Peresychanskyi
- */
+
 public class ElasticsearchTests {
     private static final ElasticsearchContainer container =
-            new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.13.1").withExposedPorts(9200);
+            new ElasticsearchContainer("docker.elastic.co/elasticsearch/elasticsearch:7.14.2")
+                    .withExposedPorts(9200);
 
     private static final NodeSelector INGEST_NODE_SELECTOR = nodes -> {
         final Iterator<Node> iterator = nodes.iterator();
@@ -34,7 +28,7 @@ public class ElasticsearchTests {
         }
     };
 
-    private static final String INDEX_NAME = "ruian";
+    private static final String INDEX_NAME = "address";
     private static RestHighLevelClient client;
 
     @BeforeAll
@@ -63,8 +57,8 @@ public class ElasticsearchTests {
 
     @Test
     public void testClusterVersion() throws Exception {
-        final ClusterHealthResponse response = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT);
-        // check for yellow or green cluster health
+        final ClusterHealthResponse response = client.cluster()
+                .health(new ClusterHealthRequest(), RequestOptions.DEFAULT);
         Assertions.assertNotSame(response.getStatus(), ClusterHealthStatus.RED);
     }
 }
