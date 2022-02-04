@@ -29,10 +29,10 @@ public class CSVFilesParser extends FilesParser {
                 .withSkipLines(1)
                 .build())
         {
-            String[] line;
+            String[] lineValues;
 
-            while ((line = reader.readNext()) != null) {
-                Address address = new AddressParser(line).parse();
+            while ((lineValues = reader.readNext()) != null) {
+                Address address = new AddressParser(lineValues).parse();
                 esService.saveAddress(address);
             }
         } catch (IOException | CsvException | ParseException e) {
