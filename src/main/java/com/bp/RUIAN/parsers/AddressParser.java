@@ -11,11 +11,11 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class AddressParser implements RecordParser<Address> {
-    private final String[] line;
+    private final String[] lineValues;
     private final SimpleDateFormat sdf;
 
     public AddressParser(String[] line) {
-        this.line = line;
+        this.lineValues = line;
         this.sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         this.sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
@@ -32,25 +32,25 @@ public class AddressParser implements RecordParser<Address> {
     @Override
     public Address parse() throws ParseException {
         String houseReferenceNumber, houseReferenceSign, houseIdentificationNumber;
-        Integer id = Integer.parseInt(line[0]);
-        Integer municipalityId = Integer.parseInt(line[1]);
-        String municipalityName = line[2];
-        Integer momcId = checkIfEmptyInteger(line[3]);
-        String momcName = checkIfEmptyString(line[4]);
-        Integer mopId = checkIfEmptyInteger(line[5]);
-        String mopName = checkIfEmptyString(line[6]);
-        Integer municipalityPartId = checkIfEmptyInteger(line[7]);
-        String municipalityPartName = checkIfEmptyString(line[8]);
-        Integer streetId = checkIfEmptyInteger(line[9]);
-        String streetName = checkIfEmptyString(line[10]);
-        String typeSO = line[11];
-        String houseNumber = line[12];
+        Integer id = Integer.parseInt(lineValues[0]);
+        Integer municipalityId = Integer.parseInt(lineValues[1]);
+        String municipalityName = lineValues[2];
+        Integer momcId = checkIfEmptyInteger(lineValues[3]);
+        String momcName = checkIfEmptyString(lineValues[4]);
+        Integer mopId = checkIfEmptyInteger(lineValues[5]);
+        String mopName = checkIfEmptyString(lineValues[6]);
+        Integer municipalityPartId = checkIfEmptyInteger(lineValues[7]);
+        String municipalityPartName = checkIfEmptyString(lineValues[8]);
+        Integer streetId = checkIfEmptyInteger(lineValues[9]);
+        String streetName = checkIfEmptyString(lineValues[10]);
+        String typeSO = lineValues[11];
+        String houseNumber = lineValues[12];
 
-        if (!line[13].isEmpty()) {
-            houseReferenceNumber = line[13];
+        if (!lineValues[13].isEmpty()) {
+            houseReferenceNumber = lineValues[13];
 
-            if (!line[14].isEmpty()) {
-                houseReferenceSign = line[14];
+            if (!lineValues[14].isEmpty()) {
+                houseReferenceSign = lineValues[14];
                 houseIdentificationNumber = String.format("%s/%s%s", houseReferenceNumber, houseNumber, houseReferenceSign);
             } else {
                 houseReferenceSign = null;
@@ -62,10 +62,10 @@ public class AddressParser implements RecordParser<Address> {
             houseIdentificationNumber = houseNumber;
         }
 
-        String zipCode = line[15];
-        String yCoordinate = line[16];
-        String xCoordinate = line[17];
-        Date validSince = sdf.parse(line[18]);
+        String zipCode = lineValues[15];
+        String yCoordinate = lineValues[16];
+        String xCoordinate = lineValues[17];
+        Date validSince = sdf.parse(lineValues[18]);
 
         return new Address(id, municipalityId, municipalityName, momcId, momcName, mopId, mopName,
                 municipalityPartId, municipalityPartName, streetId, streetName, typeSO, houseIdentificationNumber,
