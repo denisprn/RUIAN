@@ -32,7 +32,7 @@ public class CsvFilesParser extends FilesParser {
             String[] lineValues;
 
             while ((lineValues = reader.readNext()) != null) {
-                Address address = new AddressParser(lineValues).parse();
+                Address address = new AddressConverter(lineValues).convert();
                 esService.saveAddress(address);
             }
         } catch (IOException | CsvException | ParseException e) {
