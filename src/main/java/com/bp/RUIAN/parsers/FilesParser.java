@@ -1,20 +1,16 @@
 package com.bp.RUIAN.parsers;
 
 
-import com.bp.RUIAN.services.EsService;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
 
 public abstract class FilesParser {
-    protected final EsService esService;
     protected final String fileExtension;
     protected final String fileEncoding = "windows-1250";
 
-    public FilesParser(EsService esService, String fileExtension) {
-        this.esService = esService;
+    public FilesParser(String fileExtension) {
         this.fileExtension = fileExtension;
     }
 
