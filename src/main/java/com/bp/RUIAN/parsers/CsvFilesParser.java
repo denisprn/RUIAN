@@ -40,7 +40,7 @@ public class CsvFilesParser extends FilesParser {
                 esService.saveAddress(address);
             }
         } catch (IOException | CsvException | ParseException exception) {
-            throw new RuntimeException("Failed to parse csv data: " + exception.getMessage());
+            throw new RuntimeException("Failed to parse CSV data: " + exception.getMessage());
         }
     }
 }
