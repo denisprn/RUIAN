@@ -12,12 +12,9 @@ import java.util.TimeZone;
 
 public class AddressParser implements RecordParser<Address> {
     private final String[] lineValues;
-    private final SimpleDateFormat sdf;
 
     public AddressParser(String[] lineValues) {
         this.lineValues = lineValues;
-        this.sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        this.sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 
     @Contract(pure = true)
@@ -31,7 +28,10 @@ public class AddressParser implements RecordParser<Address> {
 
     @Override
     public Address parse() throws ParseException {
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         String houseReferenceNumber, houseReferenceSign, houseIdentificationNumber;
+
         Integer id = Integer.parseInt(lineValues[0]);
         Integer municipalityId = Integer.parseInt(lineValues[1]);
         String municipalityName = lineValues[2];
