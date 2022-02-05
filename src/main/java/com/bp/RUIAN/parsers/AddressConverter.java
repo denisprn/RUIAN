@@ -10,10 +10,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class AddressParser implements RecordParser<Address> {
+public class AddressConverter {
     private final String[] lineValues;
 
-    public AddressParser(String[] lineValues) {
+    public AddressConverter(String[] lineValues) {
         this.lineValues = lineValues;
     }
 
@@ -26,8 +26,7 @@ public class AddressParser implements RecordParser<Address> {
         return value.isEmpty() ? null : Integer.parseInt(value);
     }
 
-    @Override
-    public Address parse() throws ParseException {
+    public Address convert() throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         String houseReferenceNumber, houseReferenceSign, houseIdentificationNumber;
