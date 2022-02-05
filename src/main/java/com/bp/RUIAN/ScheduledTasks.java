@@ -14,10 +14,6 @@ public class ScheduledTasks {
 
     @Scheduled(cron = "${cron.value}", zone = "${cron.zone}")
     public void updateData() {
-        try {
-            csvService.updateData();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        csvService.updateData();
     }
 }
