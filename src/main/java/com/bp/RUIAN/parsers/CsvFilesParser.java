@@ -39,8 +39,8 @@ public class CsvFilesParser extends FilesParser {
                 Address address = new AddressConverter(lineValues).convert();
                 esService.saveAddress(address);
             }
-        } catch (IOException | CsvException | ParseException e) {
-            e.printStackTrace();
+        } catch (IOException | CsvException | ParseException exception) {
+            throw new RuntimeException("Failed to parse csv data: " + exception.getMessage());
         }
     }
 }
