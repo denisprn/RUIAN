@@ -14,8 +14,8 @@ public class AddressParser implements RecordParser<Address> {
     private final String[] lineValues;
     private final SimpleDateFormat sdf;
 
-    public AddressParser(String[] line) {
-        this.lineValues = line;
+    public AddressParser(String[] lineValues) {
+        this.lineValues = lineValues;
         this.sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         this.sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
