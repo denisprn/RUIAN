@@ -14,8 +14,8 @@ import java.nio.charset.Charset;
 import java.text.ParseException;
 
 @Component
-public class CSVFilesParser extends FilesParser {
-    public CSVFilesParser(EsService esService) {
+public class CsvFilesParser extends FilesParser {
+    public CsvFilesParser(EsService esService) {
         super(esService, ".csv");
     }
 
