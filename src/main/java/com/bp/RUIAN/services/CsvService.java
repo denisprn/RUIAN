@@ -1,6 +1,6 @@
 package com.bp.RUIAN.services;
 
-import com.bp.RUIAN.parsers.CSVFilesParser;
+import com.bp.RUIAN.parsers.CsvFilesParser;
 import com.bp.RUIAN.utils.UnzipFile;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +63,7 @@ public class CsvService {
     private void parseAndUploadDataFromCsvFiles() {
         try {
             final String csvDirectoryPath = String.format(".%1$sresources%1$sCSV%1$s", File.separator);
-            new CSVFilesParser(esService).walk(csvDirectoryPath);
+            new CsvFilesParser(esService).walk(csvDirectoryPath);
         } catch (IOException exception) {
             throw new RuntimeException("Failed to upload csv data: " + exception.getMessage());
         }
