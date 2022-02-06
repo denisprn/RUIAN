@@ -34,7 +34,7 @@ public class AddressSearch {
         fields.put("houseNumber", 50F);
         fields.put("houseReferenceNumber", 35F);
         fields.put("houseReferenceSign", 35F);
-        fields.put("zipCode", 25F);
+        fields.put("zipCode", 30F);
 
         SearchRequest searchRequest = new SearchRequest("address");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
@@ -54,17 +54,17 @@ public class AddressSearch {
     private String getHitsMainInfo(@NotNull SearchHit searchHit) {
         String address;
         Map<String, Object> map = searchHit.getSourceAsMap();
-        String municipalityName = map.get("municipalityName").toString();
-        String municipalityPartName = map.get("municipalityPartName").toString();
-        String zipCode = map.get("zipCode").toString();
-        String houseIdentificationNumber = map.get("houseIdentificationNumber").toString();
+        final String municipalityName = map.get("municipalityName").toString();
+        final String municipalityPartName = map.get("municipalityPartName").toString();
+        final String zipCode = map.get("zipCode").toString();
+        final String houseIdentificationNumber = map.get("houseIdentificationNumber").toString();
 
         if (map.get("streetName") != null) {
-            String streetName = map.get("streetName").toString();
+            final String streetName = map.get("streetName").toString();
             address = String.format("%s %s, %s %s, %s",
                     streetName, houseIdentificationNumber, zipCode, municipalityPartName, municipalityName);
         } else {
-            String typeSO = map.get("typeSO").toString();
+            final String typeSO = map.get("typeSO").toString();
             address = String.format("%s %s, %s %s, %s",
                     typeSO, houseIdentificationNumber, zipCode, municipalityPartName, municipalityName);
         }
