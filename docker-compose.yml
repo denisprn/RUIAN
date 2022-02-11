@@ -21,10 +21,10 @@ services:
     networks:
       - esnet
   app_production:
-    container_name: docker-spring-boot-dev
+    container_name: docker-spring-boot-production
     profiles: ["production"]
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_PROFILES_ACTIVE=production
     build:
       context: .
     ports:
