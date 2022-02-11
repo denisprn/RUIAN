@@ -16,6 +16,9 @@ import java.util.Calendar;
 
 @Service
 public class CsvService {
+    @Autowired
+    private EsService esService;
+
     private final String filePath = String.format(".%sAddresses.zip", File.separator);
 
     public void updateData() {
@@ -60,7 +63,7 @@ public class CsvService {
     private void parseAndUploadDataFromCsvFiles() {
         try {
             final String csvDirectoryPath = String.format(".%1$sresources%1$sCSV%1$s", File.separator);
-            new CsvFilesParser().walk(csvDirectoryPath);
+            new CsvFilesParser(esService).walk(csvDirectoryPath);
         } catch (IOException exception) {
             throw new RuntimeException("Failed to upload csv data: " + exception.getMessage());
         }
