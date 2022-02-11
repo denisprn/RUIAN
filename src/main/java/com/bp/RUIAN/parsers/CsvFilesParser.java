@@ -16,11 +16,8 @@ import java.text.ParseException;
 
 @Component
 public class CsvFilesParser extends FilesParser {
-    @Autowired
-    private EsService esService;
-
-    public CsvFilesParser() {
-        super(".csv");
+    public CsvFilesParser(EsService esService) {
+        super(esService, ".csv");
     }
 
     @Override
