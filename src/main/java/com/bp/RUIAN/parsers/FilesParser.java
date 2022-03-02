@@ -1,39 +1,27 @@
 package com.bp.RUIAN.parsers;
 
-
-import com.bp.RUIAN.services.EsService;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
 
-public abstract class FilesParser {
-    protected final EsService esService;
-    protected final String fileExtension;
-    protected final String fileEncoding = "windows-1250";
-
-    public FilesParser(EsService esService, String fileExtension) {
-        this.esService = esService;
-        this.fileExtension = fileExtension;
-    }
-
-    public void walk(String directoryPath) throws FileNotFoundException, UnsupportedEncodingException {
+public interface FilesParser {
+    default void walkDirectoriesAndParseFiles(final String directoryPath) throws FileNotFoundException, UnsupportedEncodingException {
         File root = new File(directoryPath);
-        File[] list = root.listFiles();
+        File[] arrayOfFileNames = root.listFiles();
 
-        if (list == null) {
+        if (arrayOfFileNames == null) {
             return;
         }
 
-        for (File f : list) {
-            if (f.isDirectory()) {
-                walk(f.getAbsolutePath());
-            } else if (f.getName().endsWith(fileExtension)) {
-                parseFile(f.getAbsolutePath());
+        for (File file : arrayOfFileNames) {
+            if (file.isDirectory()) {
+                walkDirectoriesAndParseFiles(file.getAbsolutePath());
+            } else if (file.getName().endsWith("csv")) {
+                parseFile(file.getAbsolutePath());
             }
         }
     }
 
-    protected abstract void parseFile(String filePath) throws FileNotFoundException, UnsupportedEncodingException;
+    void parseFile(String filePath) throws FileNotFoundException, UnsupportedEncodingException;
 }
