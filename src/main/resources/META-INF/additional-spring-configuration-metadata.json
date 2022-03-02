@@ -11,12 +11,7 @@
       "description": "Database port."
     },
     {
-      "name": "file.encoding.windows1250",
-      "type": "java.lang.String",
-      "description": "File encoding."
-    },
-    {
-      "name": "cron.value",
+      "name": "cron",
       "type": "java.lang.String",
       "description": "Cron value."
     },
@@ -24,5 +19,35 @@
       "name": "cron.zone",
       "type": "java.lang.String",
       "description": "Cron time zone."
+    },
+    {
+      "name": "csv-file.dir",
+      "type": "java.lang.String",
+      "description": "Description for csv-file.dir."
+    },
+    {
+      "name": "archive.url",
+      "type": "java.lang.String",
+      "description": "Description for archive.url."
+    },
+    {
+      "name": "archive.dest-dir",
+      "type": "java.lang.String",
+      "description": "Description for archive.dest-dir."
+    },
+    {
+      "name": "archive.location-dir",
+      "type": "java.lang.String",
+      "description": "Description for archive.location-dir."
+    },
+    {
+      "name": "bulk.number-of-records",
+      "type": "java.lang.Integer",
+      "description": "Description for bulk.number-of-records."
+    },
+    {
+      "name": "file.encoding-charset",
+      "type": "java.lang.String",
+      "description": "Description for file.encoding-charset."
     }
   ] }
