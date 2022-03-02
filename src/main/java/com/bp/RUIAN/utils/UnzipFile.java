@@ -1,5 +1,7 @@
 package com.bp.RUIAN.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -45,7 +47,7 @@ public class UnzipFile {
         }
     }
 
-    private File newFile(File destinationDir, ZipEntry zipEntry) throws IOException {
+    private @NotNull File newFile(File destinationDir, @NotNull ZipEntry zipEntry) throws IOException {
         File destFile = new File(destinationDir, zipEntry.getName());
 
         String destDirPath = destinationDir.getCanonicalPath();
