@@ -1,26 +1,65 @@
 {
   "analysis": {
+    "tokenizer": {
+      "stringTokenizer": {
+        "type": "char_group",
+        "tokenize_on_chars": [
+          "whitespace",
+          "punctuation",
+          "symbol"
+        ]
+      }
+    },
     "filter": {
-      "autocomplete_filter": {
+      "autocompleteFilter": {
         "type": "edge_ngram",
-        "min_gram": 2,
-        "max_gram": 10
+        "min_gram": 1,
+        "max_gram": 20
+      },
+      "asciiFoldingFilter": {
+        "type": "asciifolding",
+        "preserve_original": true
+      }
+    },
+    "char_filter": {
+      "houseIdentificationNumberCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\d*)/*(\\d*)(\\w*)",
+        "replacement": "$1 $2 $3"
+      },
+      "houseNumberOrReferenceNumberCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\d*)/*(\\d*)(\\w*)",
+        "replacement": "$1 $2"
+      },
+      "houseReferenceSignCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\d*)/*(\\d*)(\\w*)",
+        "replacement": "$3"
       }
     },
     "analyzer": {
-      "autocomplete_search": {
+      "autocompleteAnalyzer": {
         "type": "custom",
-        "tokenizer": "standard",
-        "filter": [
-          "lowercase"
-        ]
-      },
-      "autocomplete_index": {
-        "type": "custom",
-        "tokenizer": "standard",
+        "tokenizer": "stringTokenizer",
         "filter": [
           "lowercase",
-          "autocomplete_filter"
+          "asciiFoldingFilter",
+          "shingle"
+        ]
+      },
+      "houseNumberOrReferenceNumberAnalyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "char_filter": [
+          "houseNumberOrReferenceNumberCharFilter"
+        ]
+      },
+      "houseReferenceSignAnalyzer": {
+        "type": "custom",
+        "tokenizer": "standard",
+        "char_filter": [
+          "houseReferenceSignCharFilter"
         ]
       }
     }
