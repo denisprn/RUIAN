@@ -29,7 +29,7 @@ public class AddressConverter {
     public Address convert() throws ParseException {
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String houseReferenceNumber, houseReferenceSign, houseIdentificationNumber;
+        String houseReferenceSign = null, houseReferenceNumber = null, houseIdentificationNumber;
 
         Integer id = Integer.parseInt(lineValues[0]);
         Integer municipalityId = Integer.parseInt(lineValues[1]);
@@ -52,12 +52,9 @@ public class AddressConverter {
                 houseReferenceSign = lineValues[14];
                 houseIdentificationNumber = String.format("%s/%s%s", houseReferenceNumber, houseNumber, houseReferenceSign);
             } else {
-                houseReferenceSign = null;
                 houseIdentificationNumber = String.format("%s/%s", houseReferenceNumber, houseNumber);
             }
         } else {
-            houseReferenceNumber = null;
-            houseReferenceSign = null;
             houseIdentificationNumber = houseNumber;
         }
 
