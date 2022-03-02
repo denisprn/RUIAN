@@ -1,14 +1,17 @@
 package com.bp.RUIAN.controllers;
 
 import com.bp.RUIAN.entities.Address;
+import com.bp.RUIAN.exceptions.AddressNotFoundException;
 import com.bp.RUIAN.services.EsService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -25,11 +28,14 @@ public class RuianController {
 
     @GetMapping("/address/{id}")
     public Optional<Address> findAddressById(@PathVariable("id") Integer id) {
-        return esService.findAddressById(id);
-    }
+        try {
+            if (esService.findAddressById(id).isEmpty()) {
+                throw new AddressNotFoundException("Address with id " + id + " not found");
+            }
 
-    @ExceptionHandler(RuntimeException.class)
-    public final ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
-        return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+            return esService.findAddressById(id);
+        } catch (AddressNotFoundException ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getReason(), ex);
+        }
     }
 }
