@@ -4,6 +4,7 @@ import com.bp.RUIAN.parsers.CsvFilesParser;
 import com.bp.RUIAN.utils.UnzipFile;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -14,17 +15,26 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
 @Service
 public class CsvService {
+    @Value("${archive.dest-dir}")
+    private String destinationDirectoryPath;
+
+    @Value("${archive.location-dir}")
+    private String archivePath; //= String.format(".%1$saddresses%1$sAddresses.zip", File.separator);
+
+/*    @Value("${csv-file.dir}")
+    private String csvDirPath;*/
+
+    @Value("${archive.url}")
+    private String archiveUrl;
+
+    private final CsvFilesParser csvFilesParser;
+
     @Autowired
-    private EsService esService;
-
-    private final String filePath = String.format(".%sAddresses.zip", File.separator);
-
-    public void updateData() {
-        downloadArchiveWithCsvFiles();
-        unzipArchiveWithCsvFiles();
-        parseAndUploadDataFromCsvFiles();
+    public CsvService(CsvFilesParser csvFilesParser) {
+        this.csvFilesParser = csvFilesParser;
     }
 
     private @NotNull String getLastMonthsLastDate() {
@@ -38,34 +48,33 @@ public class CsvService {
         return sdf.format(calendar.getTime());
     }
 
-    private String prepareUrl() {
+    public void downloadArchive() {
         final String lastMonthsLastDate = getLastMonthsLastDate();
-
-        return String.format(
-                "https://vdp.cuzk.cz/vymenny_format/csv/%s_OB_ADR_csv.zip", lastMonthsLastDate);
-    }
-
-    private void downloadArchiveWithCsvFiles() {
-        final String csvFileUrl = prepareUrl();
+        final String csvFileUrl = String.format(archiveUrl, lastMonthsLastDate);
 
         try (InputStream in = new URL(csvFileUrl).openStream()) {
-            Files.copy(in, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(in, Paths.get(archivePath), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception exception) {
             throw new RuntimeException("Failed to download csv data: " + exception.getMessage());
         }
     }
 
-    private void unzipArchiveWithCsvFiles() {
-        final String destinationDirPath = String.format(".%1$sresources%1$s", File.separator);
-        new UnzipFile().unzip(filePath, destinationDirPath);
+    public void unzipArchive() {
+        archivePath = String.format(archivePath, File.separator);
+        destinationDirectoryPath = String.format(destinationDirectoryPath, File.separator);
+        //final String destinationDirectoryPath = String.format(".%1$saddresses%1$s", File.separator);
+        new UnzipFile().unzip(archivePath, destinationDirectoryPath);
     }
 
-    private void parseAndUploadDataFromCsvFiles() {
-        try {
-            final String csvDirectoryPath = String.format(".%1$sresources%1$sCSV%1$s", File.separator);
-            new CsvFilesParser(esService).walk(csvDirectoryPath);
-        } catch (IOException exception) {
-            throw new RuntimeException("Failed to upload csv data: " + exception.getMessage());
-        }
+    public void parseData() throws FileNotFoundException, UnsupportedEncodingException {
+        //csvDestinationDirPath = String.format(csvDirPath, File.separator);
+        //final String csvDirPath = "";
+        //csvFilesParser.walkDirectoriesAndParseFiles(csvDirPath);
+    }
+
+    public void updateData() throws FileNotFoundException, UnsupportedEncodingException {
+        downloadArchive();
+        unzipArchive();
+        parseData();
     }
 }
