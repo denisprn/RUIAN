@@ -10,6 +10,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -18,32 +20,35 @@ import java.util.List;
 import java.util.Map;
 
 
+@Component
 public class AddressSearch {
     private final RestHighLevelClient esClient;
 
+    @Autowired
     public AddressSearch(RestHighLevelClient esClient) {
         this.esClient = esClient;
     }
 
     public List<String> search(final String searchString) throws IOException {
-        Map<String, Float> fields = new HashMap<>();
-        fields.put("municipalityName", 45F);
-        fields.put("municipalityPartName", 50F);
-        fields.put("streetName", 40F);
-        fields.put("houseIdentificationNumber", 50F);
-        fields.put("houseNumber", 50F);
-        fields.put("houseReferenceNumber", 35F);
-        fields.put("houseReferenceSign", 35F);
-        fields.put("zipCode", 30F);
+        Map<String, Float> addressFields = new HashMap<>();
+        addressFields.put("houseNumber", 7F);
+        addressFields.put("zipCode", 6F);
+        addressFields.put("municipalityPartName", 5F);
+        addressFields.put("streetName", 5F);
+        addressFields.put("municipalityName", 4F);
+        addressFields.put("houseReferenceNumber", 2F);
+        addressFields.put("houseReferenceSign", 2F);
+        addressFields.put("typSO", 3F);
 
         SearchRequest searchRequest = new SearchRequest("address");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.multiMatchQuery(searchString)
-                        .fields(fields)
-                        .prefixLength(3)
+                        .fields(addressFields)
                         .type(MultiMatchQueryBuilder.Type.MOST_FIELDS)
-                        .fuzziness(Fuzziness.TWO))
-                .size(5);
+                        .prefixLength(3)
+                        .fuzziness(Fuzziness.AUTO)
+                ).size(5);
+
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = esClient.search(searchRequest, RequestOptions.DEFAULT);
         SearchHit[] searchHits = searchResponse.getHits().getHits();
@@ -54,6 +59,7 @@ public class AddressSearch {
     private String getHitsMainInfo(@NotNull SearchHit searchHit) {
         String address;
         Map<String, Object> map = searchHit.getSourceAsMap();
+        String score = String.valueOf(searchHit.getScore());
         final String municipalityName = map.get("municipalityName").toString();
         final String municipalityPartName = map.get("municipalityPartName").toString();
         final String zipCode = map.get("zipCode").toString();
@@ -61,12 +67,12 @@ public class AddressSearch {
 
         if (map.get("streetName") != null) {
             final String streetName = map.get("streetName").toString();
-            address = String.format("%s %s, %s %s, %s",
-                    streetName, houseIdentificationNumber, zipCode, municipalityPartName, municipalityName);
+            address = String.format("%s %s, %s %s, %s (%s)",
+                    streetName, houseIdentificationNumber, zipCode, municipalityPartName, municipalityName, score);
         } else {
             final String typeSO = map.get("typeSO").toString();
-            address = String.format("%s %s, %s %s, %s",
-                    typeSO, houseIdentificationNumber, zipCode, municipalityPartName, municipalityName);
+            address = String.format("%s %s, %s %s, %s (%s)",
+                    typeSO, houseIdentificationNumber, zipCode, municipalityPartName, municipalityName, score);
         }
 
         return address;
