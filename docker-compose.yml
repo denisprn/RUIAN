@@ -2,7 +2,7 @@ version: '3'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: elasticsearch:7.14.2
+    image: elasticsearch:7.17.1
     environment:
       - node.name=elasticsearch
       - discovery.type=single-node
