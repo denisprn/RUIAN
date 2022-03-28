@@ -59,4 +59,4 @@ Hypothetically both store data objects that have key-value pair, and allow query
 3. Download, install and run Docker;
 4. In command line get inside project's root folder;
 5. In command line run `gradle build -x test` command;
-6. In command line run `docker-compose --profile=production up` command or `docker-compose --profile=test up` command for test purposes;
+6. In command line run `docker-compose up` command;
