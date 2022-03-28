@@ -1,10 +1,8 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.0'
+	id 'org.springframework.boot' version '2.6.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
-
-compileJava.inputs.files(processResources)
 
 group = 'com.bp'
 version = '0.0.1-SNAPSHOT'
@@ -14,15 +12,14 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch:2.6.3'
-	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
-    implementation 'org.jetbrains:annotations:22.0.0'
-	implementation group: 'com.opencsv', name: 'opencsv', version: '5.5.2'
-	testImplementation 'org.testcontainers:elasticsearch:1.16.3'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.3'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.6.3'
+	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.jetbrains:annotations:23.0.0'
+	implementation 'com.opencsv:opencsv:5.6'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.6.5'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }
