@@ -21,25 +21,8 @@ services:
       - "9300:9300"
     networks:
       - esnet
-  app_production:
-    container_name: docker-spring-boot-production
-    profiles: ["production"]
-    environment:
-      - SPRING_PROFILES_ACTIVE=production
-    build:
-      context: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - elasticsearch
-    networks:
-      - esnet
-    restart: on-failure
-  app_test:
-    container_name: docker-spring-boot-test
-    profiles: ["test"]
-    environment:
-      - SPRING_PROFILES_ACTIVE=test
+  app_spring_boot:
+    container_name: docker-spring-boot
     build:
       context: .
     ports:
