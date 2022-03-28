@@ -1,66 +1,88 @@
 {
   "analysis": {
     "tokenizer": {
-      "stringTokenizer": {
+      "letterTokenizer": {
         "type": "char_group",
         "tokenize_on_chars": [
           "whitespace",
           "punctuation",
-          "symbol"
+          "symbol",
+          "digit"
+        ]
+      },
+      "numTokenizer": {
+        "type": "char_group",
+        "tokenize_on_chars": [
+          "whitespace",
+          "punctuation",
+          "symbol",
+          "letter"
+        ]
+      },
+      "edge_ngramTokenizer": {
+        "type": "edge_ngram",
+        "min_gram": 2,
+        "max_gram": 20,
+        "token_chars": [
+          "letter"
         ]
       }
     },
     "filter": {
-      "autocompleteFilter": {
-        "type": "edge_ngram",
-        "min_gram": 1,
-        "max_gram": 20
-      },
       "asciiFoldingFilter": {
         "type": "asciifolding",
         "preserve_original": true
       }
     },
     "char_filter": {
-      "houseIdentificationNumberCharFilter": {
+      "omitCharsBeforeDigitsCharFilter": {
         "type": "pattern_replace",
-        "pattern": "(\\d*)/*(\\d*)(\\w*)",
-        "replacement": "$1 $2 $3"
+        "pattern": "(\\w*)(\\d*)",
+        "replacement": "$2"
       },
-      "houseNumberOrReferenceNumberCharFilter": {
+      "omitCharsAfterDigitsCharFilter": {
         "type": "pattern_replace",
-        "pattern": "(\\d*)/*(\\d*)(\\w*)",
-        "replacement": "$1 $2"
+        "pattern": "(\\d*)(\\w*)",
+        "replacement": "$1"
       },
-      "houseReferenceSignCharFilter": {
+      "omitDigitsBeforeCharsCharFilter": {
         "type": "pattern_replace",
-        "pattern": "(\\d*)/*(\\d*)(\\w*)",
-        "replacement": "$3"
+        "pattern": "(\\d*)(\\w*)",
+        "replacement": "$2"
+      },
+      "omitDigitsAfterCharsCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\w*)(\\d*)",
+        "replacement": "$1"
       }
     },
     "analyzer": {
-      "autocompleteAnalyzer": {
+      "autocompleteIndexAnalyzer": {
         "type": "custom",
-        "tokenizer": "stringTokenizer",
+        "tokenizer": "edge_ngramTokenizer",
         "filter": [
           "lowercase",
-          "asciiFoldingFilter",
-          "shingle"
+          "asciiFoldingFilter"
         ]
       },
-      "houseNumberOrReferenceNumberAnalyzer": {
+      "autocompleteSearchAnalyzer": {
         "type": "custom",
-        "tokenizer": "standard",
-        "char_filter": [
-          "houseNumberOrReferenceNumberCharFilter"
+        "tokenizer": "letterTokenizer",
+        "filter": [
+          "lowercase"
         ]
+      },
+      "houseNumbersAnalyzer": {
+        "type": "custom",
+        "tokenizer": "numTokenizer"
       },
       "houseReferenceSignAnalyzer": {
         "type": "custom",
-        "tokenizer": "standard",
-        "char_filter": [
-          "houseReferenceSignCharFilter"
-        ]
+        "tokenizer": "letterTokenizer"
+      },
+      "zipCodeAnalyzer": {
+        "type": "custom",
+        "tokenizer": "numTokenizer"
       }
     }
   }
