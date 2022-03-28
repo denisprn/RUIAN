@@ -1,5 +1,5 @@
 # RÚIAN REST API
-Converts RÚIAN data to Elasticsearch database with the ability to retrieve by ID and search by municipalities, parts thereof, streets, zip codes and full address points.
+The Register of Territorial Identification, Addresses and Real Estate, also RÚIAN (in czech stands for Registr územní identifikace, adres a nemovitostí), is one of the four basic registers of the Czech Republic. RÚIAN contains data on basic territorial elements.
 ## General info
 It is a JSON RESTful API, that once a month download archive with CSV files with addresses from real estate cadastre and imports them to Elasticsearch database.
 API allows a retrieval of individual items according to RÚIAN ID and fuzzy search in the list of municipalities, parts of municipalities, streets, postal codes and entire address points.
