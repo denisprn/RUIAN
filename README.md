@@ -1,8 +1,8 @@
 # RÚIAN REST API
 Converts RÚIAN data to Elasticsearch database with the ability to retrieve by ID and search by municipalities, parts thereof, streets, zip codes and full address points.
 ## General info
-It is an JSON RESTful API, that imports RÚIAN data from CSV file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
-Int addition to this, API allows retrieval of individual items according to RÚIAN ID and fuzzy search in the list of districts, municipalities, parts of municipalities and streets, postal codes and entire address points in JSON format.
+It is a JSON RESTful API, that once a month download archive with CSV files with addresses from real estate cadastre and imports them to Elasticsearch database.
+API allows a retrieval of individual items according to RÚIAN ID and fuzzy search in the list of municipalities, parts of municipalities, streets, postal codes and entire address points.
 ## Technologies
 * JDK 17
 * Spring Boot 2.6.4
