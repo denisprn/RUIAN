@@ -19,15 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests bulk {@link Address} uploading
  * @author denisprn
  */
-@ContextConfiguration(classes = {
-        BulkAddressDataUploaderImpl.class
-})
 @SpringBootTest
 class BulkAddressDataUploaderTest {
     @Autowired
     private BulkAddressDataUploader bulkAddressDataUploader;
 
-    @MockBean
+    @Autowired
     private AddressRepository addressRepository;
 
     @Test
