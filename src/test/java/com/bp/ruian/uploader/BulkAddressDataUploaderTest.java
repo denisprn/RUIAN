@@ -7,9 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.lang.NonNull;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
@@ -19,15 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Tests bulk {@link Address} uploading
  * @author denisprn
  */
-@ContextConfiguration(classes = {
-        BulkAddressDataUploaderImpl.class
-})
 @SpringBootTest
 class BulkAddressDataUploaderTest {
     @Autowired
     private BulkAddressDataUploader bulkAddressDataUploader;
 
-    @MockBean
+    @Autowired
     private AddressRepository addressRepository;
 
     @Test
