@@ -1,4 +1,4 @@
-package com.bp.ruian.uploader;
+package com.bp.ruian.services.uploader;
 
 import com.bp.ruian.record.Address;
 import com.bp.ruian.repository.AddressRepository;

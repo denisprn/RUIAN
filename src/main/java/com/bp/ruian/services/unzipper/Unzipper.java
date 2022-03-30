@@ -1,4 +1,4 @@
-package com.bp.ruian.unzipper;
+package com.bp.ruian.services.unzipper;
 
 /**
  * Interface for unzipper

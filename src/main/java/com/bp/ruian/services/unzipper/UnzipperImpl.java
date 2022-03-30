@@ -1,4 +1,4 @@
-package com.bp.ruian.unzipper;
+package com.bp.ruian.services.unzipper;
 
 import com.bp.ruian.utils.ExceptionMessages;
 import org.slf4j.Logger;

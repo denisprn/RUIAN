@@ -14,12 +14,12 @@ public final class LoggerMessages {
             "Address from search hit has been converted successfully";
     public static final String LAST_MONTHS_LAST_DAY_INFO =
             "Last month's last day is:";
+    public static final String ARCHIVE_DOWNLOADING_STARTED =
+            "Archive downloading started";
     public static final String ARCHIVE_DOWNLOADED_INFO =
             "Archive has been downloaded successfully";
     public static final String ARCHIVE_DOWNLOADING_ERROR =
             "Failed to download archive";
-    public static final String ADDRESSES_UPLOADED_INFO =
-            "Addresses has been uploaded successfully";
 
     private LoggerMessages() {
         throw new IllegalStateException("Utility class");

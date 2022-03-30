@@ -1,4 +1,4 @@
-package com.bp.ruian.downloader;
+package com.bp.ruian.services.downloader;
 
 import com.bp.ruian.utils.LoggerMessages;
 import com.bp.ruian.utils.ResourcePaths;
@@ -30,9 +30,10 @@ public class ArchiveDownloaderImpl implements ArchiveDownloader{
 
         final String lastMonthLastDay = sdf.format(calendar.getTime());
 
-        final String loggerMessage = String.format("%s %s", LoggerMessages.LAST_MONTHS_LAST_DAY_INFO, lastMonthLastDay);
+        final String formattedMessage =
+                String.format("%s %s", LoggerMessages.LAST_MONTHS_LAST_DAY_INFO, lastMonthLastDay);
 
-        LOGGER.info(loggerMessage);
+        LOGGER.info(formattedMessage);
 
         return lastMonthLastDay;
     }
@@ -44,6 +45,8 @@ public class ArchiveDownloaderImpl implements ArchiveDownloader{
                 String.format("https://vdp.cuzk.cz/vymenny_format/csv/%s_OB_ADR_csv.zip", lastMonthsLastDate);
 
         try (InputStream in = new URL(archiveUrl).openStream()) {
+            LOGGER.info(LoggerMessages.ARCHIVE_DOWNLOADING_STARTED);
+
             Files.copy(in, Paths.get(ResourcePaths.ARCHIVE_FILE_LOCATION), StandardCopyOption.REPLACE_EXISTING);
 
             LOGGER.info(LoggerMessages.ARCHIVE_DOWNLOADED_INFO);

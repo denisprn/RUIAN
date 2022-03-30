@@ -2,6 +2,7 @@ package com.bp.ruian.uploader;
 
 import com.bp.ruian.record.Address;
 import com.bp.ruian.repository.AddressRepository;
+import com.bp.ruian.services.uploader.BulkAddressDataUploader;
 import org.jetbrains.annotations.Unmodifiable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.bp.ruian.controller;
 
 import com.bp.ruian.record.Address;
-import com.bp.ruian.service.EsServiceImpl;
+import com.bp.ruian.services.EsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

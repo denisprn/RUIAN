@@ -1,10 +1,10 @@
-package com.bp.ruian.service;
+package com.bp.ruian.services;
 
-import com.bp.ruian.converter.AddressConverterImpl;
-import com.bp.ruian.downloader.ArchiveDownloaderImpl;
+import com.bp.ruian.services.converter.AddressConverterImpl;
+import com.bp.ruian.services.downloader.ArchiveDownloaderImpl;
 import com.bp.ruian.record.Address;
-import com.bp.ruian.unzipper.UnzipperImpl;
-import com.bp.ruian.uploader.BulkAddressDataUploaderImpl;
+import com.bp.ruian.services.unzipper.UnzipperImpl;
+import com.bp.ruian.services.uploader.BulkAddressDataUploaderImpl;
 import com.bp.ruian.utils.FileExtensions;
 import com.bp.ruian.utils.LoggerMessages;
 import com.bp.ruian.utils.ResourcePaths;
@@ -103,8 +103,6 @@ public class AddressesImportServiceImpl implements AddressesImportService {
             if (counter != 0) {
                 bulkDataUploader.bulkUpload(addressList);
             }
-
-            LOGGER.info(LoggerMessages.ADDRESSES_UPLOADED_INFO);
         } catch (IOException | CsvException exception) {
             LOGGER.error(String.format("%s. %s", LoggerMessages.CSV_PARSE_ERROR, exception.getMessage()));
         }

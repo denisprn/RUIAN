@@ -1,5 +1,7 @@
 package com.bp.ruian.finder;
 
+import com.bp.ruian.services.finder.AddressFinder;
+import com.bp.ruian.services.finder.AddressFinderImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,7 @@ class AddressFinderTest {
     void searchTest() {
         Map <String, Integer> testData = prepareTestData();
 
-        testData.forEach((key, value) -> {
-            assertThat(addressFinder.find(key).get(0).id()).isEqualTo(value);
-        });
+        testData.forEach((key, value) -> assertThat(addressFinder.find(key).get(0).id()).isEqualTo(value));
     }
 
     @NonNull
@@ -36,7 +36,7 @@ class AddressFinderTest {
         Map<String, Integer> addresses = new HashMap<>();
 
         addresses.put("Jankovcova 49/1037 Praha", 22306196);
-        addresses.put("jank 1037 praa", 22306196);
+        addresses.put("jank 1037 praha", 22306196);
         addresses.put("Valdštejnské namestí 17/4, 118 00 PRAHA 011", 21694168);
         addresses.put("valds nam 17 4 prah", 21694168);
         addresses.put("Barrandovká 1236/56b, 15200", 74979388);

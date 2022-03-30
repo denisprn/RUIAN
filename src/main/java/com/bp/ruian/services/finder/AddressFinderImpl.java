@@ -1,6 +1,6 @@
-package com.bp.ruian.finder;
+package com.bp.ruian.services.finder;
 
-import com.bp.ruian.converter.AddressConverterImpl;
+import com.bp.ruian.services.converter.AddressConverterImpl;
 import com.bp.ruian.record.Address;
 import com.bp.ruian.utils.EsFieldNames;
 import com.bp.ruian.utils.LoggerMessages;
@@ -65,7 +65,10 @@ public class AddressFinderImpl implements AddressFinder {
 
             return Arrays.stream(searchHits).map(addressConverter::convertFromSearchHit).toList();
         } catch (IOException exception) {
-            LOGGER.error(String.format("%s. %s", LoggerMessages.SEARCH_ERROR, exception.getMessage()));
+            final String formattedMessage =
+                    String.format("%s. %s", LoggerMessages.SEARCH_ERROR, exception.getMessage());
+
+            LOGGER.error(formattedMessage);
         }
 
         return Collections.emptyList();

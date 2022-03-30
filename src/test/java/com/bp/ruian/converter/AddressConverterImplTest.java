@@ -1,6 +1,8 @@
 package com.bp.ruian.converter;
 
 import com.bp.ruian.record.Address;
+import com.bp.ruian.services.converter.AddressConverter;
+import com.bp.ruian.services.converter.AddressConverterImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

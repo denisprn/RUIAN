@@ -1,4 +1,4 @@
-package com.bp.ruian.service;
+package com.bp.ruian.services;
 
 /**
  * Interface for address importing service

@@ -1,6 +1,6 @@
-package com.bp.ruian.service;
+package com.bp.ruian.services;
 
-import com.bp.ruian.finder.AddressFinderImpl;
+import com.bp.ruian.services.finder.AddressFinderImpl;
 import com.bp.ruian.record.Address;
 import com.bp.ruian.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.bp.ruian.finder;
+package com.bp.ruian.services.finder;
 
 import com.bp.ruian.record.Address;
 
