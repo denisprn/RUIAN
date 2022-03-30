@@ -1,13 +1,13 @@
 # RÚIAN REST API
-Converts RÚIAN data to Elasticsearch database with the ability to retrieve by ID and search by municipalities, parts thereof, streets, zip codes and full address points.
+The Register of Territorial Identification, Addresses and Real Estate, also RÚIAN (in czech stands for Registr územní identifikace, adres a nemovitostí), is one of the four basic registers of the Czech Republic. RÚIAN contains data on basic territorial elements.
 ## General info
-It is an JSON RESTful API, that imports RÚIAN data from CSV file and imports them to Elasticsearch database. It is possible to read one or several XML files aswell. 
-Int addition to this, API allows retrieval of individual items according to RÚIAN ID and fuzzy search in the list of districts, municipalities, parts of municipalities and streets, postal codes and entire address points in JSON format.
+It is a JSON RESTful API, that once a month download archive with CSV files with addresses from real estate cadastre and imports them to Elasticsearch database.
+API allows a retrieval of individual items according to RÚIAN ID and fuzzy search in the list of municipalities, parts of municipalities, streets, postal codes and entire address points.
 ## Technologies
 * JDK 17
-* Spring Boot 2.5.0
+* Spring Boot 2.6.4
 * Gradle Build Tool 7.3.3
-* Elasticsearch 7.14.2
+* Elasticsearch 7.17.1
 ## What is REST API?
 A REST API is an application programming interface (API) that uses HTTP requests to retrieve, place, and delete data. REST stands for Representational State Transfer in the context of an API.
 
@@ -59,4 +59,4 @@ Hypothetically both store data objects that have key-value pair, and allow query
 3. Download, install and run Docker;
 4. In command line get inside project's root folder;
 5. In command line run `gradle build -x test` command;
-6. In command line run `docker-compose --profile=production up` command or `docker-compose --profile=test up` command for test purposes;
+6. In command line run `docker-compose up` command;
