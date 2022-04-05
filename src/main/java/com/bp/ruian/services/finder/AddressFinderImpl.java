@@ -80,11 +80,11 @@ public class AddressFinderImpl implements AddressFinder {
         addressFields.put(EsFieldNames.MUNICIPALITY_PART_NAME, 5F);
         addressFields.put(EsFieldNames.MUNICIPALITY_NAME, 5F);
         addressFields.put(EsFieldNames.STREET_NAME, 5F);
-        addressFields.put(EsFieldNames.HOUSE_NUMBER, 5F);
-        addressFields.put(EsFieldNames.HOUSE_REFERENCE_NUMBER, 1F);
-        addressFields.put(EsFieldNames.HOUSE_REFERENCE_SIGN, 1F);
-        addressFields.put(EsFieldNames.TYPE_CO, 1F);
-        addressFields.put(EsFieldNames.ZIP_CODE, 3F);
+        addressFields.put(EsFieldNames.HOUSE_NUMBER, 10F);
+        addressFields.put(EsFieldNames.HOUSE_REFERENCE_NUMBER, 5F);
+        addressFields.put(EsFieldNames.HOUSE_REFERENCE_SIGN, 5F);
+        addressFields.put(EsFieldNames.TYPE_CO, 3F);
+        addressFields.put(EsFieldNames.ZIP_CODE, 8F);
 
         return addressFields;
     }
