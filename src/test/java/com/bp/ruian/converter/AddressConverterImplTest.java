@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 })
 @SpringBootTest
 class AddressConverterImplTest {
+
     @Autowired
     private AddressConverter addressConverter;
 

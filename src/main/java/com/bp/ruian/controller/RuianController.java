@@ -16,6 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/ruian")
 public class RuianController {
+
     private final EsServiceImpl esServiceImpl;
 
     @Autowired

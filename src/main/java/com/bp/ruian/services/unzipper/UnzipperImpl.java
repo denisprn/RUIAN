@@ -16,6 +16,7 @@ import java.util.zip.ZipInputStream;
  */
 @Component
 public class UnzipperImpl implements Unzipper {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(UnzipperImpl.class);
 
     @Override

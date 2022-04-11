@@ -1,5 +1,6 @@
 package com.bp.ruian.services.finder;
 
+import com.bp.ruian.config.RestClientConfig;
 import com.bp.ruian.services.converter.AddressConverterImpl;
 import com.bp.ruian.record.Address;
 import com.bp.ruian.utils.EsFieldNames;
@@ -17,7 +18,6 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -30,14 +30,20 @@ import java.util.*;
  */
 @Component
 public class AddressFinderImpl implements AddressFinder {
-    @Value("${elastic.index}")
-    private String indexName;
-    private final RestHighLevelClient esClient;
-    private final AddressConverterImpl addressConverter;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AddressFinderImpl.class);
 
+    private final RestClientConfig restClientConfig;
+
+    private final RestHighLevelClient esClient;
+
+    private final AddressConverterImpl addressConverter;
+
     @Autowired
-    public AddressFinderImpl(RestHighLevelClient esClient, AddressConverterImpl addressConverter) {
+    public AddressFinderImpl(RestClientConfig restClientConfig,
+                             RestHighLevelClient esClient,
+                             AddressConverterImpl addressConverter) {
+        this.restClientConfig = restClientConfig;
         this.esClient = esClient;
         this.addressConverter = addressConverter;
     }
@@ -46,7 +52,7 @@ public class AddressFinderImpl implements AddressFinder {
     public List<Address> find(final String searchString) {
         Map<String, Float> addressFields = getBoostedSearchFields();
 
-        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchRequest searchRequest = new SearchRequest(restClientConfig.getIndex());
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder()
                 .query(QueryBuilders.multiMatchQuery(searchString)

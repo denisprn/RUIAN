@@ -5,5 +5,6 @@ package com.bp.ruian.services;
  * @author denisprn
  */
 public interface AddressesImportService {
+
     void importAddressesFromRuianToEs();
 }

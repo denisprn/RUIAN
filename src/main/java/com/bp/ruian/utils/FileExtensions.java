@@ -6,6 +6,7 @@ package com.bp.ruian.utils;
  * @author denisprn
  */
 public final class FileExtensions {
+
     public static final String CSV = "csv";
 
     private FileExtensions() {

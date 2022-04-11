@@ -11,6 +11,7 @@ import java.util.Map;
  * @author denisprn
  */
 public final class MapUtils {
+
     @Nullable
     public static String checkIfStringValueIsNotNull(@NonNull Map<String, Object> map, @NonNull String value) {
         return map.get(value) != null ? map.get(value).toString() : null;

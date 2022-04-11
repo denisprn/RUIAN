@@ -15,8 +15,11 @@ import java.util.Optional;
  */
 @Service
 public class EsServiceImpl implements EsService {
+
     private final AddressFinderImpl addressFinderImpl;
+
     private final AddressRepository addressRepository;
+
     private final AddressesImportServiceImpl addressesImportServiceImpl;
 
     @Autowired

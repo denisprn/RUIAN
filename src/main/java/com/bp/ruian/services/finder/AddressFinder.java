@@ -9,5 +9,6 @@ import java.util.List;
  * @author denisprn
  */
 public interface AddressFinder {
+
     List<Address> find(String searchString);
 }

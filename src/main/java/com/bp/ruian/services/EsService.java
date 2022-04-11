@@ -10,6 +10,7 @@ import java.util.Optional;
  * @author denisprn
  */
 public interface EsService {
+
     List<Address> findAddressesBySearchString(String searchString);
 
     Optional<Address> findAddressById(Integer id);

@@ -6,6 +6,7 @@ package com.bp.ruian.utils;
  * @author denisprn
  */
 public final class ResourcePaths {
+
     public static final String ADDRESSES_DIRECTORY = "./src/main/java/resources/addresses/";
     public static final String ARCHIVE_FILE_LOCATION = "./src/main/java/resources/addresses/Addresses.zip";
 

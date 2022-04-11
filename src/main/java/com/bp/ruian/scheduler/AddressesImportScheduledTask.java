@@ -9,8 +9,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.CronTask;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
 
+import java.util.TimeZone;
 
 /**
  * {@link Address} import scheduler
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableScheduling
 public class AddressesImportScheduledTask implements SchedulingConfigurer {
+
     private final AddressesImportScheduledTaskConfig scheduledTaskConfig;
+
     private final EsServiceImpl esServiceImpl;
 
     @Autowired
@@ -29,12 +33,17 @@ public class AddressesImportScheduledTask implements SchedulingConfigurer {
         this.esServiceImpl = esServiceImpl;
     }
 
-    private void importData() {
-        esServiceImpl.importAddresses();
-    }
-
     @Override
     public void configureTasks(@NonNull ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.addCronTask(new CronTask(this::importData, scheduledTaskConfig.getCronTrigger()));
+        CronTrigger cronTrigger = new CronTrigger(scheduledTaskConfig.getValue(),
+                TimeZone.getTimeZone(scheduledTaskConfig.getTimeZone()));
+
+        CronTask cronTask = new CronTask(this::importData, cronTrigger);
+
+        taskRegistrar.addCronTask(cronTask);
+    }
+
+    private void importData() {
+        esServiceImpl.importAddresses();
     }
 }

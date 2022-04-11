@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest
 class RuianApplicationTests {
+
 	@Autowired
 	private ApplicationContext context;
 
@@ -20,5 +21,4 @@ class RuianApplicationTests {
 	void contextLoads() {
 		assertThat(context).isNotNull();
 	}
-
 }

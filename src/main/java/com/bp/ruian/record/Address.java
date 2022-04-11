@@ -15,6 +15,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 @Document(indexName = "address")
 @Setting(settingPath = "es-config/elastic-analyzer.json")
 public record Address(
+
         @Id
         @Field(type = FieldType.Integer,
                 name = EsFieldNames.ID)

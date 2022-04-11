@@ -17,11 +17,13 @@ import java.util.Map;
  */
 @Component
 public class AddressConverterImpl implements AddressConverter {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AddressConverterImpl.class);
 
     @NonNull
     @Override
     public Address convertFromArrayValues(@NonNull final String[] lineValues) {
+
         final Integer id = Integer.parseInt(lineValues[AddressValuePositions.ID]);
 
         final Integer municipalityid = Integer.parseInt(lineValues[AddressValuePositions.MUNICIPALITY_ID]);
@@ -70,6 +72,7 @@ public class AddressConverterImpl implements AddressConverter {
     @NonNull
     @Override
     public Address convertFromSearchHit(@NonNull SearchHit searchHit) {
+
         Map<String, Object> searchHitSourceMap = searchHit.getSourceAsMap();
 
         final Integer id = MapUtils.convertValueToInteger(searchHitSourceMap, EsFieldNames.ID);

@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @SpringBootTest
 class BulkAddressDataUploaderTest {
+
     @Autowired
     private BulkAddressDataUploader bulkAddressDataUploader;
 

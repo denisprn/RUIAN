@@ -33,16 +33,19 @@ import java.util.List;
 @Service
 public class AddressesImportServiceImpl implements AddressesImportService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddressesImportServiceImpl.class);
+
+    private final ArchiveDownloaderImpl archiveDownloader;
+
+    private final UnzipperImpl unzipper;
+
+    private final BulkAddressDataUploaderImpl bulkDataUploader;
+
     @Value("${file.encoding-charset}")
     private String fileEncoding;
 
     @Value("${bulk.number-of-records}")
     private int numberOfRecordsToUpload;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AddressesImportServiceImpl.class);
-    private final ArchiveDownloaderImpl archiveDownloader;
-    private final UnzipperImpl unzipper;
-    private final BulkAddressDataUploaderImpl bulkDataUploader;
 
     @Autowired
     public AddressesImportServiceImpl(ArchiveDownloaderImpl archiveDownloader,

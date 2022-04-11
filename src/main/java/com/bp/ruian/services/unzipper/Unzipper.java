@@ -5,5 +5,6 @@ package com.bp.ruian.services.unzipper;
  * @author denisprn
  */
 public interface Unzipper {
+
     void unzip(String zipFilePath, String destinationDirectory);
 }

@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Component
 public class BulkAddressDataUploaderImpl implements BulkAddressDataUploader {
+
     private final AddressRepository addressRepository;
 
     @Autowired

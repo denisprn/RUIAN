@@ -6,6 +6,7 @@ package com.bp.ruian.utils;
  * @author denisprn
  */
 public final class LoggerMessages {
+
     public static final String CSV_PARSE_ERROR = "Failed to parse CSV data";
     public static final String SEARCH_ERROR = "Failed to search data";
     public static final String ADDRESS_FROM_ARRAY_VALUES_CONVERTED_INFO =

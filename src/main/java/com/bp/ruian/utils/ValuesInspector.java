@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
  * @author denisprn
  */
 public final class ValuesInspector {
+
     @Nullable
     @Contract(pure = true)
     public static String checkIfNotEmpty(@NonNull String value) {

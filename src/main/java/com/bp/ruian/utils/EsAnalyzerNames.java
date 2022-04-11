@@ -6,6 +6,7 @@ package com.bp.ruian.utils;
  * @author denisprn
  */
 public final class EsAnalyzerNames {
+
     public static final String AUTOCOMPLETE_INDEX = "autocompleteIndexAnalyzer";
     public static final String AUTOCOMPLETE_SEARCH = "autocompleteSearchAnalyzer";
     public static final String HOUSE_NUMBERS = "houseNumbersAnalyzer";

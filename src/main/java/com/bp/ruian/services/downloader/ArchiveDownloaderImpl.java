@@ -16,8 +16,12 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/**
+ * @author denisprn
+ */
 @Component
 public class ArchiveDownloaderImpl implements ArchiveDownloader{
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ArchiveDownloaderImpl.class);
 
     private @NotNull String getLastMonthsLastDate() {

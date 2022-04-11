@@ -8,6 +8,8 @@ import org.elasticsearch.search.SearchHit;
  * @author denisprn
  */
 public interface AddressConverter {
+
     Address convertFromArrayValues(String[] lineValues);
+
     Address convertFromSearchHit(SearchHit searchHit);
 }

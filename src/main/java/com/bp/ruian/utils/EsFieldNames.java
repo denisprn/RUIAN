@@ -6,6 +6,7 @@ package com.bp.ruian.utils;
  * @author denisprn
  */
 public final class EsFieldNames {
+
     public static final String ID = "id";
     public static final String MUNICIPALITY_ID = "municipalityId";
     public static final String MUNICIPALITY_NAME = "municipalityName";
