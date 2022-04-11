@@ -83,6 +83,7 @@ public class AddressFinderImpl implements AddressFinder {
     @NonNull
     private Map<String, Float> getBoostedSearchFields() {
         Map<String, Float> addressFields = new HashMap<>();
+        
         addressFields.put(EsFieldNames.MUNICIPALITY_PART_NAME, 5F);
         addressFields.put(EsFieldNames.MUNICIPALITY_NAME, 5F);
         addressFields.put(EsFieldNames.STREET_NAME, 5F);
