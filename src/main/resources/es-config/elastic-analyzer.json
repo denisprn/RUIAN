@@ -1,0 +1,91 @@
+{
+  "analysis": {
+    "tokenizer": {
+      "letterTokenizer": {
+        "type": "char_group",
+        "tokenize_on_chars": [
+          "whitespace",
+          "punctuation",
+          "symbol",
+          "digit"
+        ]
+      },
+      "numTokenizer": {
+        "type": "char_group",
+        "tokenize_on_chars": [
+          "whitespace",
+          "punctuation",
+          "symbol",
+          "letter"
+        ]
+      },
+      "edge_ngramTokenizer": {
+        "type": "edge_ngram",
+        "min_gram": 2,
+        "max_gram": 20,
+        "token_chars": [
+          "letter"
+        ]
+      }
+    },
+    "filter": {
+      "asciiFoldingFilter": {
+        "type": "asciifolding",
+        "preserve_original": true
+      }
+    },
+    "char_filter": {
+      "omitCharsBeforeDigitsCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\w*)(\\d*)",
+        "replacement": "$2"
+      },
+      "omitCharsAfterDigitsCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\d*)(\\w*)",
+        "replacement": "$1"
+      },
+      "omitDigitsBeforeCharsCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\d*)(\\w*)",
+        "replacement": "$2"
+      },
+      "omitDigitsAfterCharsCharFilter": {
+        "type": "pattern_replace",
+        "pattern": "(\\w*)(\\d*)",
+        "replacement": "$1"
+      }
+    },
+    "analyzer": {
+      "autocompleteIndexAnalyzer": {
+        "type": "custom",
+        "tokenizer": "edge_ngramTokenizer",
+        "filter": [
+          "lowercase",
+          "asciiFoldingFilter"
+        ]
+      },
+      "autocompleteSearchAnalyzer": {
+        "type": "custom",
+        "tokenizer": "letterTokenizer",
+        "filter": [
+          "lowercase"
+        ]
+      },
+      "houseNumbersAnalyzer": {
+        "type": "custom",
+        "tokenizer": "numTokenizer"
+      },
+      "houseReferenceSignAnalyzer": {
+        "type": "custom",
+        "tokenizer": "letterTokenizer"
+      },
+      "zipCodeAnalyzer": {
+        "type": "custom",
+        "tokenizer": "numTokenizer"
+      }
+    }
+  }
+}
+
+

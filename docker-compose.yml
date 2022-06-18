@@ -1,0 +1,40 @@
+version: '3'
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.17.1
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - cluster.routing.allocation.total_shards_per_node=1000
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - esnet
+  app_spring_boot:
+    container_name: docker-spring-boot
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - elasticsearch
+    networks:
+      - esnet
+    restart: on-failure
+networks:
+  esnet:
+    driver: bridge
+volumes:
+  esdata:
+    driver: local

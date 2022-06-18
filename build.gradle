@@ -1,12 +1,11 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.0'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.springframework.boot' version "$springBootVersion"
+	id 'io.spring.dependency-management' version "$dependencyManagementVersion"
 	id 'java'
 }
 
-group = 'com.bp'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '16'
+group = property('group')
+version = property('version')
 
 repositories {
 	mavenCentral()
@@ -15,12 +14,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-    implementation 'org.jetbrains:annotations:20.1.0'
-	testImplementation "org.testcontainers:elasticsearch:1.15.3"
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.jetbrains:annotations:23.0.0'
+	implementation 'com.opencsv:opencsv:5.6'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.7.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }
