@@ -8,3 +8,10 @@ API allows a retrieval of individual items according to RÚIAN ID and fuzzy sear
 * Spring Boot 2.6.4
 * Gradle Build Tool 7.3.3
 * Elasticsearch 7.17.1
+## Setup instructions
+1. Download and install Java SDK 17.
+2. Download and install Gradle Build Tool 7.3 or later.
+3. Download, install, and run Docker.
+4. Open a command line and navigate to the project's root folder.
+5. Run the command `gradle build -x test`.
+6. Run the command `docker-compose up`.
